@@ -1,0 +1,16 @@
+{
+  "version": "2.10",
+  "children": [
+    {
+      "type": "text",
+      "id": "hD3g0",
+      "x": 0,
+      "y": -28,
+      "fill": "#ffffff",
+      "content": "PLOS Website",
+      "fontFamily": "Inter",
+      "fontSize": 16,
+      "fontWeight": "normal"
+    }
+  ]
+}
