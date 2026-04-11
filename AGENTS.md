@@ -19,7 +19,7 @@
 | Islands       | React (for interactive components only)   |
 | Deployment    | Cloudflare Pages                          |
 | Analytics     | Cloudflare Web Analytics                  |
-| Fonts         | Inter (body), DM Sans (editorial/display) |
+| Fonts         | DM Sans (primary, all elements), Agrandir (display accents only) |
 
 ## Architecture Rules
 
@@ -81,60 +81,62 @@ cwk-plos-site/
 
 ## Brand Design System
 
-### CSS Variables
+### CSS Variables (Official Brand Palette)
+
+> See `docs/DESIGN.md` for full design system reference.
 
 ```css
 :root {
-  /* Backgrounds */
-  --color-bg-deep: #0a0a0a;
-  --color-bg-card: #141414;
-  --color-bg-elevated: #1a1a1a;
+  /* Primary Palette */
+  --bg:     #07090F;  /* Page background */
+  --bg2:    #0B0E18;  /* Cards, panels, elevated surfaces */
+  --bg3:    #101422;  /* Tab panels, deep nested elements */
+  --text:   #EEF0FF;  /* ALL headings, body, labels */
+  --cyan:   #00E5FF;  /* Primary accent: CTAs, mission bars */
+  --purple: #7B61FF;  /* Secondary accent: gradients, PLOS */
+  --pink:   #FB3079;  /* Tertiary accent: eyebrow labels, warnings */
 
-  /* Text */
-  --color-text-main: #ffffff;
-  --color-text-body: #e5e7eb;
-  --color-text-muted: #a3a3a3;
+  /* Transparency */
+  --glass:  rgba(255, 255, 255, 0.03);  /* Card fills */
+  --gb:     rgba(255, 255, 255, 0.08);  /* Default borders */
+  --gb2:    rgba(255, 255, 255, 0.14);  /* Hover borders */
+  --muted:  rgba(238, 240, 255, 0.62);  /* Secondary text */
+  --dim:    rgba(238, 240, 255, 0.32);  /* Captions, placeholders */
 
-  /* Borders */
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-hover: rgba(255, 255, 255, 0.2);
-
-  /* Action Gradient */
-  --color-gradient-blue: #38b2f6;
-  --color-gradient-purple: #b721ff;
-  --action-gradient: linear-gradient(90deg, #38b2f6 0%, #b721ff 100%);
-
-  /* Semantic */
-  --color-success: #2ecc8f;
-  --color-warning: #f5a623;
-  --color-danger: #f55555;
+  /* Stage Colors (status only, not general brand) */
+  --stage-1: #FF4444;  /* Error */
+  --stage-2: #FF7A30;  /* Warning */
+  --stage-3: #FFB830;  /* Caution */
+  --stage-4: #00E5FF;  /* Refinement */
+  --stage-5: #7B61FF;  /* Growth-Ready */
+  --stage-6: #00E396;  /* Sovereign / Success */
 
   /* Typography */
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-display: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-primary: 'DM Sans', sans-serif;
 
   /* Spacing */
-  --space-section: clamp(4rem, 8vw, 8rem);
-  --space-content: clamp(1.5rem, 3vw, 3rem);
-  --max-width: 1200px;
+  --gap-tile: 2px;
 }
 ```
 
-### Typography Scale
+### Typography
 
-- **Hero:** 52px / 800 weight / -0.03em / DM Sans
-- **H1:** 36px / 800 weight / -0.02em
-- **H2:** 28px / 700 weight / -0.01em
-- **H3:** 20px / 700 weight
-- **Body:** 16px / 400 weight / 1.6 line-height / Inter
-- **Small/Caption:** 14px / 500 weight / muted color
-- **Eyebrow:** 10px / 700 weight / 0.35em tracking / uppercase
+- **Primary font:** DM Sans (all weights 300-900). No other typeface.
+- **Accent font:** Agrandir (PP Agrandir) for display headlines only. Max one element per screen.
+- **Hero:** 48-56px / 800 weight / 1.1-1.15 line-height
+- **H1:** 32-36px / 700-800 weight / 1.2
+- **H2:** 22-26px / 700 weight / 1.3
+- **H3:** 16-18px / 600-700 weight / 1.4
+- **Body:** 14-16px / 400-500 weight / 1.5-1.6
+- **Eyebrow:** 9-11px / 700 weight / uppercase / 0.35-0.5em letter-spacing / `--pink` color
 
 ### Button Styles
 
-- **Primary (Action):** `background: var(--action-gradient)`, white text, 8px radius, purple glow shadow
-- **Ghost:** transparent bg, 1px border, muted text, hover reveals border
-- **Text link:** gradient underline on hover
+- **Primary:** `bg: --cyan`, `color: --bg`, `font-weight: 700`, `border-radius: 8px`, `padding: 12px 24px`
+- **Secondary:** `bg: transparent`, `border: 1px solid --cyan`, `color: --cyan`
+- **Ghost:** `bg: rgba(255,255,255,0.06)`, `color: --text`, `border: 1px solid --gb`
+- **Hover:** `brightness(1.1)` on primary, bg fill on secondary, `opacity: 0.9` on ghost
+- **Hero text gradient:** `linear-gradient(135deg, #00E5FF, #7B61FF)` with `background-clip: text`
 
 ## Coding Patterns
 
