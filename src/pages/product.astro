@@ -1,0 +1,434 @@
+---
+import Base from '../layouts/Base.astro';
+import WaitlistForm from '../components/WaitlistForm';
+import MockDashboard from '../components/mocks/MockDashboard.astro';
+import MockRelationships from '../components/mocks/MockRelationships.astro';
+import MockPipeline from '../components/mocks/MockPipeline.astro';
+import MockActions from '../components/mocks/MockActions.astro';
+import MockKaia from '../components/mocks/MockKaia.astro';
+import MockDestination from '../components/mocks/MockDestination.astro';
+
+const features = [
+  {
+    id: 'dashboard',
+    headline: 'Your daily command center.',
+    body: 'Every morning, your dashboard shows exactly what to focus on. Tasks assigned by your Brand Guide, tagged to the four systems, with progress tracking that builds streaks and momentum.',
+    highlights: [
+      'Time-of-day personalized greeting',
+      'Today\'s Actions with system tags (codify, create, connect, convert)',
+      'Progress tracking with streak counter',
+      'Pipeline and relationship snapshot at a glance',
+    ],
+  },
+  {
+    id: 'relationships',
+    headline: 'Every relationship. One place.',
+    body: 'Stop losing track of who you know and when you last spoke to them. The Relationships Directory is your living CRM: searchable, filterable, and built for follow-through.',
+    highlights: [
+      'Full contact directory with search and filters',
+      'Stage-based organization (Aware to Advocate)',
+      'Last touchpoint tracking with dormancy alerts',
+      'Detail panel with full relationship history',
+    ],
+  },
+  {
+    id: 'pipeline',
+    headline: 'Watch deals move, not die.',
+    body: 'Your pipeline is not a spreadsheet. It\'s a visual board that shows where every opportunity sits, what needs attention, and what\'s about to close.',
+    highlights: [
+      'Visual Kanban with 5 pipeline stages',
+      'Drag-and-drop deal management',
+      'Stage-level metrics and conversion tracking',
+      'Dormant contact alerts',
+    ],
+  },
+  {
+    id: 'actions',
+    headline: 'Three actions. Every day. Compounding.',
+    body: 'Your Brand Guide assigns your daily actions based on where you are in the PLOS framework. Each task is tagged to a system and explained with context so you know why it matters.',
+    highlights: [
+      'Daily task cards with context and purpose',
+      'System tags: codify, create, connect, convert',
+      'One-click status cycling',
+      'Completion streaks with milestone badges',
+    ],
+  },
+  {
+    id: 'kaia',
+    headline: 'Your AI-powered brand strategist.',
+    body: 'kaia is trained on the CWK. framework and your specific data. Ask about your next move, get clarity on a decision, or pressure-test an idea. kaia responds in real time with streaming intelligence.',
+    highlights: [
+      'Real-time streaming responses',
+      'Grounded in CWK. PLOS framework',
+      'Context-aware: knows your stage, tasks, and goals',
+      'Available 24/7 inside the dashboard',
+    ],
+  },
+  {
+    id: 'destination',
+    headline: '60-120 day goal sprints with real milestones.',
+    body: 'Brand Destinations are structured goal sprints designed by your Brand Guide. Each has clear milestones, a progress bar, and badge rewards. You always know where you are and what\'s next.',
+    highlights: [
+      'Named goal sprints (60-120 days)',
+      'Visual progress bar with milestone markers',
+      'Badge system for completed milestones',
+      'Clear phase descriptions and next steps',
+    ],
+  },
+];
+---
+
+<Base
+  title="CWK. Agent+ — The Operating System for Entrepreneurs"
+  description="See inside the Agent+ dashboard: daily actions, relationship tracking, AI strategy, pipeline management, and goal sprints. Built on the PLOS framework."
+>
+  <!-- ── Product Hero ─────────────────────────────────────── -->
+  <section class="product-hero">
+    <div class="product-hero-inner">
+      <span class="eyebrow fade-up">The Platform</span>
+      <h1 class="fade-up fade-up-delay-1">
+        Your Personal <span class="gradient-text">Operating System</span> for Growth.
+      </h1>
+      <p class="hero-sub fade-up fade-up-delay-2">
+        CWK. Agent+ is the command center that manages your career infrastructure across Mind, Body, Soul, and Pocket. One dashboard. Every system. Nothing falls through.
+      </p>
+      <a href="#waitlist" class="btn btn-gradient fade-up fade-up-delay-3">
+        Join the Waitlist →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── How It Works ───────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-inner">
+      <span class="eyebrow">How It Works</span>
+      <h2>Three steps. One system. Total clarity.</h2>
+
+      <div class="steps">
+        <div class="step glass-card">
+          <span class="step-num gradient-text">01</span>
+          <h3>Diagnose</h3>
+          <p>Take the Brand Mirror. See exactly where your infrastructure is leaking: revenue, operations, authority, or team.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step glass-card">
+          <span class="step-num gradient-text">02</span>
+          <h3>Install</h3>
+          <p>Your Brand Guide builds the playbook. Systems get installed. Processes get documented. Nothing stays in your head.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step glass-card">
+          <span class="step-num gradient-text">03</span>
+          <h3>Operate</h3>
+          <p>Log in daily. Execute your actions. Track your relationships. Watch your momentum compound.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Feature Showcases ─────────────────────────────────── -->
+  <section class="section features-section">
+    <div class="features-inner">
+      <span class="eyebrow" style="text-align:center;display:block;">Inside the Dashboard</span>
+      <h2 style="text-align:center;margin-bottom:64px;">Everything you need. Nothing you don't.</h2>
+
+      <!-- Feature 1: Dashboard -->
+      <div class="feature-row">
+        <div class="feature-text">
+          <span class="feat-num">01</span>
+          <h3>{features[0].headline}</h3>
+          <p>{features[0].body}</p>
+          <ul class="feat-highlights">
+            {features[0].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+        <div class="feature-mock">
+          <MockDashboard />
+        </div>
+      </div>
+
+      <!-- Feature 2: Relationships (reversed) -->
+      <div class="feature-row feature-row-rev">
+        <div class="feature-mock">
+          <MockRelationships />
+        </div>
+        <div class="feature-text">
+          <span class="feat-num">02</span>
+          <h3>{features[1].headline}</h3>
+          <p>{features[1].body}</p>
+          <ul class="feat-highlights">
+            {features[1].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 3: Pipeline -->
+      <div class="feature-row">
+        <div class="feature-text">
+          <span class="feat-num">03</span>
+          <h3>{features[2].headline}</h3>
+          <p>{features[2].body}</p>
+          <ul class="feat-highlights">
+            {features[2].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+        <div class="feature-mock">
+          <MockPipeline />
+        </div>
+      </div>
+
+      <!-- Feature 4: Daily Actions (reversed) -->
+      <div class="feature-row feature-row-rev">
+        <div class="feature-mock">
+          <MockActions />
+        </div>
+        <div class="feature-text">
+          <span class="feat-num">04</span>
+          <h3>{features[3].headline}</h3>
+          <p>{features[3].body}</p>
+          <ul class="feat-highlights">
+            {features[3].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 5: kaia -->
+      <div class="feature-row">
+        <div class="feature-text">
+          <span class="feat-num">05</span>
+          <h3>{features[4].headline}</h3>
+          <p>{features[4].body}</p>
+          <ul class="feat-highlights">
+            {features[4].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+        <div class="feature-mock">
+          <MockKaia />
+        </div>
+      </div>
+
+      <!-- Feature 6: Brand Destination (reversed) -->
+      <div class="feature-row feature-row-rev">
+        <div class="feature-mock">
+          <MockDestination />
+        </div>
+        <div class="feature-text">
+          <span class="feat-num">06</span>
+          <h3>{features[5].headline}</h3>
+          <p>{features[5].body}</p>
+          <ul class="feat-highlights">
+            {features[5].highlights.map(h => <li>{h}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Bottom Waitlist ────────────────────────────────────── -->
+  <section id="waitlist" class="section waitlist-bottom">
+    <div class="section-inner" style="text-align:center;">
+      <span class="eyebrow">Ready?</span>
+      <h2>This is the infrastructure your business has been missing.</h2>
+      <p class="waitlist-sub">
+        CWK. Agent+ is currently in private beta. Join the waitlist to be first in line.
+      </p>
+      <WaitlistForm client:visible />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .product-hero {
+    padding-top: 144px;
+    padding-bottom: 80px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+
+  .product-hero-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-tile);
+  }
+
+  .product-hero-inner h1 {
+    font-size: clamp(32px, 5.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 16px 0 20px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  /* How it works */
+  .steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 32px;
+  }
+
+  .step {
+    flex: 1;
+    padding: var(--pad-md);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-num {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .step-connector {
+    width: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    flex-shrink: 0;
+  }
+
+  /* Features */
+  .features-section { padding-bottom: 0; }
+
+  .features-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    padding: 72px 0;
+    border-bottom: 1px solid var(--gb);
+  }
+
+  .feature-row:last-of-type { border-bottom: none; }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .feat-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+
+  .feature-text h3 {
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .feature-text p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .feat-highlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .feat-highlights li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .feat-highlights li::before {
+    content: '→';
+    color: var(--cyan);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .feature-mock { min-width: 0; }
+
+  /* Reversed row: on desktop swap columns */
+  .feature-row-rev .feature-mock { order: 1; }
+  .feature-row-rev .feature-text { order: 2; }
+
+  /* Waitlist bottom */
+  .waitlist-bottom h2 {
+    font-size: clamp(22px, 3.5vw, 32px);
+    margin: 8px 0 12px;
+  }
+
+  .waitlist-sub {
+    color: var(--muted);
+    max-width: 420px;
+    margin: 0 auto 28px;
+    font-size: 15px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .feature-row,
+    .feature-row-rev {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .feature-row-rev .feature-mock { order: 2; }
+    .feature-row-rev .feature-text { order: 1; }
+    .features-inner { padding: 0 14px; }
+  }
+
+  @media (max-width: 768px) {
+    .steps {
+      flex-direction: column;
+      gap: var(--gap-tile);
+    }
+    .step-connector {
+      width: 1px;
+      height: 20px;
+      background: linear-gradient(180deg, var(--cyan), var(--purple));
+    }
+    .product-hero { padding-top: 112px; }
+  }
+
+  @media (max-width: 640px) {
+    .feature-row { padding: 48px 0; }
+  }
+</style>

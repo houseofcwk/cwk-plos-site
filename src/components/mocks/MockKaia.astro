@@ -1,0 +1,224 @@
+---
+---
+<div class="mock-kaia">
+  <!-- Header -->
+  <div class="kaia-header">
+    <div class="kaia-avatar">K</div>
+    <div class="kaia-info">
+      <span class="kaia-name">kaia</span>
+      <span class="kaia-status">
+        <span class="kaia-dot"></span>
+        Online
+      </span>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="kaia-messages">
+    <div class="kaia-msg user-msg">
+      <span>Who haven't I spoken to in the last 30 days?</span>
+    </div>
+
+    <div class="kaia-msg-wrap">
+      <span class="kaia-label">kaia</span>
+      <div class="kaia-msg ai-msg">
+        <span>You have 3 contacts in the <strong>Active Partner</strong> stage who haven't been touched in over 30 days: Jordan Walsh (28d), Priya Kumar (34d), and Dev Okafor (41d). Want me to draft a re-engagement message for any of them?</span>
+      </div>
+    </div>
+
+    <div class="kaia-msg user-msg">
+      <span>Pressure test my offer for the coaching retainer.</span>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="kaia-msg-wrap">
+      <span class="kaia-label">kaia</span>
+      <div class="kaia-msg ai-msg typing">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input bar -->
+  <div class="kaia-input-bar">
+    <span class="kaia-input-placeholder">Ask kaia anything...</span>
+    <button class="kaia-send" aria-label="Send">→</button>
+  </div>
+</div>
+
+<style>
+  .mock-kaia {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: var(--radius-card);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: var(--font-primary);
+  }
+
+  .kaia-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gb);
+    background: var(--bg3);
+  }
+
+  .kaia-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .kaia-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .kaia-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .kaia-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--stage-6);
+  }
+
+  .kaia-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--stage-6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  .kaia-messages {
+    padding: 14px 14px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .kaia-msg-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-start;
+  }
+
+  .kaia-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-left: 2px;
+  }
+
+  .kaia-msg {
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 88%;
+  }
+
+  .user-msg {
+    align-self: flex-end;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.18);
+    color: var(--text);
+    border-bottom-right-radius: 3px;
+  }
+
+  .ai-msg {
+    background: var(--bg3);
+    border: 1px solid var(--gb);
+    color: var(--muted);
+    border-bottom-left-radius: 3px;
+  }
+
+  .ai-msg strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 14px;
+    min-width: 52px;
+  }
+
+  .typing-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: blink 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; }
+    40%           { opacity: 1; }
+  }
+
+  .kaia-input-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--gb);
+    background: var(--bg3);
+  }
+
+  .kaia-input-placeholder {
+    flex: 1;
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .kaia-send {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cyan);
+    color: var(--bg);
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+</style>

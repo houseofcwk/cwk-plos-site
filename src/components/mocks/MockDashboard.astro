@@ -1,0 +1,190 @@
+---
+---
+<div class="mock-dash">
+  <!-- Greeting -->
+  <div class="mock-greeting">
+    <span class="mock-greeting-text">Good morning, Alex</span>
+    <span class="mock-greeting-time">9:14 AM</span>
+  </div>
+
+  <!-- Today's Actions -->
+  <div class="mock-section-label">Today's Actions</div>
+  <div class="mock-actions">
+    <div class="mock-task">
+      <div class="mock-task-dot done"></div>
+      <div class="mock-task-body">
+        <span class="mock-task-title">Send intro to Marcus Chen</span>
+        <span class="tag" style="font-size:9px;padding:2px 8px;">connect</span>
+      </div>
+      <span class="mock-check">✓</span>
+    </div>
+    <div class="mock-task">
+      <div class="mock-task-dot active"></div>
+      <div class="mock-task-body">
+        <span class="mock-task-title">Publish thought leadership post</span>
+        <span class="tag tag-purple" style="font-size:9px;padding:2px 8px;">create</span>
+      </div>
+    </div>
+    <div class="mock-task">
+      <div class="mock-task-dot pending"></div>
+      <div class="mock-task-body">
+        <span class="mock-task-title">Document onboarding SOP v2</span>
+        <span class="tag" style="font-size:9px;padding:2px 8px;background:rgba(0,229,255,0.08);border-color:rgba(0,229,255,0.2);color:#00E5FF;">codify</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress footer -->
+  <div class="mock-footer">
+    <div class="mock-stats">
+      <div class="mock-mini-stat">
+        <span class="mock-mini-num">24</span>
+        <span class="mock-mini-label">Contacts</span>
+      </div>
+      <div class="mock-mini-stat">
+        <span class="mock-mini-num">$18k</span>
+        <span class="mock-mini-label">Pipeline</span>
+      </div>
+    </div>
+    <div class="mock-streak">
+      <span>7-day streak</span>
+      <span class="streak-fire">🔥</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mock-dash {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: var(--radius-card);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+    font-family: var(--font-primary);
+  }
+
+  .mock-greeting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+  }
+
+  .mock-greeting-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .mock-greeting-time {
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .mock-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: 8px 0 4px;
+  }
+
+  .mock-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+  }
+
+  .mock-task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+  }
+
+  .mock-task-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .mock-task-dot.done    { background: var(--stage-6); }
+  .mock-task-dot.active  { background: var(--cyan); }
+  .mock-task-dot.pending { background: var(--gb2); }
+
+  .mock-task-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .mock-task-title {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .mock-check {
+    font-size: 11px;
+    color: var(--stage-6);
+    font-weight: 700;
+  }
+
+  .mock-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--gb);
+    margin-top: 4px;
+  }
+
+  .mock-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .mock-mini-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .mock-mini-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .mock-mini-label {
+    font-size: 9px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .mock-streak {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    background: rgba(255,184,48,0.08);
+    border: 1px solid rgba(255,184,48,0.2);
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+
+  .streak-fire { font-size: 12px; }
+</style>

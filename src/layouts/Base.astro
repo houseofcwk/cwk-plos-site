@@ -1,0 +1,83 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const { title, description, ogImage, canonical } = Astro.props;
+const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090F" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      canonical={canonical}
+    />
+    {analyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${analyticsToken}"}`}
+      />
+    )}
+  </head>
+  <body>
+    <!-- Ambient orb: cyan -->
+    <div class="orb orb-cyan" aria-hidden="true"></div>
+    <!-- Ambient orb: purple -->
+    <div class="orb orb-purple" aria-hidden="true"></div>
+
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(140px);
+  }
+
+  .orb-cyan {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    left: -200px;
+    background: rgba(0, 229, 255, 0.04);
+  }
+
+  .orb-purple {
+    width: 500px;
+    height: 500px;
+    bottom: -100px;
+    right: -100px;
+    background: rgba(123, 97, 255, 0.05);
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 80px;
+  }
+</style>

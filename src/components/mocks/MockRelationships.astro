@@ -1,0 +1,157 @@
+---
+---
+<div class="mock-rel">
+  <!-- Search -->
+  <div class="mock-search">
+    <span class="mock-search-icon">⌕</span>
+    <span class="mock-search-placeholder">Search contacts...</span>
+  </div>
+
+  <!-- Stage filters -->
+  <div class="mock-filters">
+    <span class="mock-filter active">All</span>
+    <span class="mock-filter">Engaged</span>
+    <span class="mock-filter">Active</span>
+    <span class="mock-filter">Alumni</span>
+  </div>
+
+  <!-- Contact rows -->
+  <div class="mock-contacts">
+    <div class="mock-contact">
+      <div class="mock-avatar">MC</div>
+      <div class="mock-contact-info">
+        <span class="mock-contact-name">Marcus Chen</span>
+        <span class="mock-contact-co">Venture Studio</span>
+      </div>
+      <span class="tag" style="font-size:9px;padding:2px 8px;">Active</span>
+      <span class="mock-touch fresh">3d</span>
+    </div>
+    <div class="mock-contact">
+      <div class="mock-avatar" style="background:rgba(123,97,255,0.15);color:#7B61FF;">SR</div>
+      <div class="mock-contact-info">
+        <span class="mock-contact-name">Sofia Reyes</span>
+        <span class="mock-contact-co">Brand Founders</span>
+      </div>
+      <span class="tag tag-purple" style="font-size:9px;padding:2px 8px;">Engaged</span>
+      <span class="mock-touch mid">14d</span>
+    </div>
+    <div class="mock-contact">
+      <div class="mock-avatar" style="background:rgba(251,48,121,0.12);color:#FB3079;">JW</div>
+      <div class="mock-contact-info">
+        <span class="mock-contact-name">Jordan Walsh</span>
+        <span class="mock-contact-co">Creative Agency</span>
+      </div>
+      <span class="tag tag-pink" style="font-size:9px;padding:2px 8px;">Aware</span>
+      <span class="mock-touch cold">28d</span>
+    </div>
+    <div class="mock-contact">
+      <div class="mock-avatar" style="background:rgba(0,229,255,0.08);color:#00E5FF;">DP</div>
+      <div class="mock-contact-info">
+        <span class="mock-contact-name">Diana Park</span>
+        <span class="mock-contact-co">Ops Consulting</span>
+      </div>
+      <span class="tag" style="font-size:9px;padding:2px 8px;">Active</span>
+      <span class="mock-touch fresh">1d</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mock-rel {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+    font-family: var(--font-primary);
+  }
+
+  .mock-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--bg3);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+  }
+
+  .mock-search-icon { font-size: 14px; color: var(--dim); }
+  .mock-search-placeholder { font-size: 12px; color: var(--dim); }
+
+  .mock-filters {
+    display: flex;
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .mock-filter {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .mock-filter.active {
+    background: rgba(0,229,255,0.1);
+    border-color: rgba(0,229,255,0.25);
+    color: var(--cyan);
+  }
+
+  .mock-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+  }
+
+  .mock-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+  }
+
+  .mock-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,229,255,0.1);
+    color: var(--cyan);
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mock-contact-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .mock-contact-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .mock-contact-co   { font-size: 10px; color: var(--dim); }
+
+  .mock-touch {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+
+  .mock-touch.fresh { color: var(--stage-6); border-color: rgba(0,227,150,0.3); background: rgba(0,227,150,0.08); }
+  .mock-touch.mid   { color: #FFB830; border-color: rgba(255,184,48,0.3); background: rgba(255,184,48,0.08); }
+  .mock-touch.cold  { color: var(--stage-1); border-color: rgba(255,68,68,0.3); background: rgba(255,68,68,0.08); }
+</style>

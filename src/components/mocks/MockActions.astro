@@ -1,0 +1,165 @@
+---
+---
+<div class="mock-actions-wrap">
+  <div class="mock-task-card done-card">
+    <div class="task-card-left">
+      <div class="task-status-dot done"></div>
+    </div>
+    <div class="task-card-body">
+      <span class="task-title">Send intro to Marcus Chen</span>
+      <span class="task-context">Build a warm connection before the pitch window opens</span>
+      <div class="task-footer">
+        <span class="tag" style="font-size:9px;padding:2px 8px;">connect</span>
+        <span class="task-badge done-badge">Complete</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mock-task-card active-card">
+    <div class="task-card-left">
+      <div class="task-status-dot active"></div>
+    </div>
+    <div class="task-card-body">
+      <span class="task-title">Publish thought leadership post</span>
+      <span class="task-context">Reinforce authority positioning this week ahead of the launch</span>
+      <div class="task-footer">
+        <span class="tag tag-purple" style="font-size:9px;padding:2px 8px;">create</span>
+        <span class="task-badge pending-badge">In Progress</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mock-task-card">
+    <div class="task-card-left">
+      <div class="task-status-dot pending"></div>
+    </div>
+    <div class="task-card-body">
+      <span class="task-title">Document onboarding SOP v2</span>
+      <span class="task-context">Reduce founder bottleneck so team can onboard without you</span>
+      <div class="task-footer">
+        <span class="tag" style="font-size:9px;padding:2px 8px;background:rgba(0,229,255,0.08);border-color:rgba(0,229,255,0.2);color:#00E5FF;">codify</span>
+        <span class="task-badge">Pending</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="actions-progress">
+    <span class="actions-progress-text">2 of 3 complete</span>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:66%"></div>
+    </div>
+    <span class="streak-label">5-day streak 🔥</span>
+  </div>
+</div>
+
+<style>
+  .mock-actions-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+    font-family: var(--font-primary);
+  }
+
+  .mock-task-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+  }
+
+  .done-card  { border-left: 3px solid var(--stage-6); }
+  .active-card { border-left: 3px solid var(--cyan); }
+
+  .task-card-left {
+    padding-top: 2px;
+  }
+
+  .task-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+  .task-status-dot.done    { background: var(--stage-6); }
+  .task-status-dot.active  { background: var(--cyan); }
+  .task-status-dot.pending { background: var(--gb2); border: 1px solid var(--gb2); }
+
+  .task-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .task-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .task-context {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.4;
+  }
+
+  .task-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .task-badge {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .done-badge    { color: var(--stage-6); }
+  .pending-badge { color: var(--cyan); }
+
+  .actions-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0 0;
+    border-top: 1px solid var(--gb);
+    margin-top: 4px;
+  }
+
+  .actions-progress-text {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    border-radius: 100px;
+  }
+
+  .streak-label {
+    font-size: 10px;
+    color: #FFB830;
+    white-space: nowrap;
+  }
+</style>

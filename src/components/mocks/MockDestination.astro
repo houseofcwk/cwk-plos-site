@@ -1,0 +1,179 @@
+---
+---
+<div class="mock-dest">
+  <!-- Destination header -->
+  <div class="dest-header">
+    <div class="dest-header-left">
+      <span class="eyebrow" style="margin-bottom:4px;">Active Sprint</span>
+      <span class="dest-name">Strategic Partnerships Sprint</span>
+      <span class="dest-timeline">Day 42 of 90 · Est. Jun 15</span>
+    </div>
+    <div class="dest-pct">65%</div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="dest-progress-track">
+    <div class="dest-progress-fill" style="width:65%"></div>
+  </div>
+
+  <!-- Milestones -->
+  <div class="dest-milestones">
+    <div class="milestone done-ms">
+      <span class="ms-icon">✓</span>
+      <span class="ms-text">Map top 15 partnership targets</span>
+      <span class="ms-badge">🎯</span>
+    </div>
+    <div class="milestone done-ms">
+      <span class="ms-icon">✓</span>
+      <span class="ms-text">Send warm intros to 8 contacts</span>
+      <span class="ms-badge">📬</span>
+    </div>
+    <div class="milestone current-ms">
+      <span class="ms-icon ms-arrow">→</span>
+      <span class="ms-text">Hold 3 discovery calls</span>
+      <span class="ms-badge locked">🔒</span>
+    </div>
+    <div class="milestone locked-ms">
+      <span class="ms-icon ms-lock">○</span>
+      <span class="ms-text">Close first partnership deal</span>
+      <span class="ms-badge locked">🔒</span>
+    </div>
+  </div>
+
+  <!-- Badge row -->
+  <div class="dest-badges">
+    <span class="dest-badge-label">Earned</span>
+    <span class="badge-item" title="Mapped targets">🎯</span>
+    <span class="badge-item" title="Warm intros sent">📬</span>
+    <span class="badge-item locked" title="Locked">🔒</span>
+    <span class="badge-item locked" title="Locked">🔒</span>
+  </div>
+</div>
+
+<style>
+  .mock-dest {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: var(--radius-card);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: var(--font-primary);
+  }
+
+  .dest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dest-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dest-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .dest-timeline {
+    font-size: 10px;
+    color: var(--dim);
+  }
+
+  .dest-pct {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex-shrink: 0;
+  }
+
+  .dest-progress-track {
+    height: 6px;
+    background: var(--bg3);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .dest-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    border-radius: 100px;
+  }
+
+  .dest-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tile);
+  }
+
+  .milestone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gb);
+  }
+
+  .done-ms    { background: rgba(0, 227, 150, 0.04); border-color: rgba(0,227,150,0.2); }
+  .current-ms { background: rgba(0, 229, 255, 0.06); border-color: rgba(0,229,255,0.25); }
+  .locked-ms  { background: var(--glass); opacity: 0.55; }
+
+  .ms-icon {
+    font-size: 11px;
+    font-weight: 700;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .done-ms .ms-icon    { color: var(--stage-6); }
+  .current-ms .ms-icon { color: var(--cyan); }
+  .locked-ms .ms-icon  { color: var(--dim); }
+
+  .ms-text {
+    flex: 1;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  .locked-ms .ms-text { color: var(--dim); }
+
+  .ms-badge { font-size: 13px; }
+  .ms-badge.locked { opacity: 0.3; filter: grayscale(1); }
+
+  .dest-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--gb);
+  }
+
+  .dest-badge-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dim);
+  }
+
+  .badge-item {
+    font-size: 16px;
+    filter: drop-shadow(0 0 4px rgba(0,229,255,0.3));
+  }
+
+  .badge-item.locked {
+    filter: grayscale(1);
+    opacity: 0.3;
+  }
+</style>
