@@ -6,7 +6,8 @@
 - **Type:** Static marketing/product site
 - **Tagline:** "The sports agent for entrepreneurs."
 - **Philosophy:** Build. Learn. Earn. Play.
-- **Target URL:** cwkexperience.com (Cloudflare Pages)
+- **Target URL:** houseofcwk.com (Cloudflare Pages — project: houseofcwk)
+- **Reference site:** cwkexperience.com (old site on page builder — used as content/design source only, not the deploy target)
 
 ## Tech Stack
 

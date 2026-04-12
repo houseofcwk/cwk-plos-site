@@ -2,7 +2,9 @@
 
 ## What We're Building
 
-A production-grade marketing and product website for **CWK. Experience** — replacing the current site hosted on a page builder ([cwkexperience.com](https://cwkexperience.com/)) with a fast, SEO-optimized, developer-owned Astro site deployed to Cloudflare Pages.
+A production-grade marketing and product website for **CWK. Experience** — deployed to **houseofcwk.com** (Cloudflare Pages project: `houseofcwk`).
+
+Replaces the old site hosted on a page builder at [cwkexperience.com](https://cwkexperience.com/) — that domain is used as a **content and design reference only**, not as the deploy target.
 
 ## Why We're Rebuilding
 

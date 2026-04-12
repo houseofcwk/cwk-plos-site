@@ -152,7 +152,7 @@ function buildConfirmationEmail(): string {
             </table>
 
             <!-- CTA button -->
-            <a href="https://cwkexperience.com/work"
+            <a href="https://houseofcwk.com/work"
                style="display:inline-block;background:#38B2F6;color:#0A0A0A;
                       font-size:14px;font-weight:700;text-decoration:none;
                       padding:14px 28px;border-radius:8px;letter-spacing:0.2px;
@@ -177,10 +177,10 @@ function buildConfirmationEmail(): string {
                       Helvetica,Arial,sans-serif;">
               &copy; 2026 CWK. LLC. All rights reserved.
               &nbsp;&middot;&nbsp;
-              <a href="https://cwkexperience.com"
-                 style="color:#38B2F6;text-decoration:none;">cwkexperience.com</a>
+              <a href="https://houseofcwk.com"
+                 style="color:#38B2F6;text-decoration:none;">houseofcwk.com</a>
               &nbsp;&middot;&nbsp;
-              <a href="https://cwkexperience.com/privacy"
+              <a href="https://houseofcwk.com/privacy"
                  style="color:#57534E;text-decoration:none;">Privacy</a>
             </p>
           </td>
@@ -200,8 +200,8 @@ function buildConfirmationEmail(): string {
 //   wrangler pages secret put RESEND_API --project-name=houseofcwk --env production
 // For local dev, add RESEND_API to .dev.vars (git-ignored).
 //
-// The "from" domain (cwkexperience.com) must be verified in Resend dashboard:
-//   https://resend.com/domains → Add domain → cwkexperience.com
+// The "from" domain (houseofcwk.com) must be verified in Resend dashboard:
+//   https://resend.com/domains → Add domain → houseofcwk.com
 
 async function sendConfirmation(env: Env, recipientEmail: string): Promise<void> {
   const response = await fetch('https://api.resend.com/emails', {
@@ -221,10 +221,10 @@ async function sendConfirmation(env: Env, recipientEmail: string): Promise<void>
         '',
         "We've locked in your spot. When PLOS opens, you'll be among the first to get access.",
         '',
-        'See the work: https://cwkexperience.com/work',
+        'See the work: https://houseofcwk.com/work',
         '',
         'Build. Learn. Earn. Play.',
-        '© 2026 CWK. LLC — cwkexperience.com',
+        '© 2026 CWK. LLC — houseofcwk.com',
       ].join('\n'),
     }),
   });

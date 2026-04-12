@@ -224,3 +224,45 @@ Before going live:
 - [ ] Favicon and apple-touch-icon configured
 - [ ] `robots.txt` and `sitemap.xml` accessible
 - [ ] Page speed audit passes targets above
+
+---
+
+## Resend Email Setup
+
+### 1. Create a Resend account
+Go to https://resend.com and create an account.
+
+### 2. Verify your sending domain
+In Resend dashboard: Domains → Add domain → `cwkexperience.com`
+Add the DNS records Resend provides (SPF, DKIM, DMARC).
+
+### 3. Create an API key
+Resend → API Keys → Create API Key → name it "cwk-plos-production"
+Save the key — you will only see it once.
+
+### 4. Set secrets on Cloudflare Pages
+Run each command and paste the value when prompted:
+
+```bash
+wrangler pages secret put RESEND_API      --project-name=houseofcwk
+wrangler pages secret put FROM_EMAIL      --project-name=houseofcwk
+wrangler pages secret put FROM_NAME       --project-name=houseofcwk
+wrangler pages secret put REPLY_TO_EMAIL  --project-name=houseofcwk
+wrangler pages secret put REPLY_TO_NAME   --project-name=houseofcwk
+```
+
+Values:
+- `RESEND_API`: your Resend API key (re_...)
+- `FROM_EMAIL`: `waitlist@cwkexperience.com` (must be on verified domain)
+- `FROM_NAME`: `CWK. Experience`
+- `REPLY_TO_EMAIL`: `kris@cwkexperience.com`
+- `REPLY_TO_NAME`: `Kris San`
+
+### 5. Local dev with Resend
+Copy `.dev.vars.example` to `.dev.vars` and fill in your key.
+Start local dev:
+
+```bash
+npm run build
+npx wrangler pages dev dist --kv WAITLIST
+```
