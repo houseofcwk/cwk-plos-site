@@ -1,0 +1,205 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Privacy Policy — CWK. Experience"
+  description="How CWK. LLC collects, uses, and protects your information."
+>
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="legal-hero">
+    <div class="legal-hero-inner">
+      <span class="eyebrow fade-up">Legal</span>
+      <h1 class="fade-up fade-up-delay-1">Privacy Policy</h1>
+      <p class="last-updated fade-up fade-up-delay-2">Last updated: April 2026</p>
+    </div>
+  </section>
+
+  <!-- ── Content ───────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="glass-card prose-card fade-up">
+
+        <div class="prose-section">
+          <h2>Information We Collect</h2>
+          <p>We collect the following types of information when you interact with houseofcwk.com:</p>
+          <ul>
+            <li><strong>Email addresses</strong> submitted voluntarily via the CWK. Agent+ waitlist form.</li>
+            <li><strong>Analytics data</strong> collected through Cloudflare Web Analytics — a privacy-first, cookieless analytics solution that does not track individual users or store personal identifiers.</li>
+          </ul>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>How We Use It</h2>
+          <p>
+            Information we collect is used solely to notify you about CWK. Agent+ early access, product updates, and relevant communications from CWK. LLC. We do not sell, rent, or share your personal data with third parties for marketing or any other purpose.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Email Communications</h2>
+          <p>
+            By submitting your email address, you consent to receive communications from CWK. LLC regarding CWK. Agent+ and related updates. You may unsubscribe at any time by replying "unsubscribe" to any email you receive from us. We will honor all unsubscribe requests promptly.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Data Storage</h2>
+          <p>
+            Email addresses submitted via the waitlist are stored securely in Cloudflare KV — Cloudflare's globally distributed key-value storage with strong access controls. We use <strong>Resend</strong> for transactional email delivery. Resend processes email data in accordance with their own privacy policy and security standards.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Cookies</h2>
+          <p>
+            We do not use tracking cookies or third-party advertising cookies on this site. Cloudflare Web Analytics, our analytics provider, is fully cookieless and does not create persistent identifiers or user profiles.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Contact</h2>
+          <p>
+            If you have questions or concerns about this Privacy Policy or how your data is handled, please contact us at <a href="mailto:kris@houseofcwk.com">kris@houseofcwk.com</a>.
+          </p>
+        </div>
+
+      </div>
+
+      <p class="footer-note">© 2026 CWK. LLC. All rights reserved.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .legal-hero {
+    padding-top: 144px;
+    padding-bottom: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .legal-hero-inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legal-hero-inner h1 {
+    margin: 0;
+  }
+
+  .last-updated {
+    font-size: 13px;
+    color: var(--dim);
+  }
+
+  /* Prose card */
+  .prose-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .prose-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px 0;
+  }
+
+  .prose-section:first-child {
+    padding-top: 0;
+  }
+
+  .prose-section:last-child {
+    padding-bottom: 0;
+  }
+
+  .prose-section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .prose-section p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .prose-section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 0;
+  }
+
+  .prose-section li {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .prose-section li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  .prose-section strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .prose-section a {
+    color: var(--cyan);
+  }
+
+  .prose-divider {
+    height: 1px;
+    background: var(--gb);
+    flex-shrink: 0;
+  }
+
+  /* Footer note */
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 32px;
+    padding-bottom: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .legal-hero {
+      padding-top: 112px;
+    }
+
+    .prose-card {
+      padding: 24px 20px;
+    }
+  }
+</style>

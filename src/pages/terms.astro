@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Terms of Service — CWK. Experience"
+  description="Terms governing use of houseofcwk.com and CWK. Experience services."
+>
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="legal-hero">
+    <div class="legal-hero-inner">
+      <span class="eyebrow fade-up">Legal</span>
+      <h1 class="fade-up fade-up-delay-1">Terms of Service</h1>
+      <p class="last-updated fade-up fade-up-delay-2">Last updated: April 2026</p>
+    </div>
+  </section>
+
+  <!-- ── Content ───────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="glass-card prose-card fade-up">
+
+        <div class="prose-section">
+          <h2>Acceptance</h2>
+          <p>
+            By accessing or using houseofcwk.com, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any part of these terms, you may not use this site.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Use of Site</h2>
+          <p>
+            This site is provided for informational and marketing purposes. You agree to use this site only for lawful purposes and in a manner that does not infringe the rights of others or restrict their use of the site. Prohibited uses include, but are not limited to, transmitting harmful or illegal content, attempting to gain unauthorized access, or interfering with site functionality.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Intellectual Property</h2>
+          <p>
+            All content, copy, design, and brand assets on this site — including text, graphics, logos, and visual identity — are the exclusive property of CWK. LLC. Reproduction, redistribution, or use of any materials without express written permission from CWK. LLC is strictly prohibited.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Waitlist</h2>
+          <p>
+            Joining the CWK. Agent+ waitlist does not guarantee access to the product or any specific tier of service. CWK. LLC reserves the right to modify, delay, or cancel the waitlist or product offering at any time without notice. Submission of your email address to the waitlist constitutes consent to receive communications from CWK. LLC as described in our <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Disclaimer</h2>
+          <p>
+            This site is provided on an "as is" basis without warranties of any kind, either express or implied. CWK. LLC makes no representations or guarantees regarding the accuracy, completeness, or fitness of any content for a particular purpose. We do not guarantee specific business outcomes, results, or performance from use of this site or any associated services.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Limitation of Liability</h2>
+          <p>
+            To the fullest extent permitted by applicable law, CWK. LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use this site or its content, even if CWK. LLC has been advised of the possibility of such damages.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Changes</h2>
+          <p>
+            CWK. LLC reserves the right to update or modify these Terms of Service at any time. Changes will be posted on this page with an updated effective date. Your continued use of the site following any changes constitutes your acceptance of the revised terms.
+          </p>
+        </div>
+
+        <div class="prose-divider"></div>
+
+        <div class="prose-section">
+          <h2>Contact</h2>
+          <p>
+            Questions about these Terms of Service? Reach us at <a href="mailto:kris@houseofcwk.com">kris@houseofcwk.com</a>.
+          </p>
+        </div>
+
+      </div>
+
+      <p class="footer-note">© 2026 CWK. LLC. All rights reserved.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .legal-hero {
+    padding-top: 144px;
+    padding-bottom: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .legal-hero-inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legal-hero-inner h1 {
+    margin: 0;
+  }
+
+  .last-updated {
+    font-size: 13px;
+    color: var(--dim);
+  }
+
+  /* Prose card */
+  .prose-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .prose-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px 0;
+  }
+
+  .prose-section:first-child {
+    padding-top: 0;
+  }
+
+  .prose-section:last-child {
+    padding-bottom: 0;
+  }
+
+  .prose-section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .prose-section p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .prose-section a {
+    color: var(--cyan);
+  }
+
+  .prose-divider {
+    height: 1px;
+    background: var(--gb);
+    flex-shrink: 0;
+  }
+
+  /* Footer note */
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 32px;
+    padding-bottom: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .legal-hero {
+      padding-top: 112px;
+    }
+
+    .prose-card {
+      padding: 24px 20px;
+    }
+  }
+</style>

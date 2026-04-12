@@ -1,0 +1,254 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const cases = [
+  {
+    href: '/work/rob-dial',
+    tagClass: 'tag',
+    category: 'Podcast Host',
+    client: 'Rob Dial',
+    description: 'Scaled a one-person media role into a full content operation. Revenue grew from $1M to $5M.',
+    statNum: '10x',
+    statLabel: 'Content output',
+  },
+  {
+    href: '/work/the-lab-miami',
+    tagClass: 'tag tag-purple',
+    category: 'Builder Hub',
+    client: 'The LAB Miami',
+    description: 'Built content infrastructure and positioning clarity for a globally connected innovation campus.',
+    statNum: '30%',
+    statLabel: 'Faster sales cycles',
+  },
+  {
+    href: '/work/raasin-in-the-sun',
+    tagClass: 'tag tag-pink',
+    category: 'Non-Profit',
+    client: 'Raasin in the Sun',
+    description: 'Documented 9 public art projects, secured six-figure grants, built media foundation of a creative placemaking movement.',
+    statNum: '6-fig',
+    statLabel: 'Grants secured',
+  },
+  {
+    href: '/work/dawa',
+    tagClass: 'tag tag-pink',
+    category: 'Non-Profit',
+    client: 'DAWA',
+    description: "Found the organization's anchor phrase, built its content system, and co-built an education program from zero.",
+    statNum: '80%',
+    statLabel: 'Messaging clarity',
+  },
+  {
+    href: '/work/stephy-lee',
+    tagClass: 'tag',
+    category: 'Creative Founder',
+    client: 'Stephy Lee',
+    description: "Protected a music artist's brand during crisis, raised $30K, and strategically secured an SXSW booking.",
+    statNum: 'SXSW',
+    statLabel: 'Stage secured',
+  },
+  {
+    href: '/work/spraycation',
+    tagClass: 'tag tag-purple',
+    category: 'Experiential',
+    client: 'SPRAYCATION',
+    description: 'Built the brand foundation and operational backbone for a female-led experiential art movement while the tour was live.',
+    statNum: '6 cities',
+    statLabel: 'Tour executed',
+  },
+  {
+    href: '/work/lifes-tapestry',
+    tagClass: 'tag tag-pink',
+    category: 'Lifelong Dream',
+    client: "Life's Tapestry",
+    description: 'Launched a digital property for a 64-year-old first-time writer — 25+ editions and a growing audience.',
+    statNum: '47',
+    statLabel: 'Real subscribers',
+  },
+  {
+    href: '/work/pay-the-creators',
+    tagClass: 'tag',
+    category: 'Podcast',
+    client: 'Pay the Creators (BeatStars)',
+    description: "Renamed and repositioned a podcast to align with BeatStars' brand mission. Built the first 7 episodes.",
+    statNum: '1',
+    statLabel: 'Costly mistake stopped',
+  },
+];
+---
+
+<Base
+  title="The Work — CWK. Experience"
+  description="Brands built for the real world. A collection of CWK. work bridging education, community, tech, and art."
+>
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="work-hero">
+    <div class="work-hero-inner">
+      <span class="eyebrow fade-up">The Work</span>
+      <h1 class="fade-up fade-up-delay-1">Brands Built For The Real World.</h1>
+      <p class="hero-sub fade-up fade-up-delay-2">
+        A collection of work bridging education, community, tech, &amp; art.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Case Study Grid ───────────────────────────────────── -->
+  <section class="section cases-section">
+    <div class="section-inner">
+      <div class="cases-grid">
+        {cases.map((c, i) => (
+          <a href={c.href} class={`case-card glass-card fade-up`} style={`animation-delay: ${i * 0.05}s`}>
+            <span class={c.tagClass}>{c.category}</span>
+            <h2 class="case-client">{c.client}</h2>
+            <p class="case-desc">{c.description}</p>
+            <div class="case-result">
+              <span class="case-stat gradient-text">{c.statNum}</span>
+              <span class="case-stat-label">{c.statLabel}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────────── -->
+  <section class="section cta-section">
+    <div class="section-inner">
+      <div class="cta-inner">
+        <a href="/#waitlist" class="btn btn-primary">Join the Waitlist →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .work-hero {
+    padding-top: 144px;
+    padding-bottom: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+
+  .work-hero-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .work-hero-inner .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .work-hero-inner h1 {
+    font-size: clamp(32px, 5.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.65;
+  }
+
+  /* ── Cases grid ───────────────────────────────────── */
+  .cases-section {
+    padding-top: 0;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-tile);
+  }
+
+  .case-card {
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .case-card:hover {
+    /* glass-card already handles border brightening + scale;
+       add a subtle translate for extra lift feeling */
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .case-client {
+    font-size: clamp(17px, 2.2vw, 22px);
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+
+  .case-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .case-result {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gb);
+  }
+
+  .case-stat {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .case-stat-label {
+    font-size: 11px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  /* ── CTA ──────────────────────────────────────────── */
+  .cta-section {
+    padding-top: 56px;
+    padding-bottom: 16px;
+  }
+
+  .cta-inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .cases-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .work-hero {
+      padding-top: 112px;
+      padding-bottom: 48px;
+    }
+
+    .case-card {
+      padding: 22px 20px;
+    }
+  }
+</style>
