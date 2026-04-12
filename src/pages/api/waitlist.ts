@@ -1,4 +1,12 @@
-interface Env {
+import type { APIRoute } from 'astro';
+
+// Astro server endpoint — replaces the old src/functions/api/waitlist.ts
+// (Cloudflare Pages Functions in src/functions/ are never compiled when
+//  _worker.js Advanced Mode is active; this route goes through the worker.)
+
+export const prerender = false;
+
+interface CloudflareEnv {
   WAITLIST: KVNamespace;
   RESEND_API: string;
   FROM_EMAIL: string;
@@ -195,15 +203,8 @@ function buildConfirmationEmail(): string {
 }
 
 // ─── Email Delivery (Resend) ──────────────────────────────────────────────────
-// RESEND_API is a Cloudflare Pages secret — set via:
-//   wrangler pages secret put RESEND_API --project-name=houseofcwk
-//   wrangler pages secret put RESEND_API --project-name=houseofcwk --env production
-// For local dev, add RESEND_API to .dev.vars (git-ignored).
-//
-// The "from" domain (houseofcwk.com) must be verified in Resend dashboard:
-//   https://resend.com/domains → Add domain → houseofcwk.com
 
-async function sendConfirmation(env: Env, recipientEmail: string): Promise<void> {
+async function sendConfirmation(env: CloudflareEnv, recipientEmail: string): Promise<void> {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -235,44 +236,42 @@ async function sendConfirmation(env: Env, recipientEmail: string): Promise<void>
   }
 }
 
-// ─── Handler ──────────────────────────────────────────────────────────────────
+// ─── Route handlers ───────────────────────────────────────────────────────────
 
-export async function onRequestOptions(): Promise<Response> {
-  return new Response(null, { status: 204, headers: CORS_HEADERS });
-}
+const CORS_RESPONSE = new Response(null, { status: 204, headers: CORS_HEADERS });
 
-export async function onRequestPost(
-  context: EventContext<Env, string, Record<string, unknown>>
-): Promise<Response> {
-  const { env } = context;
+export const OPTIONS: APIRoute = () => CORS_RESPONSE;
+
+export const POST: APIRoute = async ({ request, locals }) => {
+  const runtime = (locals as any).runtime;
+  const env: CloudflareEnv | undefined = runtime?.env;
+
+  if (!env?.WAITLIST) return json({ error: 'server_error' }, 500);
 
   let body: { email?: unknown };
   try {
-    body = await context.request.json();
+    body = await request.json();
   } catch {
     return json({ error: 'invalid_request' }, 400);
   }
 
   const rawEmail = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
-
-  if (!rawEmail || !EMAIL_REGEX.test(rawEmail)) {
-    return json({ error: 'invalid_email' }, 422);
-  }
+  if (!rawEmail || !EMAIL_REGEX.test(rawEmail)) return json({ error: 'invalid_email' }, 422);
 
   try {
     const existing = await env.WAITLIST.get(rawEmail);
-    if (existing !== null) {
-      return json({ error: 'already_on_list' }, 409);
-    }
+    if (existing !== null) return json({ error: 'already_on_list' }, 409);
 
     const entry: WaitlistEntry = { joinedAt: new Date().toISOString() };
     await env.WAITLIST.put(rawEmail, JSON.stringify(entry));
 
     // Fire-and-forget — don't block the response on email delivery
-    context.waitUntil(sendConfirmation(env, rawEmail));
+    if (env.RESEND_API) {
+      runtime.ctx.waitUntil(sendConfirmation(env, rawEmail));
+    }
 
-    return json({ success: true }, 200);
+    return json({ success: true });
   } catch {
     return json({ error: 'server_error' }, 500);
   }
-}
+};

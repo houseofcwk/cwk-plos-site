@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://houseofcwk.com',
-  output: 'static',
+  output: 'server',
   adapter: cloudflare(),
   integrations: [
     react(),
