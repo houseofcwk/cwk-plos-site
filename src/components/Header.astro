@@ -26,7 +26,10 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
       <a href="/side-quests" class:list={['nav-link', { active: isActive('/side-quests') }]}>Side Quests</a>
     </div>
 
-    <a href="/brand-mirror" class="btn btn-primary nav-cta">Brand Mirror →</a>
+    <div class="nav-actions">
+      <button class="btn btn-ghost nav-join" data-open-waitlist aria-label="Join the waitlist">Join Waitlist</button>
+      <a href="/brand-mirror" class="btn btn-primary nav-cta-btn">Brand Mirror →</a>
+    </div>
 
     <!-- Hamburger (mobile only) -->
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
@@ -118,6 +121,17 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
       </span>
       Side Quests
     </a>
+
+    <button class="overlay-link overlay-waitlist-btn" data-open-waitlist>
+      <span class="overlay-icon" aria-hidden="true">
+        <!-- Star / sparkle icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 2v3M11 17v3M2 11h3M17 11h3M4.93 4.93l2.12 2.12M14.95 14.95l2.12 2.12M4.93 17.07l2.12-2.12M14.95 7.05l2.12-2.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </span>
+      Join Waitlist
+    </button>
   </nav>
 
   <!-- Sticky footer -->
@@ -195,11 +209,23 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
   .nav-link:hover,
   .nav-link.active { color: var(--text); }
 
-  .nav-cta {
+  /* Right-side action buttons */
+  .nav-actions {
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     flex-shrink: 0;
+  }
+
+  .nav-join,
+  .nav-cta-btn {
     padding: 8px 18px;
     font-size: 13px;
+  }
+
+  .nav-join {
+    font-weight: 600;
   }
 
   /* Hamburger */
@@ -331,6 +357,27 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
     color: var(--cyan);
   }
 
+  /* Join Waitlist — gradient CTA in mobile overlay */
+  .overlay-waitlist-btn {
+    background: none;
+    border: none;
+    border-bottom: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    margin-top: 8px;
+    color: var(--cyan);
+    background: linear-gradient(90deg, rgba(0,229,255,0.06), rgba(123,97,255,0.06));
+    border-top: 1px solid var(--gb);
+  }
+  .overlay-waitlist-btn .overlay-icon {
+    color: var(--cyan);
+  }
+  .overlay-waitlist-btn:hover {
+    background: linear-gradient(90deg, rgba(0,229,255,0.1), rgba(123,97,255,0.1));
+    padding-left: 30px;
+  }
+
   .overlay-icon {
     display: flex;
     align-items: center;
@@ -395,7 +442,7 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
   /* ── Responsive ───────────────────────────────────────────── */
   @media (max-width: 768px) {
     .nav-links,
-    .nav-cta { display: none; }
+    .nav-actions { display: none; }
     .hamburger { display: flex; }
   }
 
@@ -441,7 +488,7 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
     if (e.key === 'Escape') closeMenu();
   });
 
-  // Close when navigating to a new page
+  // Close when navigating to a new page or triggering modal
   overlay?.querySelectorAll('.overlay-link').forEach(link => {
     link.addEventListener('click', closeMenu);
   });

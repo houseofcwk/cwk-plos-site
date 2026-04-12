@@ -19,6 +19,7 @@ import WaitlistForm from '../components/WaitlistForm';
       </p>
       <div class="hero-ctas fade-up fade-up-delay-3">
         <a href="/brand-mirror" class="btn btn-primary">Find Your Bottleneck (2 Min, Free) →</a>
+        <button class="btn btn-join" data-open-waitlist>Join Waitlist →</button>
         <a href="/product" class="btn btn-secondary">See the Product →</a>
       </div>
     </div>
@@ -171,13 +172,15 @@ import WaitlistForm from '../components/WaitlistForm';
   <!-- ── Waitlist ──────────────────────────────────────────── -->
   <section id="waitlist" class="section waitlist-section">
     <div class="section-inner">
-      <span class="eyebrow">Early Access</span>
-      <h2>We're building something for founders<br>who are done patching leaks.</h2>
-      <p class="section-sub">
-        CWK. Agent+ is the operating system that manages your growth across Mind, Body, Soul, and Pocket. Join the waitlist to get early access when we launch.
-      </p>
-      <WaitlistForm client:visible />
-      <p class="social-proof-line">Join 50+ founders already on the list.</p>
+      <div class="waitlist-card glass-card">
+        <span class="eyebrow">Early Access</span>
+        <h2>We're building something for founders<br>who are done patching leaks.</h2>
+        <p class="section-sub">
+          CWK. Agent+ is the operating system that manages your growth across Mind, Body, Soul, and Pocket. Join the waitlist to get early access when we launch.
+        </p>
+        <WaitlistForm client:visible />
+        <p class="social-proof-line">Join 50+ founders already on the list.</p>
+      </div>
     </div>
   </section>
 
@@ -420,19 +423,68 @@ import WaitlistForm from '../components/WaitlistForm';
     width: 100%;
   }
 
+  /* ── Animated gradient hero button ───────────────── */
+  .btn-join {
+    background: linear-gradient(90deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    color: #07090F;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.1s ease;
+  }
+
+  .btn-join:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 0 24px rgba(0, 229, 255, 0.35), 0 0 48px rgba(123, 97, 255, 0.18);
+    color: #07090F;
+    opacity: 1;
+  }
+
+  .btn-join:active { transform: scale(0.98); }
+
   /* ── Waitlist ─────────────────────────────────────── */
   .waitlist-section {
     text-align: center;
   }
 
-  .waitlist-section h2 {
-    font-size: clamp(22px, 3.5vw, 34px);
+  .waitlist-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 56px 48px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .waitlist-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px;
+    height: 240px;
+    background: radial-gradient(ellipse, rgba(0, 229, 255, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .waitlist-card > * {
+    position: relative;
+  }
+
+  .waitlist-card h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
     margin-bottom: 12px;
   }
 
-  .waitlist-section .section-sub {
-    max-width: 480px;
-    margin: 0 auto 32px;
+  .waitlist-card .section-sub {
+    max-width: 440px;
+    margin: 0 auto 28px;
   }
 
   .social-proof-line {
@@ -449,11 +501,13 @@ import WaitlistForm from '../components/WaitlistForm';
     .proof-divider:nth-child(4) { display: none; }
     .work-grid { grid-template-columns: 1fr; }
     .product-preview-card { padding: 28px 20px; }
+    .waitlist-card { padding: 40px 28px 36px; }
   }
 
   @media (max-width: 640px) {
     .hero { padding-top: 112px; }
     .hero-ctas { flex-direction: column; align-items: stretch; }
     .proof-bar { grid-template-columns: 1fr 1fr; }
+    .btn-join { width: 100%; }
   }
 </style>
