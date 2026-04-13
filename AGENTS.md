@@ -167,7 +167,8 @@ cwk-plos-site/
 | Variable | Purpose |
 |----------|---------|
 | `PUBLIC_SITE_URL` | Canonical site URL (for SEO/OG tags) |
-| `PUBLIC_CF_ANALYTICS_TOKEN` | Cloudflare Web Analytics beacon token |
+| `PUBLIC_CF_ANALYTICS_TOKEN` | Cloudflare Web Analytics beacon token (omit to disable) |
+| `PUBLIC_GTM_ID` | Google Tag Manager container ID (omit to disable tracking) |
 
 ## Domain Vocabulary
 

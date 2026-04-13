@@ -38,6 +38,7 @@ preview_id = "db599f73549a4618ad888315963321b5"
 [env.production.vars]
 ENVIRONMENT = "production"
 PUBLIC_SITE_URL = "https://houseofcwk.com"
+PUBLIC_GTM_ID = "GTM-MVJ9VXS5"
 FROM_EMAIL = "hello@houseofcwk.com"
 FROM_NAME = "CWK. Experience"
 REPLY_TO_EMAIL = "hello@houseofcwk.com"
