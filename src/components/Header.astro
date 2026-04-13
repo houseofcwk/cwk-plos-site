@@ -16,6 +16,7 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
         loading="eager"
         decoding="async"
       />
+      <span class="beta-badge" aria-label="Beta">β</span>
     </a>
 
     <!-- Desktop nav links (no icons) -->
@@ -193,6 +194,20 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
   }
   .logo:hover { opacity: 0.75; }
   .logo img { display: block; width: 40px; height: 40px; object-fit: contain; }
+
+  .beta-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--cyan);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    background: rgba(0, 229, 255, 0.08);
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin-left: 6px;
+    user-select: none;
+  }
 
   /* Desktop nav links */
   .nav-links {
