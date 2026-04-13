@@ -86,7 +86,19 @@ import WaitlistForm from '../components/WaitlistForm';
       <span class="hero-eyebrow fade-up">Personal Leverage OS</span>
       <h1 class="hero-headline fade-up fade-up-delay-1">
         <span class="hl-line hl-white">CWK. is like a</span>
-        <span class="hl-line hl-cyan">sports agent</span>
+        <span class="hl-line hl-cyan word-flip-wrap" aria-live="polite" aria-atomic="true">
+          <span class="word-flip-track" id="word-flip-track">
+            <span class="word-flip-item" aria-hidden="false">sports agent</span>
+            <span class="word-flip-item" aria-hidden="true">brand architect</span>
+            <span class="word-flip-item" aria-hidden="true">growth operator</span>
+            <span class="word-flip-item" aria-hidden="true">deal closer</span>
+            <span class="word-flip-item" aria-hidden="true">systems builder</span>
+            <span class="word-flip-item" aria-hidden="true">leverage partner</span>
+            <span class="word-flip-item" aria-hidden="true">revenue strategist</span>
+            <!-- duplicate of first item — enables seamless infinite loop -->
+            <span class="word-flip-item word-flip-sentinel" aria-hidden="true">sports agent</span>
+          </span>
+        </span>
         <span class="hl-line hl-white">for entrepreneurs.</span>
       </h1>
       <p class="hero-sub fade-up fade-up-delay-2">
@@ -489,6 +501,42 @@ import WaitlistForm from '../components/WaitlistForm';
   .hl-white { color: var(--text); }
   .hl-cyan  { color: #00E5FF; }
 
+  /* ── Word-flip slot machine ────────────────────────── */
+  .word-flip-wrap {
+    display: inline-block;
+    /* Clip to exactly one cap-height line — no bleed from adjacent slots */
+    overflow: hidden;
+    height: 1em;
+    /* Clip-path as a belt-and-suspenders guarantee against sub-pixel bleed */
+    clip-path: inset(0 0 0 0);
+    vertical-align: bottom;
+    position: relative;
+  }
+  .word-flip-track {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .word-flip-item {
+    display: block;
+    /* Exact 1em slot height — matches the wrap height precisely */
+    line-height: 1em;
+    height: 1em;
+    /* Hard-clip any descenders that would bleed into adjacent slots */
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* The slide-up transition, applied via JS class toggle */
+  .word-flip-track.is-animating {
+    transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* After snap (no transition for instant reset) */
+  .word-flip-track.no-transition {
+    transition: none;
+  }
+
   /* Subtext */
   .hero-sub {
     font-size: 17px;
@@ -857,3 +905,54 @@ import WaitlistForm from '../components/WaitlistForm';
     .hero-link-divider { display: none; }
   }
 </style>
+
+<script>
+  (() => {
+    const INTERVAL = 2800; // ms between flips
+
+    const track = document.getElementById('word-flip-track') as HTMLElement | null;
+    if (!track) return;
+
+    // Real items exclude the sentinel (last duplicate)
+    const allItems = Array.from(track.querySelectorAll<HTMLElement>('.word-flip-item'));
+    const real  = allItems.filter(el => !el.classList.contains('word-flip-sentinel'));
+    const total = real.length; // 7 real words
+    if (total < 2) return;
+
+    // The sentinel is the 8th slot (index = total) — a visual clone of slot 0.
+    // We animate 0 → 1 → 2 → … → total (sentinel), then snap back to 0 instantly.
+
+    let current = 0;
+    track.style.transform = 'translateY(0)';
+
+    function advance() {
+      const visualNext = current + 1; // may equal total (sentinel slot)
+
+      track!.classList.add('is-animating');
+      track!.style.transform = `translateY(-${visualNext * 1}em)`;
+
+      // Update aria on real items
+      real[current % total].setAttribute('aria-hidden', 'true');
+      real[visualNext % total].setAttribute('aria-hidden', 'false');
+
+      if (visualNext === total) {
+        // We just slid to the sentinel. After the transition ends,
+        // snap back to slot 0 (visually identical) without transition.
+        track!.addEventListener('transitionend', () => {
+          track!.classList.remove('is-animating');
+          track!.classList.add('no-transition');
+          track!.style.transform = 'translateY(0)';
+          void (track!.offsetHeight); // force reflow to commit no-transition
+          track!.classList.remove('no-transition');
+          current = 0;
+        }, { once: true });
+      } else {
+        current = visualNext;
+      }
+    }
+
+    setTimeout(() => {
+      setInterval(advance, INTERVAL);
+    }, INTERVAL);
+  })();
+</script>
