@@ -303,11 +303,11 @@ import WaitlistForm from '../components/WaitlistForm';
   .hero {
     position: relative;
     overflow: hidden;
-    min-height: 750px;
+    min-height: 800px;
     display: flex;
     align-items: center;
     padding-top: 144px;
-    padding-bottom: 80px;
+    padding-bottom: 96px;
   }
 
   /* ── Background layer ─────────────────────────────── */
@@ -468,7 +468,7 @@ import WaitlistForm from '../components/WaitlistForm';
   .hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 860px;
     width: 100%;
     margin: 0 auto;
     padding: 0 24px;
@@ -481,21 +481,21 @@ import WaitlistForm from '../components/WaitlistForm';
   /* Eyebrow */
   .hero-eyebrow {
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #00E5FF;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
   /* Headline */
   .hero-headline {
-    font-size: clamp(40px, 5.5vw, 60px);
+    font-size: clamp(46px, 6.5vw, 72px);
     font-weight: 800;
-    line-height: 1.05;
+    line-height: 1.1;
     letter-spacing: -0.03em;
-    margin: 0 0 28px;
+    margin: 0 0 32px;
   }
   .hl-line  { display: block; }
   .hl-white { color: var(--text); }
@@ -504,13 +504,13 @@ import WaitlistForm from '../components/WaitlistForm';
   /* ── Word-flip slot machine ────────────────────────── */
   .word-flip-wrap {
     display: inline-block;
-    /* Clip to exactly one cap-height line — no bleed from adjacent slots */
     overflow: hidden;
-    height: 1em;
-    /* Clip-path as a belt-and-suspenders guarantee against sub-pixel bleed */
+    height: 1.2em;
     clip-path: inset(0 0 0 0);
     vertical-align: bottom;
     position: relative;
+    padding: 0.05em 0;
+    margin: 0.06em 0;
   }
   .word-flip-track {
     display: flex;
@@ -519,10 +519,8 @@ import WaitlistForm from '../components/WaitlistForm';
   }
   .word-flip-item {
     display: block;
-    /* Exact 1em slot height — matches the wrap height precisely */
-    line-height: 1em;
-    height: 1em;
-    /* Hard-clip any descenders that would bleed into adjacent slots */
+    line-height: 1.2em;
+    height: 1.2em;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -539,11 +537,11 @@ import WaitlistForm from '../components/WaitlistForm';
 
   /* Subtext */
   .hero-sub {
-    font-size: 17px;
+    font-size: 18px;
     color: var(--muted);
-    max-width: 540px;
-    line-height: 1.6;
-    margin: 0 0 36px;
+    max-width: 580px;
+    line-height: 1.65;
+    margin: 0 0 40px;
   }
 
   /* CTA area */
@@ -559,13 +557,13 @@ import WaitlistForm from '../components/WaitlistForm';
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 14px 32px;
+    padding: 16px 36px;
     background: linear-gradient(180deg, #00E5FF 0%, #00B4D8 100%);
     color: #07090F;
     border: none;
     border-radius: 10px;
     font-family: var(--font-primary);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 4px 24px rgba(0,229,255,0.30);
@@ -594,7 +592,7 @@ import WaitlistForm from '../components/WaitlistForm';
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--muted);
     text-decoration: none;
@@ -929,7 +927,7 @@ import WaitlistForm from '../components/WaitlistForm';
       const visualNext = current + 1; // may equal total (sentinel slot)
 
       track!.classList.add('is-animating');
-      track!.style.transform = `translateY(-${visualNext * 1}em)`;
+      track!.style.transform = `translateY(-${visualNext * 1.2}em)`;
 
       // Update aria on real items
       real[current % total].setAttribute('aria-hidden', 'true');
