@@ -1,7 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { sanity } from '../../lib/sanity';
+import { CASE_LIST_QUERY } from '../../lib/queries';
 
-const cases = [
+let sanityCases: any[] | null = null;
+try {
+  const result = await sanity.fetch(CASE_LIST_QUERY);
+  sanityCases = Array.isArray(result) && result.length > 0 ? result : null;
+} catch {
+  sanityCases = null;
+}
+
+const HARDCODED_CASES = [
   {
     href: '/work/rob-dial',
     tagClass: 'tag',
@@ -75,6 +85,18 @@ const cases = [
     statLabel: 'Costly mistake stopped',
   },
 ];
+
+const cases = sanityCases
+  ? sanityCases.map((c) => ({
+      href: `/work/${c.slug}`,
+      tagClass: c.tagClass ?? 'tag',
+      category: c.category ?? '',
+      client: c.client ?? '',
+      description: c.cardDescription ?? '',
+      statNum: c.cardStat?.num ?? '',
+      statLabel: c.cardStat?.label ?? '',
+    }))
+  : HARDCODED_CASES;
 ---
 
 <Base

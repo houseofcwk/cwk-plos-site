@@ -1,11 +1,41 @@
 ---
 import Base from '../layouts/Base.astro';
+import PortableText from '../components/PortableText.astro';
 import WaitlistForm from '../components/WaitlistForm';
+import { sanity } from '../lib/sanity';
+import { HOME_QUERY } from '../lib/queries';
+
+// Sanity-first; fall through to the existing hardcoded copy when the
+// homePage doc isn't published. The site builds either way.
+let s: any = null;
+try { s = await sanity.fetch(HOME_QUERY); } catch { s = null; }
+
+const HARDCODED_PHRASES = [
+  'sports agent', 'brand architect', 'growth operator', 'deal closer',
+  'systems builder', 'leverage partner', 'revenue strategist',
+];
+const HARDCODED_PILLARS = [
+  { key: 'mind',   title: 'Mind',   body: 'Strategic clarity, decision frameworks, mental performance, and clearing psychological blockers that slow momentum.' },
+  { key: 'body',   title: 'Body',   body: 'Operational systems, time and energy optimization, process documentation, and building infrastructure that runs without you.' },
+  { key: 'soul',   title: 'Soul',   body: 'Legacy building, IP development, thought leadership positioning, and turning your expertise into compounding authority.' },
+  { key: 'pocket', title: 'Pocket', body: 'Revenue systems, opportunity sourcing, deal structuring, and building the financial engine that funds your vision.' },
+];
+const PILLAR_ICONS: Record<string, string> = { mind: '🧠', body: '⚡', soul: '🔥', pocket: '💰' };
+
+const pageTitle       = s?.seo?.title       ?? 'CWK. Experience — The Sports Agent for Entrepreneurs';
+const pageDescription = s?.seo?.description ?? "CWK. installs the infrastructure that scales high-performing entrepreneurs. Long-term business management, not consulting.";
+const heroEyebrow     = s?.heroEyebrow      ?? 'Personal Leverage OS';
+const heroHeadline    = s?.heroHeadline     ?? 'CWK. is like a';
+const wordPhrases: string[] = (Array.isArray(s?.wordFlipPhrases) && s.wordFlipPhrases.length > 0)
+  ? s.wordFlipPhrases : HARDCODED_PHRASES;
+const heroCtaLabel    = s?.heroCta?.label   ?? 'Join Waitlist';
+const heroCtaHref     = s?.heroCta?.href    ?? '#';
+const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars : HARDCODED_PILLARS;
 ---
 
 <Base
-  title="CWK. Experience — The Sports Agent for Entrepreneurs"
-  description="CWK. installs the infrastructure that scales high-performing entrepreneurs. Long-term business management, not consulting."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
@@ -83,31 +113,31 @@ import WaitlistForm from '../components/WaitlistForm';
 
     <!-- Hero content -->
     <div class="hero-inner">
-      <span class="hero-eyebrow fade-up">Personal Leverage OS</span>
+      <span class="hero-eyebrow fade-up">{heroEyebrow}</span>
       <h1 class="hero-headline fade-up fade-up-delay-1">
-        <span class="hl-line hl-white">CWK. is like a</span>
+        <span class="hl-line hl-white">{heroHeadline}</span>
         <span class="hl-line hl-cyan word-flip-wrap" aria-live="polite" aria-atomic="true">
           <span class="word-flip-track" id="word-flip-track">
-            <span class="word-flip-item" aria-hidden="false">sports agent</span>
-            <span class="word-flip-item" aria-hidden="true">brand architect</span>
-            <span class="word-flip-item" aria-hidden="true">growth operator</span>
-            <span class="word-flip-item" aria-hidden="true">deal closer</span>
-            <span class="word-flip-item" aria-hidden="true">systems builder</span>
-            <span class="word-flip-item" aria-hidden="true">leverage partner</span>
-            <span class="word-flip-item" aria-hidden="true">revenue strategist</span>
+            {wordPhrases.map((phrase, i) => (
+              <span class="word-flip-item" aria-hidden={i !== 0}>{phrase}</span>
+            ))}
             <!-- duplicate of first item — enables seamless infinite loop -->
-            <span class="word-flip-item word-flip-sentinel" aria-hidden="true">sports agent</span>
+            <span class="word-flip-item word-flip-sentinel" aria-hidden="true">{wordPhrases[0]}</span>
           </span>
         </span>
         <span class="hl-line hl-white">for entrepreneurs.</span>
       </h1>
-      <p class="hero-sub fade-up fade-up-delay-2">
-        We rep your career, install the infrastructure that scales you, and
-        manage your growth like a PE firm manages a portfolio company.
-      </p>
+      {s?.heroSubtext ? (
+        <div class="hero-sub fade-up fade-up-delay-2 pt-hero-sub"><PortableText value={s.heroSubtext} /></div>
+      ) : (
+        <p class="hero-sub fade-up fade-up-delay-2">
+          We rep your career, install the infrastructure that scales you, and
+          manage your growth like a PE firm manages a portfolio company.
+        </p>
+      )}
       <div class="hero-ctas fade-up fade-up-delay-3">
         <button class="btn-hero-join" data-open-waitlist>
-          Join Waitlist
+          {heroCtaLabel}
           <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
           </svg>
@@ -157,26 +187,13 @@ import WaitlistForm from '../components/WaitlistForm';
       <p class="section-sub">We support you across the four dimensions of a high-leverage business.</p>
 
       <div class="pillars-grid">
-        <div class="pillar-card glass-card">
-          <div class="pillar-icon">🧠</div>
-          <h3>Mind</h3>
-          <p>Strategic clarity, decision frameworks, mental performance, and clearing psychological blockers that slow momentum.</p>
-        </div>
-        <div class="pillar-card glass-card">
-          <div class="pillar-icon">⚡</div>
-          <h3>Body</h3>
-          <p>Operational systems, time and energy optimization, process documentation, and building infrastructure that runs without you.</p>
-        </div>
-        <div class="pillar-card glass-card">
-          <div class="pillar-icon">🔥</div>
-          <h3>Soul</h3>
-          <p>Legacy building, IP development, thought leadership positioning, and turning your expertise into compounding authority.</p>
-        </div>
-        <div class="pillar-card glass-card">
-          <div class="pillar-icon">💰</div>
-          <h3>Pocket</h3>
-          <p>Revenue systems, opportunity sourcing, deal structuring, and building the financial engine that funds your vision.</p>
-        </div>
+        {pillars.map((p: any) => (
+          <div class="pillar-card glass-card">
+            <div class="pillar-icon">{PILLAR_ICONS[p.key] ?? '✦'}</div>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>

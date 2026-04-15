@@ -7,8 +7,14 @@ import MockPipeline from '../components/mocks/MockPipeline.astro';
 import MockActions from '../components/mocks/MockActions.astro';
 import MockKaia from '../components/mocks/MockKaia.astro';
 import MockDestination from '../components/mocks/MockDestination.astro';
+import { sanity } from '../lib/sanity';
+import { PRODUCT_QUERY } from '../lib/queries';
 
-const features = [
+// Sanity-first; intentional swallow so a missing doc doesn't break the build.
+let s: any = null;
+try { s = await sanity.fetch(PRODUCT_QUERY); } catch { s = null; }
+
+const HARDCODED_FEATURES = [
   {
     id: 'dashboard',
     headline: 'Your daily command center.',
@@ -76,21 +82,35 @@ const features = [
     ],
   },
 ];
+
+// Features render in a fixed 6-row layout with dedicated mock components.
+// If Sanity returns fewer than 6 features, we pad from the hardcoded list so
+// the structural markup (feature rows + mock slots) stays intact.
+const features = s?.features && s.features.length
+  ? HARDCODED_FEATURES.map((fallback, i) => s.features[i] ?? fallback)
+  : HARDCODED_FEATURES;
+
+const heroEyebrow  = s?.heroEyebrow  ?? 'The Platform';
+const heroHeadline = s?.heroHeadline ?? null; // null -> render hardcoded headline w/ gradient span
+const heroSubtext  = s?.heroSubtext  ?? "CWK. Agent+ is the command center that manages your career infrastructure across Mind, Body, Soul, and Pocket. One dashboard. Every system. Nothing falls through.";
+
+const pageTitle = s?.seo?.title ?? 'CWK. Agent+ — The Operating System for Entrepreneurs';
+const pageDescription = s?.seo?.description ?? 'See inside the Agent+ dashboard: daily actions, relationship tracking, AI strategy, pipeline management, and goal sprints. Built on the PLOS framework.';
 ---
 
 <Base
-  title="CWK. Agent+ — The Operating System for Entrepreneurs"
-  description="See inside the Agent+ dashboard: daily actions, relationship tracking, AI strategy, pipeline management, and goal sprints. Built on the PLOS framework."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Product Hero ─────────────────────────────────────── -->
   <section class="product-hero">
     <div class="product-hero-inner">
-      <span class="eyebrow fade-up">The Platform</span>
+      <span class="eyebrow fade-up">{heroEyebrow}</span>
       <h1 class="fade-up fade-up-delay-1">
-        Your Personal <span class="gradient-text">Operating System</span> for Growth.
+        {heroHeadline ? heroHeadline : (<>Your Personal <span class="gradient-text">Operating System</span> for Growth.</>)}
       </h1>
       <p class="hero-sub fade-up fade-up-delay-2">
-        CWK. Agent+ is the command center that manages your career infrastructure across Mind, Body, Soul, and Pocket. One dashboard. Every system. Nothing falls through.
+        {heroSubtext}
       </p>
       <a href="#waitlist" class="btn btn-gradient fade-up fade-up-delay-3">
         Join the Waitlist →
@@ -139,7 +159,7 @@ const features = [
           <h3>{features[0].headline}</h3>
           <p>{features[0].body}</p>
           <ul class="feat-highlights">
-            {features[0].highlights.map(h => <li>{h}</li>)}
+            {features[0].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
         <div class="feature-mock">
@@ -157,7 +177,7 @@ const features = [
           <h3>{features[1].headline}</h3>
           <p>{features[1].body}</p>
           <ul class="feat-highlights">
-            {features[1].highlights.map(h => <li>{h}</li>)}
+            {features[1].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
       </div>
@@ -169,7 +189,7 @@ const features = [
           <h3>{features[2].headline}</h3>
           <p>{features[2].body}</p>
           <ul class="feat-highlights">
-            {features[2].highlights.map(h => <li>{h}</li>)}
+            {features[2].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
         <div class="feature-mock">
@@ -187,7 +207,7 @@ const features = [
           <h3>{features[3].headline}</h3>
           <p>{features[3].body}</p>
           <ul class="feat-highlights">
-            {features[3].highlights.map(h => <li>{h}</li>)}
+            {features[3].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
       </div>
@@ -199,7 +219,7 @@ const features = [
           <h3>{features[4].headline}</h3>
           <p>{features[4].body}</p>
           <ul class="feat-highlights">
-            {features[4].highlights.map(h => <li>{h}</li>)}
+            {features[4].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
         <div class="feature-mock">
@@ -217,7 +237,7 @@ const features = [
           <h3>{features[5].headline}</h3>
           <p>{features[5].body}</p>
           <ul class="feat-highlights">
-            {features[5].highlights.map(h => <li>{h}</li>)}
+            {features[5].highlights.map((h: string) => <li>{h}</li>)}
           </ul>
         </div>
       </div>

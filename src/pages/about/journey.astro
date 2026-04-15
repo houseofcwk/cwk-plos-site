@@ -1,20 +1,41 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PortableText from '../../components/PortableText.astro';
+import { sanity } from '../../lib/sanity';
+import { JOURNEY_QUERY } from '../../lib/queries';
+
+let s: any = null;
+try { s = await sanity.fetch(JOURNEY_QUERY); } catch { s = null; }
+
+const heroEyebrow  = s?.heroEyebrow  ?? 'The Journey';
+const heroHeadline = s?.heroHeadline ?? 'Chapter by chapter.';
+
+const pageTitle = s?.seo?.title ?? "Kris's Journey — CWK. Experience";
+const pageDescription = s?.seo?.description ?? 'From Caguas, Puerto Rico to Austin, TX — the chapter-by-chapter story of Kris San, founder of CWK. Experience.';
 ---
 
 <Base
-  title="Kris's Journey — CWK. Experience"
-  description="From Caguas, Puerto Rico to Austin, TX — the chapter-by-chapter story of Kris San, founder of CWK. Experience."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-inner">
       <a href="/about" class="back-link">← Back to About</a>
-      <span class="eyebrow fade-up">The Journey</span>
-      <h1 class="hero-headline fade-up fade-up-delay-1">Chapter by chapter.</h1>
+      <span class="eyebrow fade-up">{heroEyebrow}</span>
+      <h1 class="hero-headline fade-up fade-up-delay-1">{heroHeadline}</h1>
     </div>
   </section>
 
+  {s?.body ? (
+    <!-- ── Sanity-authored body ───────────────────────────── -->
+    <section class="section body-section">
+      <div class="section-inner">
+        <div class="pt-body"><PortableText value={s.body} /></div>
+      </div>
+    </section>
+  ) : (
+  <>
   <!-- ── Timeline ──────────────────────────────────────────── -->
   <section class="section timeline-section">
     <div class="section-inner">
@@ -112,6 +133,8 @@ import Base from '../../layouts/Base.astro';
       </div>
     </div>
   </section>
+  </>
+  )}
 </Base>
 
 <style>
@@ -298,6 +321,54 @@ import Base from '../../layouts/Base.astro';
     max-width: 400px;
     margin: 0 0 8px;
   }
+
+  /* ── Portable Text body (Sanity-authored) ─────────── */
+  .body-section .section-inner {
+    max-width: 680px;
+  }
+  .pt-body :global(h2) {
+    font-size: clamp(20px, 2.8vw, 26px);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 32px 0 12px;
+  }
+  .pt-body :global(h2:first-child) { margin-top: 0; }
+  .pt-body :global(h3) {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 10px;
+  }
+  .pt-body :global(p) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(li) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .pt-body :global(li::before) {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+    top: 3px;
+  }
+  .pt-body :global(strong) { color: var(--text); font-weight: 600; }
+  .pt-body :global(a)      { color: var(--cyan); }
 
   /* ── Responsive ───────────────────────────────────── */
   @media (max-width: 640px) {

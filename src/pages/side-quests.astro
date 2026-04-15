@@ -1,22 +1,44 @@
 ---
 import Base from '../layouts/Base.astro';
+import PortableText from '../components/PortableText.astro';
+import { sanity } from '../lib/sanity';
+import { SIDE_QUESTS_QUERY } from '../lib/queries';
+
+let s: any = null;
+try { s = await sanity.fetch(SIDE_QUESTS_QUERY); } catch { s = null; }
+
+const heroEyebrow  = s?.heroEyebrow  ?? 'Side Quests';
+const heroHeadline = s?.heroHeadline ?? 'Welcome to my Side Quests.';
+
+const pageTitle = s?.seo?.title ?? 'Side Quests — CWK. Experience';
+const pageDescription = s?.seo?.description ?? 'Short, self-initiated projects that showcase range, curiosity, and execution outside of core client work.';
 ---
 
 <Base
-  title="Side Quests — CWK. Experience"
-  description="Short, self-initiated projects that showcase range, curiosity, and execution outside of core client work."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Hero ──────────────────────────────────────────────── -->
   <section class="sq-hero">
     <div class="sq-hero-inner">
-      <span class="eyebrow fade-up">Side Quests</span>
-      <h1 class="fade-up fade-up-delay-1">Welcome to my Side Quests.</h1>
-      <p class="hero-sub fade-up fade-up-delay-2">
-        Side quests are short, self-initiated projects that showcase range, curiosity, and execution outside of core client work.
-      </p>
+      <span class="eyebrow fade-up">{heroEyebrow}</span>
+      <h1 class="fade-up fade-up-delay-1">{heroHeadline}</h1>
+      {!s?.body && (
+        <p class="hero-sub fade-up fade-up-delay-2">
+          Side quests are short, self-initiated projects that showcase range, curiosity, and execution outside of core client work.
+        </p>
+      )}
     </div>
   </section>
 
+  {s?.body ? (
+    <section class="section body-section">
+      <div class="section-inner">
+        <div class="pt-body"><PortableText value={s.body} /></div>
+      </div>
+    </section>
+  ) : (
+  <>
   <!-- ── Quest Grid ────────────────────────────────────────── -->
   <section class="section">
     <div class="section-inner">
@@ -98,6 +120,8 @@ import Base from '../layouts/Base.astro';
       </div>
     </div>
   </section>
+  </>
+  )}
 
   <!-- ── CTA ───────────────────────────────────────────────── -->
   <section class="section cta-section">
@@ -252,6 +276,54 @@ import Base from '../layouts/Base.astro';
   .cta-section {
     padding-bottom: 40px;
   }
+
+  /* Portable Text body (Sanity-authored) */
+  .body-section .section-inner {
+    max-width: 680px;
+  }
+  .pt-body :global(h2) {
+    font-size: clamp(20px, 2.8vw, 26px);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 32px 0 12px;
+  }
+  .pt-body :global(h2:first-child) { margin-top: 0; }
+  .pt-body :global(h3) {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 10px;
+  }
+  .pt-body :global(p) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(li) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .pt-body :global(li::before) {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+    top: 3px;
+  }
+  .pt-body :global(strong) { color: var(--text); font-weight: 600; }
+  .pt-body :global(a)      { color: var(--cyan); }
 
   /* Responsive */
   @media (max-width: 680px) {

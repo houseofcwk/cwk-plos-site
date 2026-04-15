@@ -1,21 +1,41 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PortableText from '../../components/PortableText.astro';
+import { sanity } from '../../lib/sanity';
+import { ABOUT_QUERY } from '../../lib/queries';
+
+let s: any = null;
+try { s = await sanity.fetch(ABOUT_QUERY); } catch { s = null; }
+
+const HARDCODED_STATS = [
+  { value: '3.5yr', label: 'Avg Engagement' },
+  { value: '8+',    label: 'Brands Built' },
+  { value: 'ATX',   label: 'Austin, TX' },
+];
+
+const heroHeadline = s?.heroHeadline ?? 'My Why.';
+const stats = s?.stats && s.stats.length ? s.stats : HARDCODED_STATS;
+
+const pageTitle = s?.seo?.title ?? 'About Kris San — CWK. Experience';
+const pageDescription = s?.seo?.description ?? 'Kris San is the founder of CWK. Experience — the sports agent for entrepreneurs. Long-term business management, not consulting.';
 ---
 
 <Base
-  title="About Kris San — CWK. Experience"
-  description="Kris San is the founder of CWK. Experience — the sports agent for entrepreneurs. Long-term business management, not consulting."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-inner">
       <span class="eyebrow fade-up">About Kris</span>
-      <h1 class="hero-headline fade-up fade-up-delay-1">My Why.</h1>
-      <blockquote class="hero-quote fade-up fade-up-delay-2">
-        <p>I didn't grow up around entrepreneurship, wealth, or legacy.</p>
-        <p>I grew up watching what it looks like to never live up to your potential, and I made a vow to never let that be my story.</p>
-        <p>I exist to help exceptional people turn their creative power into a brand that sets them free.</p>
-      </blockquote>
+      <h1 class="hero-headline fade-up fade-up-delay-1">{heroHeadline}</h1>
+      {!s?.bio && (
+        <blockquote class="hero-quote fade-up fade-up-delay-2">
+          <p>I didn't grow up around entrepreneurship, wealth, or legacy.</p>
+          <p>I grew up watching what it looks like to never live up to your potential, and I made a vow to never let that be my story.</p>
+          <p>I exist to help exceptional people turn their creative power into a brand that sets them free.</p>
+        </blockquote>
+      )}
     </div>
   </section>
 
@@ -24,11 +44,15 @@ import Base from '../../layouts/Base.astro';
     <div class="section-inner">
       <div class="bio-card glass-card">
         <span class="eyebrow">My Why</span>
-        <div class="bio-body">
-          <p>I didn't grow up around entrepreneurship, wealth, or legacy.</p>
-          <p>I grew up watching what it looks like to never live up to your potential, and I made a vow to never let that be my story.</p>
-          <p>I exist to help exceptional people turn their creative power into a brand that sets them free.</p>
-        </div>
+        {s?.bio ? (
+          <div class="bio-body pt-body"><PortableText value={s.bio} /></div>
+        ) : (
+          <div class="bio-body">
+            <p>I didn't grow up around entrepreneurship, wealth, or legacy.</p>
+            <p>I grew up watching what it looks like to never live up to your potential, and I made a vow to never let that be my story.</p>
+            <p>I exist to help exceptional people turn their creative power into a brand that sets them free.</p>
+          </div>
+        )}
         <div class="bio-ctas">
           <a href="/about/journey" class="btn btn-primary">Learn More About My Journey →</a>
           <a href="/work" class="btn btn-secondary">See The Work →</a>
@@ -41,20 +65,15 @@ import Base from '../../layouts/Base.astro';
   <section class="section stats-section">
     <div class="section-inner">
       <div class="stats-bar glass-card">
-        <div class="stat">
-          <span class="stat-number gradient-text">3.5yr</span>
-          <span class="stat-label">Avg Engagement</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number gradient-text">8+</span>
-          <span class="stat-label">Brands Built</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number gradient-text">ATX</span>
-          <span class="stat-label">Austin, TX</span>
-        </div>
+        {stats.map((stat: { value: string; label: string }, i: number) => (
+          <>
+            {i > 0 && <div class="stat-divider"></div>}
+            <div class="stat">
+              <span class="stat-number gradient-text">{stat.value}</span>
+              <span class="stat-label">{stat.label}</span>
+            </div>
+          </>
+        ))}
       </div>
     </div>
   </section>
@@ -141,6 +160,46 @@ import Base from '../../layouts/Base.astro';
     color: var(--muted);
     line-height: 1.7;
   }
+
+  /* Portable Text rendering (mirrors .bio-body but flat children). */
+  .bio-body.pt-body :global(p) {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 16px;
+  }
+  .bio-body.pt-body :global(p:last-child) { margin-bottom: 0; }
+  .bio-body.pt-body :global(h2) {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 16px 0 12px;
+  }
+  .bio-body.pt-body :global(h2:first-child) { margin-top: 0; }
+  .bio-body.pt-body :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 12px;
+  }
+  .bio-body.pt-body :global(li) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .bio-body.pt-body :global(li::before) {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+    top: 3px;
+  }
+  .bio-body.pt-body :global(strong) { color: var(--text); font-weight: 600; }
+  .bio-body.pt-body :global(a)      { color: var(--cyan); }
 
   .bio-ctas {
     display: flex;

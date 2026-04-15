@@ -1,27 +1,50 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PortableText from '../../components/PortableText.astro';
+import { sanity } from '../../lib/sanity';
+import { BRAND_MIRROR_QUERY } from '../../lib/queries';
+
+let s: any = null;
+try { s = await sanity.fetch(BRAND_MIRROR_QUERY); } catch { s = null; }
+
+const heroEyebrow  = s?.heroEyebrow  ?? 'The Brand Mirror';
+const heroHeadline = s?.heroHeadline ?? 'See where your brand is leaking.';
+const heroSubtext  = s?.heroSubtext  ?? '2 minutes. Free. No email required.';
+const quizCtaLabel = s?.quizCta?.label ?? 'See Your Reflection →';
+const quizCtaHref  = s?.quizCta?.href  ?? '/brand-mirror/quiz';
+
+const pageTitle = s?.seo?.title ?? 'Brand Mirror — CWK. Experience';
+const pageDescription = s?.seo?.description ?? 'See where your brand is leaking in 2 minutes. Free, no email required.';
 ---
 
 <Base
-  title="Brand Mirror — CWK. Experience"
-  description="See where your brand is leaking in 2 minutes. Free, no email required."
+  title={pageTitle}
+  description={pageDescription}
 >
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-inner">
-      <span class="eyebrow fade-up">The Brand Mirror</span>
+      <span class="eyebrow fade-up">{heroEyebrow}</span>
       <h1 class="hero-headline fade-up fade-up-delay-1">
-        See where your brand is leaking.
+        {heroHeadline}
       </h1>
       <p class="hero-sub fade-up fade-up-delay-2">
-        2 minutes. Free. No email required.
+        {heroSubtext}
       </p>
       <div class="hero-cta fade-up fade-up-delay-3">
-        <a href="/brand-mirror/quiz" class="btn btn-gradient">See Your Reflection →</a>
+        <a href={quizCtaHref} class="btn btn-gradient">{quizCtaLabel}</a>
       </div>
     </div>
   </section>
 
+  {s?.body ? (
+    <section class="section body-section">
+      <div class="section-inner">
+        <div class="pt-body"><PortableText value={s.body} /></div>
+      </div>
+    </section>
+  ) : (
+  <>
   <!-- ── How it works ──────────────────────────────────────── -->
   <section class="section how-it-works">
     <div class="section-inner">
@@ -56,11 +79,13 @@ import Base from '../../layouts/Base.astro';
       </div>
     </div>
   </section>
+  </>
+  )}
 
   <!-- ── Second CTA ────────────────────────────────────────── -->
   <section class="section second-cta">
     <div class="section-inner">
-      <a href="/brand-mirror/quiz" class="btn btn-primary">Start the Brand Mirror →</a>
+      <a href={quizCtaHref} class="btn btn-primary">Start the Brand Mirror →</a>
     </div>
   </section>
 </Base>
@@ -176,6 +201,54 @@ import Base from '../../layouts/Base.astro';
     font-size: 15px;
     padding: 14px 32px;
   }
+
+  /* ── Portable Text body (Sanity-authored) ─────────── */
+  .body-section .section-inner {
+    max-width: 680px;
+  }
+  .pt-body :global(h2) {
+    font-size: clamp(20px, 2.8vw, 26px);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 32px 0 12px;
+  }
+  .pt-body :global(h2:first-child) { margin-top: 0; }
+  .pt-body :global(h3) {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 10px;
+  }
+  .pt-body :global(p) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 14px;
+  }
+  .pt-body :global(li) {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .pt-body :global(li::before) {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+    top: 3px;
+  }
+  .pt-body :global(strong) { color: var(--text); font-weight: 600; }
+  .pt-body :global(a)      { color: var(--cyan); }
 
   /* ── Responsive ───────────────────────────────────── */
   @media (max-width: 768px) {
