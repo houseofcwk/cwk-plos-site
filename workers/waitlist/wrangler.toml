@@ -1,0 +1,38 @@
+name = "cwk-waitlist"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat_v2"]
+
+# Preview / dev defaults (override in env.production)
+[vars]
+ENVIRONMENT    = "preview"
+ALLOWED_ORIGIN = "https://houseofcwk.pages.dev"
+FROM_EMAIL     = "hello@houseofcwk.com"
+FROM_NAME      = "CWK. Experience"
+REPLY_TO_EMAIL = "hello@houseofcwk.com"
+REPLY_TO_NAME  = "Kris San — CWK."
+
+[[kv_namespaces]]
+binding    = "WAITLIST"
+id         = "1ed95845bab948dd8e276272f98fa74f"
+preview_id = "1ed95845bab948dd8e276272f98fa74f"
+
+# Production overrides — deploy with `wrangler deploy --env production`
+[env.production]
+name = "cwk-waitlist-prod"
+routes = [
+  { pattern = "api.houseofcwk.com/waitlist", custom_domain = true },
+  { pattern = "api.houseofcwk.com/healthz",  custom_domain = true },
+]
+
+[env.production.vars]
+ENVIRONMENT    = "production"
+ALLOWED_ORIGIN = "https://houseofcwk.com"
+FROM_EMAIL     = "hello@houseofcwk.com"
+FROM_NAME      = "CWK. Experience"
+REPLY_TO_EMAIL = "hello@houseofcwk.com"
+REPLY_TO_NAME  = "Kris San — CWK."
+
+[[env.production.kv_namespaces]]
+binding = "WAITLIST"
+id      = "c025d8eee2234c7abeab8cfdabfb7a9d"

@@ -1,17 +1,42 @@
-name: Deploy to Cloudflare Pages
+name: Deploy (Pages + Workers)
+
+# Triggered by:
+#   push main         — production deploy (Pages + waitlist worker)
+#   pull_request main — preview deploy (Pages only)
+#   workflow_dispatch — Sanity webhook fires this when content changes so the
+#                       static site rebuilds with fresh CMS data.
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Deploy trigger source (e.g. "sanity")'
+        required: false
+        default: 'manual'
+
+concurrency:
+  group: deploy-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  pages:
+    name: Pages (static site)
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
+    env:
+      # Public build-time values. Surfacing them here keeps the build
+      # reproducible if Cloudflare-injected Pages env is ever absent.
+      PUBLIC_SANITY_PROJECT_ID: 3fsa3jok
+      PUBLIC_SANITY_DATASET: production
+      PUBLIC_API_BASE_URL: https://api.houseofcwk.com
+      PUBLIC_GTM_ID: GTM-MVJ9VXS5
+      PUBLIC_SITE_URL: https://houseofcwk.com
 
     steps:
       - name: Checkout
@@ -26,11 +51,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build (pulls content from Sanity)
         run: npm run build
 
       - name: Deploy (Production)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: |
+          (github.event_name == 'push' && github.ref == 'refs/heads/main')
+          || github.event_name == 'workflow_dispatch'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -44,3 +71,40 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 1e48d0c8c1ba072982901bb60cf6fc75
           command: pages deploy dist --project-name=houseofcwk --branch=${{ github.head_ref }}
+
+  worker-waitlist:
+    name: Worker (waitlist API)
+    # Only deploy the worker when code actually changed (main push) — skip on
+    # content-only Sanity rebuilds and on PR previews.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: workers/waitlist
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: workers/waitlist/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Deploy (Production)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 1e48d0c8c1ba072982901bb60cf6fc75
+          workingDirectory: workers/waitlist
+          command: deploy --env production

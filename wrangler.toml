@@ -1,53 +1,26 @@
 name = "houseofcwk"
 pages_build_output_dir = "dist"
 compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat_v2"]
 
-# ─── Preview / Local Environment ─────────────────────────────────────────────
-# These vars apply to local `wrangler pages dev` and all preview deployments.
-# Secrets (RESEND_API) are set via:  wrangler pages secret put RESEND_API
-# For local dev, put secrets in .dev.vars (git-ignored).
+# Cloudflare Pages now serves pure static HTML. No _worker.js, no KV.
+# The waitlist API was extracted to workers/waitlist/ and deploys separately
+# to api.houseofcwk.com (see that project's wrangler.toml for KV + Resend).
+#
+# Values below are public (PUBLIC_* or env labels) — they ship to the browser.
+# Sanity content is fetched at BUILD time in GitHub Actions, so the project
+# id / dataset are injected there as env on the build step (see deploy.yml).
 
 [vars]
-ENVIRONMENT = "preview"
-PUBLIC_SITE_URL = "https://houseofcwk.pages.dev"
-FROM_EMAIL = "hello@houseofcwk.com"
-FROM_NAME = "CWK. Experience"
-REPLY_TO_EMAIL = "hello@houseofcwk.com"
-REPLY_TO_NAME = "Kris San — CWK."
-
-# ─── KV Namespaces ───────────────────────────────────────────────────────────
-# id        = used by production deployments
-# preview_id = used by preview deployments and local wrangler pages dev
-
-[[kv_namespaces]]
-binding = "WAITLIST"
-id = "c025d8eee2234c7abeab8cfdabfb7a9d"
-preview_id = "1ed95845bab948dd8e276272f98fa74f"
-
-[[kv_namespaces]]
-binding = "SESSION"
-id = "5d2d5155b6574a22b3ae7c7ad716d8bb"
-preview_id = "db599f73549a4618ad888315963321b5"
-
-# ─── Production Environment ───────────────────────────────────────────────────
-# Overrides applied only to the production deployment (main branch).
-# Secrets for production: wrangler pages secret put RESEND_API --env production
-# KV namespaces must be explicitly repeated here — they are not inherited.
+ENVIRONMENT              = "preview"
+PUBLIC_SITE_URL          = "https://houseofcwk.pages.dev"
+PUBLIC_SANITY_PROJECT_ID = "3fsa3jok"
+PUBLIC_SANITY_DATASET    = "production"
+PUBLIC_API_BASE_URL      = "https://api.houseofcwk.com"
 
 [env.production.vars]
-ENVIRONMENT = "production"
-PUBLIC_SITE_URL = "https://houseofcwk.com"
-PUBLIC_GTM_ID = "GTM-MVJ9VXS5"
-FROM_EMAIL = "hello@houseofcwk.com"
-FROM_NAME = "CWK. Experience"
-REPLY_TO_EMAIL = "hello@houseofcwk.com"
-REPLY_TO_NAME = "Kris San — CWK."
-
-[[env.production.kv_namespaces]]
-binding = "WAITLIST"
-id = "c025d8eee2234c7abeab8cfdabfb7a9d"
-
-[[env.production.kv_namespaces]]
-binding = "SESSION"
-id = "5d2d5155b6574a22b3ae7c7ad716d8bb"
+ENVIRONMENT              = "production"
+PUBLIC_SITE_URL          = "https://houseofcwk.com"
+PUBLIC_GTM_ID            = "GTM-MVJ9VXS5"
+PUBLIC_SANITY_PROJECT_ID = "3fsa3jok"
+PUBLIC_SANITY_DATASET    = "production"
+PUBLIC_API_BASE_URL      = "https://api.houseofcwk.com"

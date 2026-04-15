@@ -10,18 +10,24 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.5.0",
     "@astrojs/react": "^4.2.0",
     "@astrojs/sitemap": "^3.2.1",
+    "@portabletext/react": "^6.0.3",
+    "@sanity/client": "^7.21.0",
+    "@sanity/image-url": "^2.1.1",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.1",
     "astro": "^5.6.0",
+    "groq": "^5.20.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@cloudflare/workers-types": "^4.20260412.1",
+    "@sanity/vision": "^5.20.0",
+    "sanity": "^5.20.0",
+    "styled-components": "^6.4.0",
     "typescript": "^5.8.3"
   }
 }

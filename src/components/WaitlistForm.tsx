@@ -4,6 +4,8 @@ type FormState = 'idle' | 'loading' | 'success' | 'duplicate' | 'invalid' | 'ser
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const API_BASE = import.meta.env.PUBLIC_API_BASE_URL ?? 'https://api.houseofcwk.com';
+
 const MESSAGES: Record<FormState, { text: string; color: string } | null> = {
   idle:          null,
   loading:       null,
@@ -39,7 +41,7 @@ export default function WaitlistForm() {
     setState('loading');
 
     try {
-      const res = await fetch('/api/waitlist', {
+      const res = await fetch(`${API_BASE}/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

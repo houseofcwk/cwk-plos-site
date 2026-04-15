@@ -1,18 +1,16 @@
-import type { APIRoute } from 'astro';
+// CWK. PLOS waitlist — standalone Cloudflare Worker
+// Migrated verbatim from the former Astro API route at src/pages/api/waitlist.ts
+// Deploys to api.houseofcwk.com via a custom-domain route.
 
-// Astro server endpoint — replaces the old src/functions/api/waitlist.ts
-// (Cloudflare Pages Functions in src/functions/ are never compiled when
-//  _worker.js Advanced Mode is active; this route goes through the worker.)
-
-export const prerender = false;
-
-interface CloudflareEnv {
+interface Env {
   WAITLIST: KVNamespace;
   RESEND_API: string;
   FROM_EMAIL: string;
   FROM_NAME: string;
   REPLY_TO_EMAIL: string;
   REPLY_TO_NAME: string;
+  ALLOWED_ORIGIN: string;
+  ENVIRONMENT: string;
 }
 
 interface WaitlistEntry {
@@ -21,16 +19,19 @@ interface WaitlistEntry {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+function corsHeaders(env: Env): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    Vary: 'Origin',
+  };
+}
 
-function json(body: object, status = 200): Response {
+function json(body: object, status: number, env: Env): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    headers: { 'Content-Type': 'application/json', ...corsHeaders(env) },
   });
 }
 
@@ -215,7 +216,7 @@ function buildConfirmationEmail(): string {
 
 // ─── Email Delivery (Resend) ──────────────────────────────────────────────────
 
-async function sendConfirmation(env: CloudflareEnv, recipientEmail: string): Promise<void> {
+async function sendConfirmation(env: Env, recipientEmail: string): Promise<void> {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -268,40 +269,59 @@ async function sendConfirmation(env: CloudflareEnv, recipientEmail: string): Pro
 
 // ─── Route handlers ───────────────────────────────────────────────────────────
 
-const CORS_RESPONSE = new Response(null, { status: 204, headers: CORS_HEADERS });
-
-export const OPTIONS: APIRoute = () => CORS_RESPONSE;
-
-export const POST: APIRoute = async ({ request, locals }) => {
-  const runtime = (locals as any).runtime;
-  const env: CloudflareEnv | undefined = runtime?.env;
-
-  if (!env?.WAITLIST) return json({ error: 'server_error' }, 500);
+async function handleWaitlistPost(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  if (!env.WAITLIST) return json({ error: 'server_error' }, 500, env);
 
   let body: { email?: unknown };
   try {
     body = await request.json();
   } catch {
-    return json({ error: 'invalid_request' }, 400);
+    return json({ error: 'invalid_request' }, 400, env);
   }
 
   const rawEmail = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
-  if (!rawEmail || !EMAIL_REGEX.test(rawEmail)) return json({ error: 'invalid_email' }, 422);
+  if (!rawEmail || !EMAIL_REGEX.test(rawEmail)) return json({ error: 'invalid_email' }, 422, env);
 
   try {
     const existing = await env.WAITLIST.get(rawEmail);
-    if (existing !== null) return json({ error: 'already_on_list' }, 409);
+    if (existing !== null) return json({ error: 'already_on_list' }, 409, env);
 
     const entry: WaitlistEntry = { joinedAt: new Date().toISOString() };
     await env.WAITLIST.put(rawEmail, JSON.stringify(entry));
 
     // Fire-and-forget — don't block the response on email delivery
     if (env.RESEND_API) {
-      runtime.ctx.waitUntil(sendConfirmation(env, rawEmail));
+      ctx.waitUntil(sendConfirmation(env, rawEmail));
     }
 
-    return json({ success: true });
+    return json({ success: true }, 200, env);
   } catch {
-    return json({ error: 'server_error' }, 500);
+    return json({ error: 'server_error' }, 500, env);
   }
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const url = new URL(request.url);
+    const { pathname } = url;
+
+    if (pathname === '/healthz') {
+      return Response.json({ ok: true });
+    }
+
+    if (pathname === '/waitlist') {
+      if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: corsHeaders(env) });
+      }
+      if (request.method === 'POST') {
+        return handleWaitlistPost(request, env, ctx);
+      }
+      return new Response('Method Not Allowed', {
+        status: 405,
+        headers: { Allow: 'POST, OPTIONS', ...corsHeaders(env) },
+      });
+    }
+
+    return new Response('Not Found', { status: 404 });
+  },
 };

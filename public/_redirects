@@ -11,3 +11,7 @@
 /lifestapestryarticle       /work/lifes-tapestry          301
 /brandmirrorlobby           /brand-mirror                 301
 /brandmirror                /brand-mirror                 301
+
+# Sanity Studio is a client-side SPA — rewrite all /studio/* paths to the
+# static shell so Studio's internal router can take over without 404s.
+/studio/*                   /studio                       200

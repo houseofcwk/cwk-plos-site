@@ -1,0 +1,56 @@
+// Documents
+import { siteSettings } from './siteSettings';
+import { homePage } from './homePage';
+import { productPage } from './productPage';
+import { aboutPage } from './aboutPage';
+import { journeyPage } from './journeyPage';
+import { brandMirrorPage } from './brandMirrorPage';
+import { sideQuestsPage } from './sideQuestsPage';
+import { caseStudy } from './caseStudy';
+import { legalPage } from './legalPage';
+
+// Shared objects
+import { seo } from './objects/seo';
+import { ctaButton } from './objects/ctaButton';
+import { statItem } from './objects/statItem';
+import { featureBlock } from './objects/featureBlock';
+import { pillarBlock } from './objects/pillarBlock';
+import { blockContent } from './objects/blockContent';
+
+export {
+  siteSettings,
+  homePage,
+  productPage,
+  aboutPage,
+  journeyPage,
+  brandMirrorPage,
+  sideQuestsPage,
+  caseStudy,
+  legalPage,
+  seo,
+  ctaButton,
+  statItem,
+  featureBlock,
+  pillarBlock,
+  blockContent,
+};
+
+export const schemaTypes = [
+  // Documents
+  siteSettings,
+  homePage,
+  productPage,
+  aboutPage,
+  journeyPage,
+  brandMirrorPage,
+  sideQuestsPage,
+  caseStudy,
+  legalPage,
+  // Objects
+  seo,
+  ctaButton,
+  statItem,
+  featureBlock,
+  pillarBlock,
+  blockContent,
+];
