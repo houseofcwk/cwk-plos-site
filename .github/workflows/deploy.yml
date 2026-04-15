@@ -108,3 +108,38 @@ jobs:
           accountId: 1e48d0c8c1ba072982901bb60cf6fc75
           workingDirectory: workers/waitlist
           command: deploy --env production
+
+  worker-contact:
+    name: Worker (contact API)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: workers/contact
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: workers/contact/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Deploy (Production)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 1e48d0c8c1ba072982901bb60cf6fc75
+          workingDirectory: workers/contact
+          command: deploy --env production

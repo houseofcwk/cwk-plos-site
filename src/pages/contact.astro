@@ -1,0 +1,366 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm';
+
+const pageTitle = 'Contact CWK. — Talk to the team';
+const pageDescription =
+  'Reach the CWK. team for partnerships, press, product support, or a general hello. We respond within 1–2 business days.';
+
+// Non-JS success state (?status=ok) is rendered below the form when the
+// Worker redirects a progressive-enhancement fallback submission.
+const statusParam = Astro.url.searchParams.get('status');
+const showNoJsSuccess = statusParam === 'ok';
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section class="contact-page">
+    <div class="contact-inner">
+      <!-- ── Left: intro ───────────────────────────── -->
+      <div class="contact-intro">
+        <span class="eyebrow fade-up">Contact</span>
+        <h1 class="fade-up fade-up-delay-1">
+          Let's <span class="gradient-text">talk</span>.
+        </h1>
+        <p class="contact-lede fade-up fade-up-delay-2">
+          Partnership, press, product questions, or just a hello —
+          drop us a line and a real person will reply.
+        </p>
+
+        <ul class="contact-meta fade-up fade-up-delay-3">
+          <li>
+            <span class="contact-meta-label">Email</span>
+            <a href="mailto:hello@houseofcwk.com">hello@houseofcwk.com</a>
+          </li>
+          <li>
+            <span class="contact-meta-label">Response time</span>
+            <span>Typically within 1–2 business days</span>
+          </li>
+          <li>
+            <span class="contact-meta-label">Based in</span>
+            <span>New York · remote-first</span>
+          </li>
+        </ul>
+
+        <div class="contact-alt fade-up fade-up-delay-4">
+          <p class="contact-alt-title">Other ways in</p>
+          <div class="contact-alt-links">
+            <a href="/brand-mirror" class="contact-alt-link">
+              <span>Take the Brand Mirror</span>
+              <span class="contact-alt-arrow">→</span>
+            </a>
+            <a href="/product" class="contact-alt-link">
+              <span>Explore Agent+</span>
+              <span class="contact-alt-arrow">→</span>
+            </a>
+            <a href="/work" class="contact-alt-link">
+              <span>See the work</span>
+              <span class="contact-alt-arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Right: form card ──────────────────────── -->
+      <div class="contact-form-wrap fade-up fade-up-delay-2">
+        {showNoJsSuccess && (
+          <div class="contact-success glass-card" role="status" aria-live="polite">
+            <span class="contact-success-dot"></span>
+            <h3>Message received.</h3>
+            <p>
+              Thanks for reaching out. Expect a reply within 1–2 business days.
+            </p>
+          </div>
+        )}
+        <ContactForm client:load />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  /* ── Layout ─────────────────────────────────────────── */
+  .contact-page {
+    padding: 140px 24px 80px;
+  }
+
+  .contact-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .contact-page { padding: 100px 20px 64px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* ── Intro column ──────────────────────────────────── */
+  .contact-intro h1 {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 8px 0 20px;
+  }
+
+  .contact-lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 460px;
+    margin-bottom: 32px;
+  }
+
+  .contact-meta {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 1px solid var(--gb);
+    padding-top: 24px;
+  }
+
+  .contact-meta li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .contact-meta-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .contact-meta a,
+  .contact-meta span:not(.contact-meta-label) {
+    font-size: 15px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .contact-meta a:hover { color: var(--cyan); }
+
+  .contact-alt {
+    border-top: 1px solid var(--gb);
+    padding-top: 24px;
+  }
+
+  .contact-alt-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+
+  .contact-alt-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-alt-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--gb);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    font-size: 14px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact-alt-link:hover {
+    border-color: rgba(0, 229, 255, 0.35);
+    background: rgba(0, 229, 255, 0.04);
+  }
+
+  .contact-alt-arrow {
+    color: var(--cyan);
+    font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+  .contact-alt-link:hover .contact-alt-arrow { transform: translateX(4px); }
+
+  /* ── Form card ─────────────────────────────────────── */
+  .contact-form {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  @media (max-width: 480px) { .contact-form { padding: 22px; } }
+
+  .contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 560px) { .contact-row { grid-template-columns: 1fr; } }
+
+  .contact-field { display: flex; flex-direction: column; gap: 6px; }
+
+  .contact-field label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+
+  .contact-required { color: var(--pink); font-weight: 700; }
+  .contact-optional { color: var(--dim); font-weight: 400; font-size: 11px; }
+
+  .contact-field input,
+  .contact-field select,
+  .contact-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+
+  .contact-field textarea { resize: vertical; min-height: 140px; }
+
+  .contact-field input::placeholder,
+  .contact-field textarea::placeholder { color: var(--dim); }
+
+  .contact-field input:focus,
+  .contact-field select:focus,
+  .contact-field textarea:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.18);
+    background: rgba(0, 229, 255, 0.03);
+  }
+
+  .contact-field-invalid input,
+  .contact-field-invalid select,
+  .contact-field-invalid textarea {
+    border-color: rgba(251, 48, 121, 0.7);
+    box-shadow: 0 0 0 3px rgba(251, 48, 121, 0.12);
+  }
+
+  .contact-field-hint { font-size: 11px; color: var(--dim); }
+
+  .contact-field-error {
+    font-size: 12px;
+    color: #FF7A30;
+    font-weight: 500;
+  }
+
+  .contact-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .contact-consent input {
+    margin-top: 3px;
+    accent-color: var(--cyan);
+    width: 16px;
+    height: 16px;
+  }
+  .contact-consent a { color: var(--cyan); text-decoration: none; }
+  .contact-consent a:hover { text-decoration: underline; }
+
+  .contact-turnstile { margin-top: 4px; }
+
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .contact-submit {
+    height: 48px;
+    min-width: 180px;
+    align-self: flex-start;
+    justify-content: center;
+  }
+  .contact-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  @media (max-width: 480px) {
+    .contact-submit { width: 100%; align-self: stretch; }
+  }
+
+  .contact-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(7, 9, 15, 0.3);
+    border-top-color: #07090F;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .contact-legal { font-size: 11px; color: var(--dim); line-height: 1.5; }
+  .contact-legal a { color: var(--muted); }
+
+  .contact-form-error {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #FF7A30;
+    font-weight: 500;
+  }
+
+  /* Honeypot — visually hidden, still in DOM for bots */
+  .contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── Success state ─────────────────────────────────── */
+  .contact-success {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-color: rgba(0, 227, 150, 0.3) !important;
+    background: rgba(0, 227, 150, 0.04) !important;
+  }
+  .contact-success h3 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .contact-success p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .contact-success a { color: var(--cyan); }
+  .contact-success-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00E396;
+    box-shadow: 0 0 0 4px rgba(0, 227, 150, 0.2);
+    margin-bottom: 4px;
+  }
+</style>

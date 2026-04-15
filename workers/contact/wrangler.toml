@@ -1,0 +1,52 @@
+name = "cwk-contact"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat_v2"]
+
+# Preview / dev defaults (override in env.production)
+[vars]
+ENVIRONMENT      = "preview"
+ALLOWED_ORIGIN   = "https://houseofcwk.pages.dev"
+FROM_EMAIL       = "hello@houseofcwk.com"
+FROM_NAME        = "CWK. Experience"
+REPLY_TO_EMAIL   = "hello@houseofcwk.com"
+REPLY_TO_NAME    = "CWK. Team"
+CONTACT_INBOX_TO = "hello@houseofcwk.com"
+# Leave TURNSTILE_SITE_KEY unset here; injected as a Pages build var client-side.
+# RESEND_API, TURNSTILE_SECRET, HASH_SALT are Worker secrets set via
+# `wrangler secret put` (never committed).
+
+[[kv_namespaces]]
+binding    = "CONTACTS"
+id         = "PLACEHOLDER_CONTACTS_KV_ID"
+preview_id = "PLACEHOLDER_CONTACTS_KV_ID"
+
+[[kv_namespaces]]
+binding    = "RATE_LIMIT"
+id         = "PLACEHOLDER_RATELIMIT_KV_ID"
+preview_id = "PLACEHOLDER_RATELIMIT_KV_ID"
+
+# Production overrides — deploy with `wrangler deploy --env production`
+[env.production]
+name = "cwk-contact-prod"
+routes = [
+  { pattern = "api.houseofcwk.com/contact",         custom_domain = true },
+  { pattern = "api.houseofcwk.com/contact/healthz", custom_domain = true },
+]
+
+[env.production.vars]
+ENVIRONMENT      = "production"
+ALLOWED_ORIGIN   = "https://houseofcwk.com"
+FROM_EMAIL       = "hello@houseofcwk.com"
+FROM_NAME        = "CWK. Experience"
+REPLY_TO_EMAIL   = "hello@houseofcwk.com"
+REPLY_TO_NAME    = "CWK. Team"
+CONTACT_INBOX_TO = "hello@houseofcwk.com"
+
+[[env.production.kv_namespaces]]
+binding = "CONTACTS"
+id      = "PLACEHOLDER_CONTACTS_PROD_KV_ID"
+
+[[env.production.kv_namespaces]]
+binding = "RATE_LIMIT"
+id      = "PLACEHOLDER_RATELIMIT_PROD_KV_ID"
