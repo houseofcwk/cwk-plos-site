@@ -29,14 +29,6 @@ const stats = [
     gap: 16px;
   }
 
-  /* 6-up row only when there's genuinely room for each card's content */
-  @media (min-width: 1200px) {
-    .proof-grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 16px;
-    }
-  }
-
   .stat-card {
     position: relative;
     overflow: hidden;
@@ -45,8 +37,8 @@ const stats = [
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 28px 16px;
+    gap: 12px;
+    padding: 36px 20px;
     border: 1px solid var(--gb);
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.02);
@@ -85,16 +77,18 @@ const stats = [
   .stat-card > * { position: relative; z-index: 1; }
 
   .stat-number {
-    font-size: clamp(20px, 1.9vw, 26px);
+    font-size: clamp(24px, 2.4vw, 36px);
     font-weight: 800;
     letter-spacing: -0.02em;
-    line-height: 1;
+    line-height: 1.1;
     color: #00E5FF;
     white-space: nowrap;
     display: inline-flex;
+    justify-content: center;
     align-items: baseline;
     gap: 0.15em;
     max-width: 100%;
+    text-align: center;
   }
 
   .stat-arrow {
@@ -106,13 +100,13 @@ const stats = [
   }
 
   .stat-label {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--muted);
     text-transform: none;
     letter-spacing: 0.02em;
-    line-height: 1.35;
-    max-width: 14ch;
+    line-height: 1.4;
+    max-width: 20ch;
   }
 
   @media (hover: hover) {

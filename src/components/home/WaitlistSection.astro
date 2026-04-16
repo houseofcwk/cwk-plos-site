@@ -3,69 +3,236 @@ import WaitlistForm from '../WaitlistForm';
 ---
 
 <section id="waitlist" class="section waitlist-section">
-  <div class="section-inner">
-    <div class="waitlist-card glass-card">
-      <span class="eyebrow">Early Access</span>
-      <h2>We're building something for founders<br>who are done patching leaks.</h2>
-      <p class="section-sub">
-        CWK. Agent+ is the operating system that manages your growth across Mind, Body, Soul, and Pocket. Join the waitlist to get early access when we launch.
-      </p>
-      <WaitlistForm client:visible />
-      <p class="social-proof-line">Join 50+ founders already on the list.</p>
+  <div class="wl-inner">
+    <div class="wl-card">
+      <!-- Left: copy + form -->
+      <div class="wl-content reveal-up">
+        <span class="wl-eyebrow">
+          <span class="wl-eyebrow-dot"></span>
+          COMING SOON
+        </span>
+        <h2 class="wl-heading">Agent<span class="wl-plus">+</span></h2>
+        <p class="wl-tagline">
+          Your Personal Operating<br>System for Growth.
+        </p>
+        <p class="wl-desc">
+          Daily actions. Relationship tracking. AI strategy.<br>
+          Pipeline management. Goal sprints.<br>
+          Built for founders earning $150K–$5M.
+        </p>
+        <WaitlistForm client:visible />
+      </div>
+
+      <!-- Right: mini dashboard mockup -->
+      <div class="wl-visual reveal-card" style="--reveal-i:1">
+        <span class="wl-visual-glow" aria-hidden="true"></span>
+        <div class="wl-mock">
+          <img
+            src="/images/home/agent-minidash.webp"
+            alt="Agent+ preview showing task cards and kaia AI prompt."
+            class="wl-mock-img"
+            width="960"
+            height="940"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="wl-mock-shimmer" aria-hidden="true"></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .waitlist-section {
-    text-align: center;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    background: var(--bg);
   }
 
-  .waitlist-card {
-    max-width: 600px;
+  .wl-inner {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 56px 48px 48px;
+    padding: 0 24px;
+  }
+
+  .wl-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Left */
+  .wl-content {
+    padding: 56px 48px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .wl-eyebrow {
+    display: inline-flex;
     align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(123, 97, 255, 0.08);
+    border: 1px solid rgba(123, 97, 255, 0.22);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--purple);
+  }
+  .wl-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--purple);
+    box-shadow: 0 0 8px rgba(123, 97, 255, 0.55);
+    animation: wl-dot-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes wl-dot-pulse {
+    0%, 100% { transform: scale(1);   box-shadow: 0 0 8px  rgba(123, 97, 255, 0.55); }
+    50%       { transform: scale(1.25); box-shadow: 0 0 14px rgba(123, 97, 255, 0.85); }
+  }
+
+  .wl-heading {
+    font-size: clamp(40px, 5.5vw, 56px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .wl-plus {
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .wl-tagline {
+    font-size: clamp(18px, 2.1vw, 22px);
+    font-weight: 500;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .wl-desc {
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.7;
+    margin: 0 0 4px;
+  }
+
+  /* Right visual */
+  .wl-visual {
     position: relative;
+    padding: 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(123, 97, 255, 0.05), rgba(0, 229, 255, 0.025) 60%, transparent);
+    border-left: 1px solid var(--gb);
     overflow: hidden;
   }
 
-  .waitlist-card::before {
-    content: '';
+  .wl-visual-glow {
     position: absolute;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 360px;
-    height: 240px;
-    background: radial-gradient(ellipse, rgba(0, 229, 255, 0.06) 0%, transparent 70%);
+    top: 20%;
+    left: 30%;
+    width: 320px;
+    height: 260px;
+    background: radial-gradient(ellipse, rgba(123, 97, 255, 0.08) 0%, transparent 70%);
+    filter: blur(12px);
     pointer-events: none;
+    animation: wl-float 10s ease-in-out infinite;
+  }
+  @keyframes wl-float {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(20px, -15px); }
   }
 
-  .waitlist-card > * {
+  .wl-mock {
     position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg);
+    border: 1px solid var(--gb);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease;
+    animation: wl-mock-float 8s ease-in-out infinite;
+  }
+  @keyframes wl-mock-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+  .wl-mock-img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
-  .waitlist-card h2 {
-    font-size: clamp(22px, 3.5vw, 30px);
-    margin-bottom: 12px;
+  .wl-mock-shimmer {
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(123, 97, 255, 0.14) 50%,
+      transparent 80%
+    );
+    pointer-events: none;
+    transform: skewX(-12deg);
+    opacity: 0;
+  }
+  .wl-visual.is-visible .wl-mock-shimmer {
+    animation: wl-shimmer 1.8s 0.4s ease-out forwards;
+  }
+  @keyframes wl-shimmer {
+    0%   { opacity: 0; left: -40%; }
+    30%  { opacity: 1; }
+    100% { opacity: 0; left: 130%; }
   }
 
-  .waitlist-card .section-sub {
-    max-width: 440px;
-    margin: 0 auto 28px;
+  @media (hover: hover) {
+    .wl-mock:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(123, 97, 255, 0.18);
+    }
   }
 
-  .social-proof-line {
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--dim);
-    text-align: center;
+  /* Waitlist form width fit */
+  .wl-content :global(.waitlist-wrap) {
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
   }
 
-  @media (max-width: 768px) {
-    .waitlist-card { padding: 40px 28px 36px; }
+  /* Responsive */
+  @media (max-width: 900px) {
+    .wl-card { grid-template-columns: 1fr; }
+    .wl-visual { border-left: none; border-top: 1px solid var(--gb); padding: 40px 24px; }
+    .wl-content { padding: 44px 28px; }
+    .waitlist-section { padding-top: 64px; padding-bottom: 64px; }
+  }
+  @media (max-width: 480px) {
+    .wl-content { padding: 36px 22px; gap: 18px; }
+    .wl-visual { padding: 32px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wl-eyebrow-dot, .wl-visual-glow, .wl-mock { animation: none !important; }
+    .wl-mock-shimmer { display: none; }
   }
 </style>

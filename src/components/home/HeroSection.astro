@@ -84,8 +84,14 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
     <div class="acc-sq as-2"></div>
     <div class="acc-sq as-3"></div>
 
-    <!-- Abstract Lottie (loaded lazily via lottie-web) -->
-    <div class="hero-lottie" data-lottie="/animations/technology.json" aria-hidden="true"></div>
+    <!-- Abstract Lottie (loaded lazily via lottie-web).
+         Two stacked slots crossfade to hide the loop seam — while one instance
+         restarts at frame 0, the other is playing mid-animation and fully
+         visible, so the seam is never seen. -->
+    <div class="hero-lottie" data-lottie="/animations/technology.json" aria-hidden="true">
+      <div class="hero-lottie-slot slot-a"></div>
+      <div class="hero-lottie-slot slot-b"></div>
+    </div>
   </div>
 
   <!-- Hero content -->
@@ -317,7 +323,32 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
     transition: opacity 1.4s ease-out;
   }
   .hero-lottie.is-ready { opacity: 0.22; }
-  .hero-lottie svg { display: block; width: 100%; height: 100%; }
+
+  /* Two stacked slots crossfade so the Lottie loop seam is never visible.
+     JS sets --loop-duration once we know the clip length. */
+  .hero-lottie-slot {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    will-change: opacity;
+  }
+  .hero-lottie-slot svg { display: block; width: 100%; height: 100%; }
+  .hero-lottie.is-ready .hero-lottie-slot {
+    animation-duration: var(--loop-duration, 10s);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .hero-lottie.is-ready .slot-a { animation-name: hero-lottie-crossfade-a; }
+  .hero-lottie.is-ready .slot-b { animation-name: hero-lottie-crossfade-b; }
+  @keyframes hero-lottie-crossfade-a {
+    0%, 100% { opacity: 0; }
+    50%       { opacity: 1; }
+  }
+  @keyframes hero-lottie-crossfade-b {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-lottie { display: none; }
   }
@@ -542,6 +573,10 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
   // Lazy-load the abstract Lottie in the hero background.
   // Skips on reduced-motion; fetches lottie-web ESM only when the element
   // scrolls into view (first paint is unaffected).
+  //
+  // We run TWO instances in stacked slots and crossfade via CSS keyframes
+  // synced to the clip length. When one instance is at its loop seam, the
+  // other is at mid-animation and fully visible, so the seam is never seen.
   (() => {
     const host = document.querySelector<HTMLElement>('.hero-lottie');
     if (!host) return;
@@ -550,12 +585,17 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
     const path = host.dataset.lottie;
     if (!path) return;
 
+    const slotA = host.querySelector<HTMLElement>('.slot-a');
+    const slotB = host.querySelector<HTMLElement>('.slot-b');
+    if (!slotA || !slotB) return;
+
+    const SPEED = 0.5;
+
     const lottieUrl = 'https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm';
     const mount = () => import(/* @vite-ignore */ lottieUrl)
       .then(({ default: lottie }) => {
-        const anim = lottie.loadAnimation({
-          container: host,
-          renderer: 'svg',
+        const common = {
+          renderer: 'svg' as const,
           loop: true,
           autoplay: true,
           path,
@@ -563,13 +603,28 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
           // prevents the loop-boundary flash some browsers show when chunks
           // are still streaming in. preserveAspectRatio keeps it centered.
           rendererSettings: { progressiveLoad: false, preserveAspectRatio: 'xMidYMid slice' },
+        };
+
+        const animA = lottie.loadAnimation({ ...common, container: slotA });
+        const animB = lottie.loadAnimation({ ...common, container: slotB });
+
+        for (const a of [animA, animB]) {
+          a.setSubframe(true);
+          a.setSpeed(SPEED);
+        }
+
+        // Once A has its metadata, we know the clip length. Offset B by half a
+        // cycle so its seam falls while A is at peak opacity (and vice versa),
+        // and sync the CSS crossfade to the same period.
+        animA.addEventListener('DOMLoaded', () => {
+          const totalFrames = animA.totalFrames;
+          const frameRate   = animA.frameRate;
+          const cycleSec    = (totalFrames / frameRate) / SPEED;
+
+          animB.goToAndPlay(totalFrames / 2, true);
+          host.style.setProperty('--loop-duration', `${cycleSec}s`);
+          host.classList.add('is-ready');
         });
-
-        // Sub-frame interpolation smooths the transition at the loop seam.
-        anim.setSubframe(true);
-        anim.setSpeed(0.5);
-
-        anim.addEventListener('DOMLoaded', () => host.classList.add('is-ready'));
       })
       .catch(() => { /* silent — hero still renders without it */ });
 

@@ -2,8 +2,10 @@
 import Base from '../layouts/Base.astro';
 import HeroSection from '../components/home/HeroSection.astro';
 import MissionSection from '../components/home/MissionSection.astro';
+import WhatCwkDoesSection from '../components/home/WhatCwkDoesSection.astro';
 import PillarsSection from '../components/home/PillarsSection.astro';
 import ProofSection from '../components/home/ProofSection.astro';
+import TestimonialCTASection from '../components/home/TestimonialCTASection.astro';
 import WorkMosaicSection from '../components/home/WorkMosaicSection.astro';
 import ProductPreviewSection from '../components/home/ProductPreviewSection.astro';
 import WaitlistSection from '../components/home/WaitlistSection.astro';
@@ -44,8 +46,10 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
     subtext={s?.heroSubtext}
   />
   <MissionSection />
+  <WhatCwkDoesSection />
   <PillarsSection pillars={pillars} />
   <ProofSection />
+  <TestimonialCTASection />
   <WorkMosaicSection />
   <ProductPreviewSection />
   <WaitlistSection />

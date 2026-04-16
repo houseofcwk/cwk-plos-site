@@ -1,58 +1,317 @@
 ---
+const features = [
+  {
+    title: 'Dashboard',
+    desc:  'Your daily command center',
+    color: 'cyan',
+    icon:  'dashboard',
+  },
+  {
+    title: 'kaia AI',
+    desc:  'AI strategy partner',
+    color: 'purple',
+    icon:  'sparkles',
+  },
+  {
+    title: 'Destination',
+    desc:  'Goal sprints & milestones',
+    color: 'pink',
+    icon:  'target',
+  },
+];
 ---
 
 <section class="section product-preview">
-  <div class="section-inner">
-    <div class="product-preview-card glass-card">
-      <span class="eyebrow">The Platform</span>
-      <h2>See what's inside CWK. Agent+</h2>
-      <p>Your personal command center for managing relationships, tracking momentum, and executing with clarity. Built on the PLOS framework. Powered by AI.</p>
-      <a href="/product" class="btn btn-gradient">Explore the Product →</a>
+  <span class="pp-glow" aria-hidden="true"></span>
 
-      <div class="product-feature-tags">
-        <span class="tag">Player Dashboard</span>
-        <span class="tag tag-purple">Relationships CRM</span>
-        <span class="tag">Pipeline Kanban</span>
-        <span class="tag tag-pink">kaia AI Chat</span>
-        <span class="tag tag-purple">Brand Destination</span>
-        <span class="tag">Daily Actions</span>
+  <div class="pp-inner">
+    <!-- Intro: left copy + right feature cards -->
+    <div class="pp-intro">
+      <div class="pp-intro-left reveal-up">
+        <span class="pp-eyebrow">
+          <span class="pp-eyebrow-dot"></span>
+          INSIDE AGENT+
+        </span>
+        <h2 class="pp-heading">See what's inside.</h2>
+        <p class="pp-desc">
+          A unified operating system that replaces the scattered tools holding your
+          business together with duct tape. Everything you need in one place.
+        </p>
       </div>
+
+      <div class="pp-feature-row">
+        {features.map((f, i) => (
+          <div class={`pp-feature pp-feature--${f.color} reveal-card`} style={`--reveal-i:${i + 1}`}>
+            <span class="pp-feature-icon" aria-hidden="true">
+              {f.icon === 'dashboard' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/>
+                  <rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>
+                </svg>
+              )}
+              {f.icon === 'sparkles' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                  <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+                </svg>
+              )}
+              {f.icon === 'target' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                </svg>
+              )}
+            </span>
+            <span class="pp-feature-title">{f.title}</span>
+            <span class="pp-feature-desc">{f.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="pp-mock reveal-card" style="--reveal-i:4">
+      <img
+        src="/images/home/agent-dashboard.webp"
+        alt="Agent+ dashboard showing pipeline value, active deals, today's actions and kaia AI chat."
+        class="pp-mock-img"
+        width="2200"
+        height="1160"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="pp-mock-shimmer" aria-hidden="true"></span>
     </div>
   </div>
 </section>
 
 <style>
-  .product-preview-card {
-    padding: 48px;
-    text-align: center;
+  .product-preview {
+    position: relative;
+    background: var(--bg2);
+    overflow: hidden;
+    padding-top: 96px;
+    padding-bottom: 80px;
+  }
+
+  .pp-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 900px;
+    height: 460px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(0, 229, 255, 0.06) 0%, rgba(123, 97, 255, 0.035) 55%, transparent 75%);
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .pp-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  /* Intro: side-by-side */
+  .pp-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: flex-start;
+  }
+
+  .pp-intro-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .pp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(251, 48, 121, 0.08);
+    border: 1px solid rgba(251, 48, 121, 0.22);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--pink);
+  }
+  .pp-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--pink);
+    box-shadow: 0 0 8px rgba(251, 48, 121, 0.55);
+  }
+
+  .pp-heading {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+
+  .pp-desc {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0;
+  }
+
+  /* Feature row */
+  .pp-feature-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    align-self: stretch;
+  }
+
+  .pp-feature {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
+    padding: 24px 16px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 14px;
+    text-align: center;
+    overflow: hidden;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      box-shadow 0.5s ease;
   }
-
-  .product-preview-card h2 {
-    font-size: clamp(22px, 3vw, 32px);
-    margin: 8px 0;
+  .pp-feature::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--feat-accent, transparent) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
   }
+  .pp-feature > * { position: relative; z-index: 1; }
 
-  .product-preview-card p {
-    max-width: 500px;
-    margin-bottom: 8px;
-  }
+  .pp-feature--cyan   { --feat-color: var(--cyan);   --feat-accent: rgba(0, 229, 255, 0.10); }
+  .pp-feature--purple { --feat-color: var(--purple); --feat-accent: rgba(123, 97, 255, 0.10); }
+  .pp-feature--pink   { --feat-color: var(--pink);   --feat-accent: rgba(251, 48, 121, 0.10); }
 
-  .product-feature-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  .pp-feature-icon {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 16px;
-    padding-top: 24px;
-    border-top: 1px solid var(--gb);
-    width: 100%;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--feat-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--feat-color) 22%, transparent);
+    color: var(--feat-color);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  @media (max-width: 768px) {
-    .product-preview-card { padding: 28px 20px; }
+  .pp-feature-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .pp-feature-desc {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.4;
+  }
+
+  @media (hover: hover) {
+    .pp-feature:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--feat-color) 32%, var(--gb));
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+    }
+    .pp-feature:hover::before { opacity: 1; }
+    .pp-feature:hover .pp-feature-icon {
+      transform: scale(1.08) rotate(-4deg);
+    }
+  }
+
+  /* Dashboard mockup */
+  .pp-mock {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg3);
+    border: 1px solid var(--gb);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 229, 255, 0.06);
+    transform-origin: 50% 100%;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease;
+  }
+
+  .pp-mock-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Shimmer sweep that plays when card enters viewport */
+  .pp-mock-shimmer {
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(0, 229, 255, 0.10) 50%,
+      transparent 80%
+    );
+    pointer-events: none;
+    transform: skewX(-12deg);
+    opacity: 0;
+  }
+  .pp-mock.is-visible .pp-mock-shimmer {
+    animation: pp-shimmer 1.6s 0.3s ease-out forwards;
+  }
+  @keyframes pp-shimmer {
+    0%   { opacity: 0; left: -40%; }
+    30%  { opacity: 1; }
+    100% { opacity: 0; left: 130%; }
+  }
+
+  @media (hover: hover) {
+    .pp-mock:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 229, 255, 0.14);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .pp-intro { grid-template-columns: 1fr; gap: 32px; }
+    .pp-inner { gap: 40px; }
+    .product-preview { padding-top: 72px; padding-bottom: 64px; }
+  }
+  @media (max-width: 640px) {
+    .pp-feature-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .pp-feature { padding: 18px 8px; gap: 8px; }
+    .pp-feature-icon { width: 38px; height: 38px; border-radius: 10px; }
+    .pp-feature-title { font-size: 12px; }
+    .pp-feature-desc  { font-size: 10px; }
+    .pp-mock { border-radius: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pp-mock, .pp-feature, .pp-feature-icon { transition: none !important; }
+    .pp-mock-shimmer { display: none; }
   }
 </style>

@@ -1,40 +1,282 @@
 ---
+const painPoints = [
+  'Your systems are fragmented.',
+  'Your authority is scattered across tools or locked in your head.',
+  "Deals die because you can't prove value fast enough, or you forgot to follow up.",
+];
+
+const fragCards = [
+  { label: 'CRM',      color: 'cyan',   width: '82%' },
+  { label: 'Content',  color: 'purple', width: '66%' },
+  { label: 'Pipeline', color: 'pink',   width: '54%' },
+];
 ---
 
-<section class="section mission">
-  <div class="section-inner">
-    <div class="mission-card glass-card">
-      <span class="eyebrow">The Problem</span>
-      <h2>Your expertise is compounding.<br>Your infrastructure isn't.</h2>
-      <div class="mission-body">
-        <p>
-          Most high-performing entrepreneurs between $150k–$5M are stuck because their infrastructure is leaking. Systems are fragmented. Authority is scattered across tools or locked in your head. Deals die because you can't prove value fast enough, or you forgot to follow up.
-        </p>
-        <p>
-          The result? You're working harder to earn the same.
-        </p>
-        <p>
-          CWK. is your long-term partner. We install the infrastructure that catches everything, then manage your operations and coordinate your growth. We're not consultants who give advice and leave. We're business managers who acquire a stake in your future and stay for the long game.
-        </p>
-      </div>
+<section class="section mission-section">
+  <div class="mission-inner">
+    <!-- Left: copy -->
+    <div class="mission-left">
+      <span class="ms-eyebrow reveal-up">
+        <span class="ms-eyebrow-dot"></span>
+        THE MISSION
+      </span>
+
+      <h2 class="ms-heading reveal-up reveal-delay-1">
+        Most high-performing entrepreneurs between
+        <span class="ms-range">$150K&ndash;$5M</span> are stuck because their infrastructure is leaking.
+      </h2>
+
+      <ul class="ms-pains reveal-up reveal-delay-2">
+        {painPoints.map((p, i) => (
+          <li class="ms-pain" style={`--pi:${i}`}>
+            <span class="ms-pain-dot" aria-hidden="true"></span>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p class="ms-result reveal-up reveal-delay-3">
+        The result? <span class="ms-result-em">You are working harder to earn the same.</span>
+      </p>
+    </div>
+
+    <!-- Right: scattered cards visual -->
+    <div class="mission-right reveal-card" aria-hidden="true">
+      {fragCards.map((c, i) => (
+        <div class={`frag-card frag-card--${c.color}`} style={`--fi:${i}`}>
+          <span class="frag-label">{c.label}</span>
+          <span class="frag-bar" style={`width:${c.width}`}></span>
+          <span class="frag-sparks">
+            <span class="spark"></span>
+            <span class="spark"></span>
+            <span class="spark"></span>
+          </span>
+        </div>
+      ))}
+      <span class="frag-glow" aria-hidden="true"></span>
     </div>
   </div>
 </section>
 
 <style>
-  .mission-card {
-    padding: var(--pad-lg);
+  .mission-section {
+    background: var(--bg2);
+    padding-top: 96px;
+    padding-bottom: 96px;
   }
 
-  .mission-card h2 {
-    font-size: clamp(22px, 3vw, 30px);
-    margin: 12px 0 24px;
-    line-height: 1.25;
+  .mission-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: center;
   }
 
-  .mission-body {
+  /* ── Left: copy ───────────────────────────────────────────── */
+  .mission-left {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 22px;
+    align-items: flex-start;
+  }
+
+  .ms-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(251, 48, 121, 0.08);
+    border: 1px solid rgba(251, 48, 121, 0.22);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--pink);
+  }
+  .ms-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--pink);
+    box-shadow: 0 0 8px rgba(251, 48, 121, 0.55);
+  }
+
+  .ms-heading {
+    font-size: clamp(24px, 2.8vw, 32px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.018em;
+    margin: 0;
+  }
+  .ms-range {
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+  }
+
+  /* Pain list */
+  .ms-pains {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+  .ms-pain {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateX(-8px);
+    animation: ms-pain-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.4s + var(--pi) * 0.12s);
+  }
+  @keyframes ms-pain-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .ms-pain-dot {
+    flex-shrink: 0;
+    width: 8px; height: 8px;
+    margin-top: 9px;
+    border-radius: 50%;
+    background: var(--pink);
+    box-shadow: 0 0 10px rgba(251, 48, 121, 0.45);
+  }
+
+  .ms-result {
+    margin: 8px 0 0;
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .ms-result-em {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── Right: fragmented cards visual ───────────────────────── */
+  .mission-right {
+    position: relative;
+    height: 300px;
+    min-height: 300px;
+  }
+
+  .frag-glow {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(251, 48, 121, 0.08) 0%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .frag-card {
+    position: absolute;
+    width: 220px;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.5s ease;
+  }
+
+  .frag-card:nth-child(1) { top:   0; left: 12%; transform: translateY(8px) rotate(-3deg); animation: frag-float-a 9s ease-in-out infinite; }
+  .frag-card:nth-child(2) { top:  86px; left: 38%; transform: rotate(2deg); animation: frag-float-b 10s ease-in-out infinite 1.2s; }
+  .frag-card:nth-child(3) { top: 180px; left: 20%; transform: rotate(-2deg); animation: frag-float-c 11s ease-in-out infinite 2.4s; }
+
+  @keyframes frag-float-a {
+    0%, 100% { transform: translateY(8px)  rotate(-3deg); }
+    50%       { transform: translateY(-4px) rotate(-4deg); }
+  }
+  @keyframes frag-float-b {
+    0%, 100% { transform: translateY(0)    rotate(2deg); }
+    50%       { transform: translateY(-8px) rotate(3deg); }
+  }
+  @keyframes frag-float-c {
+    0%, 100% { transform: translateY(0)   rotate(-2deg); }
+    50%       { transform: translateY(6px) rotate(-1deg); }
+  }
+
+  .frag-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .frag-bar {
+    display: block;
+    height: 4px;
+    border-radius: 2px;
+    opacity: 0.45;
+  }
+  .frag-card--cyan   .frag-bar { background: var(--cyan); }
+  .frag-card--purple .frag-bar { background: var(--purple); }
+  .frag-card--pink   .frag-bar { background: var(--pink); }
+
+  .frag-sparks {
+    display: flex;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .spark {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .frag-card--cyan   .spark:nth-child(1) { background: rgba(0, 229, 255, 0.55); box-shadow: 0 0 6px rgba(0, 229, 255, 0.55); animation: spark-pulse 2.4s ease-in-out infinite; }
+  .frag-card--purple .spark:nth-child(2) { background: rgba(123, 97, 255, 0.55); box-shadow: 0 0 6px rgba(123, 97, 255, 0.55); animation: spark-pulse 2.4s ease-in-out infinite 0.8s; }
+  .frag-card--pink   .spark:nth-child(3) { background: rgba(251, 48, 121, 0.55); box-shadow: 0 0 6px rgba(251, 48, 121, 0.55); animation: spark-pulse 2.4s ease-in-out infinite 1.4s; }
+
+  @keyframes spark-pulse {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1;    }
+  }
+
+  @media (hover: hover) {
+    .frag-card:hover {
+      border-color: var(--gb2);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .mission-inner { grid-template-columns: 1fr; gap: 44px; }
+    .mission-right { height: 260px; max-width: 420px; margin: 0 auto; }
+    .frag-card { width: 200px; }
+    .frag-card:nth-child(1) { left: 8%;  top:   0; }
+    .frag-card:nth-child(2) { left: 34%; top:  74px; }
+    .frag-card:nth-child(3) { left: 16%; top: 156px; }
+  }
+  @media (max-width: 640px) {
+    .mission-section { padding-top: 64px; padding-bottom: 64px; }
+    .frag-card { width: 180px; padding: 14px 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frag-card, .spark, .ms-pain { animation: none !important; }
+    .ms-pain { opacity: 1; transform: none; }
+    .frag-card:nth-child(1) { transform: rotate(-3deg); }
+    .frag-card:nth-child(2) { transform: rotate(2deg); }
+    .frag-card:nth-child(3) { transform: rotate(-2deg); }
   }
 </style>
