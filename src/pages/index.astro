@@ -20,7 +20,6 @@ const HARDCODED_PILLARS = [
   { key: 'soul',   title: 'Soul',   body: 'Legacy building, IP development, thought leadership positioning, and turning your expertise into compounding authority.' },
   { key: 'pocket', title: 'Pocket', body: 'Revenue systems, opportunity sourcing, deal structuring, and building the financial engine that funds your vision.' },
 ];
-const PILLAR_ICONS: Record<string, string> = { mind: '🧠', body: '⚡', soul: '🔥', pocket: '💰' };
 
 const pageTitle       = s?.seo?.title       ?? 'CWK. Experience — The Sports Agent for Entrepreneurs';
 const pageDescription = s?.seo?.description ?? "CWK. installs the infrastructure that scales high-performing entrepreneurs. Long-term business management, not consulting.";
@@ -109,6 +108,9 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
       <div class="acc-sq as-1"></div>
       <div class="acc-sq as-2"></div>
       <div class="acc-sq as-3"></div>
+
+      <!-- Abstract Lottie (loaded lazily via lottie-web) -->
+      <div class="hero-lottie" data-lottie="/animations/technology.json" aria-hidden="true"></div>
     </div>
 
     <!-- Hero content -->
@@ -182,87 +184,166 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
   <!-- ── Four Pillars ──────────────────────────────────────── -->
   <section class="section pillars">
     <div class="section-inner">
-      <span class="eyebrow">The PLOS Framework</span>
-      <h2>Four pillars. One operating system.</h2>
-      <p class="section-sub">We support you across the four dimensions of a high-leverage business.</p>
+      <div class="pillars-header">
+        <span class="pill-eyebrow reveal-up">
+          <span class="pill-dot" aria-hidden="true"></span>
+          How We Support You
+        </span>
+        <h2 class="pillars-title reveal-up reveal-delay-1">We support you across four categories.</h2>
+        <p class="pillars-sub reveal-up reveal-delay-2">The PLOS framework — Mind, Body, Soul, Pocket — covers the full operating surface of a high-leverage business.</p>
+      </div>
 
       <div class="pillars-grid">
-        {pillars.map((p: any) => (
-          <div class="pillar-card glass-card">
-            <div class="pillar-icon">{PILLAR_ICONS[p.key] ?? '✦'}</div>
-            <h3>{p.title}</h3>
-            <p>{p.body}</p>
-          </div>
+        {pillars.map((p: any, i: number) => (
+          <article class={`pillar-card pillar-card--${p.key} glass-card reveal-card`} style={`--reveal-i:${i}`}>
+            <div class="pillar-icon" aria-hidden="true">
+              {p.key === 'mind' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+                  <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+                  <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/>
+                  <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/>
+                  <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/>
+                  <path d="M3.477 10.896a4 4 0 0 1 .585-.396"/>
+                  <path d="M19.938 10.5a4 4 0 0 1 .585.396"/>
+                  <path d="M6 18a4 4 0 0 1-1.967-.516"/>
+                  <path d="M19.967 17.484A4 4 0 0 1 18 18"/>
+                </svg>
+              )}
+              {p.key === 'body' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.5.5 0 0 1-.96 0L9.24 2.18a.5.5 0 0 0-.96 0l-2.35 8.36A2 2 0 0 1 4 12H2"/>
+                </svg>
+              )}
+              {p.key === 'soul' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                </svg>
+              )}
+              {p.key === 'pocket' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+                  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
+                </svg>
+              )}
+            </div>
+            <div class="pillar-body">
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ── Social Proof ──────────────────────────────────────── -->
+  <!-- ── Social Proof — Metrics Grid ────────────────────────── -->
   <section class="section proof">
     <div class="section-inner">
-      <div class="proof-bar glass-card">
-        <div class="proof-stat">
-          <span class="proof-number gradient-text">8+</span>
-          <span class="proof-label">Brands Built</span>
+      <div class="proof-grid">
+        <div class="stat-card reveal-card" style="--reveal-i:0">
+          <span class="stat-number">$1M <span class="stat-arrow" aria-hidden="true">→</span> $5M</span>
+          <span class="stat-label">Revenue Growth</span>
         </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <span class="proof-number gradient-text">3.5yr</span>
-          <span class="proof-label">Avg Engagement</span>
+        <div class="stat-card reveal-card" style="--reveal-i:1">
+          <span class="stat-number">10x</span>
+          <span class="stat-label">Content Output</span>
         </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <span class="proof-number gradient-text">$5M+</span>
-          <span class="proof-label">Revenue Growth Managed</span>
+        <div class="stat-card reveal-card" style="--reveal-i:2">
+          <span class="stat-number">20–30%</span>
+          <span class="stat-label">Shorter Sales Cycles</span>
         </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <span class="proof-number gradient-text">10x</span>
-          <span class="proof-label">Content Output for Rob Dial</span>
+        <div class="stat-card reveal-card" style="--reveal-i:3">
+          <span class="stat-number">60%</span>
+          <span class="stat-label">Less Decision Fatigue</span>
+        </div>
+        <div class="stat-card reveal-card" style="--reveal-i:4">
+          <span class="stat-number">80%</span>
+          <span class="stat-label">Less Messaging Confusion</span>
+        </div>
+        <div class="stat-card reveal-card" style="--reveal-i:5">
+          <span class="stat-number">6-Figure</span>
+          <span class="stat-label">Grants Secured</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Featured Work ─────────────────────────────────────── -->
-  <section class="section work-preview">
+  <!-- ── Featured Work — Mosaic Gallery ────────────────────── -->
+  <section class="section work-mosaic">
     <div class="section-inner">
-      <span class="eyebrow">The Work</span>
-      <h2>Real brands. Measurable results.</h2>
-      <p class="section-sub">From podcasters to non-profits to creative founders — CWK. builds the infrastructure that scales any vision.</p>
+      <div class="work-mosaic-header">
+        <span class="pill-eyebrow reveal-up">
+          <span class="pill-dot" aria-hidden="true"></span>
+          The Work
+        </span>
+        <h2 class="work-mosaic-title reveal-up reveal-delay-1">Brands Built For The Real World.</h2>
+        <p class="work-mosaic-sub reveal-up reveal-delay-2">A collection of work bridging education, community, tech, &amp; art.</p>
+      </div>
 
-      <div class="work-grid">
-        <a href="/work/rob-dial" class="work-card glass-card">
-          <span class="work-category tag">Podcast</span>
-          <h3>Rob Dial</h3>
-          <p>Scaled content from scattered output to 84 pieces/month. Revenue grew from $1M to $5M over a 3.5-year engagement.</p>
-          <div class="work-result">
-            <span class="work-stat">10x</span>
-            <span class="work-stat-label">Content output</span>
+      <div class="mosaic-grid">
+        <a href="/work/the-lab-miami" class="mosaic-card mosaic-card--wide reveal-card" style="--reveal-i:0">
+          <img src="/images/work/lab-miami.webp" alt="The LAB Miami innovation campus" width="1440" height="804" loading="lazy" decoding="async" />
+          <div class="mosaic-overlay">
+            <span class="mosaic-tag">Builder Hub</span>
+            <h3 class="mosaic-title">The LAB Miami</h3>
+            <p class="mosaic-meta">20–30% faster sales cycles</p>
+            <span class="mosaic-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
           </div>
         </a>
-        <a href="/work/the-lab-miami" class="work-card glass-card">
-          <span class="work-category tag tag-purple">Builder Hub</span>
-          <h3>The LAB Miami</h3>
-          <p>Installed content infrastructure and positioning clarity that shortened sales cycles by 20–30% across all programs.</p>
-          <div class="work-result">
-            <span class="work-stat">30%</span>
-            <span class="work-stat-label">Faster sales cycles</span>
+
+        <a href="/work/rob-dial" class="mosaic-card reveal-card" style="--reveal-i:1">
+          <img src="/images/work/rob-dial.webp" alt="Rob Dial podcast studio" width="1200" height="654" loading="lazy" decoding="async" />
+          <div class="mosaic-overlay">
+            <span class="mosaic-tag">Podcast</span>
+            <h3 class="mosaic-title">Rob Dial</h3>
+            <p class="mosaic-meta">Revenue $1M → $5M</p>
+            <span class="mosaic-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
           </div>
         </a>
-        <a href="/work/raasin-in-the-sun" class="work-card glass-card">
-          <span class="work-category tag tag-pink">Non-Profit</span>
-          <h3>Raasin in the Sun</h3>
-          <p>Documented 9 public art projects, secured multiple six-figure grants, and built the media foundation of a creative placemaking movement.</p>
-          <div class="work-result">
-            <span class="work-stat">6-fig</span>
-            <span class="work-stat-label">Grants secured</span>
+
+        <a href="/work/spraycation" class="mosaic-card reveal-card" style="--reveal-i:2">
+          <img src="/images/work/spraycation.webp" alt="SPRAYCATION experiential art tour" width="1000" height="546" loading="lazy" decoding="async" />
+          <div class="mosaic-overlay">
+            <span class="mosaic-tag">Experiential</span>
+            <h3 class="mosaic-title">SPRAYCATION</h3>
+            <p class="mosaic-meta">6-city tour executed</p>
+            <span class="mosaic-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="/work/dawa" class="mosaic-card reveal-card" style="--reveal-i:3">
+          <img src="/images/work/dawa.webp" alt="DAWA non-profit education program" width="1000" height="546" loading="lazy" decoding="async" />
+          <div class="mosaic-overlay">
+            <span class="mosaic-tag">Non-Profit</span>
+            <h3 class="mosaic-title">DAWA</h3>
+            <p class="mosaic-meta">A dignity project unveiled</p>
+            <span class="mosaic-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="/work/stephy-lee" class="mosaic-card reveal-card" style="--reveal-i:4">
+          <img src="/images/work/stephy-lee.webp" alt="Stephy Lee music artist" width="1000" height="546" loading="lazy" decoding="async" />
+          <div class="mosaic-overlay">
+            <span class="mosaic-tag">Creative Founder</span>
+            <h3 class="mosaic-title">Stephy Lee</h3>
+            <p class="mosaic-meta">SXSW stage secured</p>
+            <span class="mosaic-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
           </div>
         </a>
       </div>
 
-      <div class="work-cta">
+      <div class="work-cta reveal-up reveal-delay-3">
         <a href="/work" class="btn btn-ghost">See All Work →</a>
       </div>
     </div>
@@ -481,6 +562,28 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
     75%       { translate: -5px  -5px; }
   }
 
+  /* ── Abstract Lottie layer ─────────────────────────── */
+  /* The source animation paints everything in #150529 (near-black), so we
+     invert + hue-rotate to get a bright cyan-leaning render that reads on
+     the dark hero bg without fighting the CTAs. */
+  .hero-lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(1100px, 95vw);
+    aspect-ratio: 1 / 1;
+    translate: -50% -50%;
+    opacity: 0;
+    pointer-events: none;
+    filter: invert(1) hue-rotate(170deg) saturate(0.85) brightness(0.85);
+    transition: opacity 1.4s ease-out;
+  }
+  .hero-lottie.is-ready { opacity: 0.22; }
+  .hero-lottie svg { display: block; width: 100%; height: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-lottie { display: none; }
+  }
+
   /* ── Hero content ──────────────────────────────────── */
   .hero-inner {
     position: relative;
@@ -663,131 +766,572 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
     margin-bottom: 32px;
   }
 
+  .pillars-header {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+    text-align: left;
+  }
+
+  .pillars-title {
+    font-size: clamp(28px, 4.6vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .pillars-sub {
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: var(--muted);
+    margin: 0;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
   .pillars-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-tile);
+    gap: 20px;
   }
 
   .pillar-card {
-    padding: var(--pad-md);
+    position: relative;
+    overflow: hidden;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, var(--pillar-accent, transparent) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .pillar-card > * { position: relative; z-index: 1; }
+
+  .pillar-card--mind   { --pillar-color: #00E5FF; --pillar-accent: rgba(0, 229, 255, 0.10); }
+  .pillar-card--body   { --pillar-color: #7B61FF; --pillar-accent: rgba(123, 97, 255, 0.10); }
+  .pillar-card--soul   { --pillar-color: #FB3079; --pillar-accent: rgba(251, 48, 121, 0.10); }
+  .pillar-card--pocket { --pillar-color: #00E5FF; --pillar-accent: rgba(0, 229, 255, 0.10); }
+
+  .pillar-icon {
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--pillar-color) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pillar-color) 22%, transparent);
+    color: var(--pillar-color);
+    flex-shrink: 0;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.4s ease,
+      border-color 0.4s ease;
+  }
+
+  .pillar-body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .pillar-icon {
-    font-size: 24px;
-    line-height: 1;
   }
 
   .pillar-card h3 {
-    font-size: 16px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 0;
+    line-height: 1.2;
   }
 
   .pillar-card p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--muted);
-    line-height: 1.55;
+    line-height: 1.65;
+    margin: 0;
   }
 
-  /* ── Proof ────────────────────────────────────────── */
-  .proof-bar {
+  @media (hover: hover) {
+    .pillar-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--pillar-color) 32%, var(--gb));
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+    }
+    .pillar-card:hover::before { opacity: 1; }
+    .pillar-card:hover .pillar-icon {
+      transform: scale(1.06) rotate(-3deg);
+      background: color-mix(in srgb, var(--pillar-color) 18%, transparent);
+      border-color: color-mix(in srgb, var(--pillar-color) 38%, transparent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pillar-card, .pillar-icon { transition: none !important; }
+    .pillar-card:hover { transform: none !important; }
+    .pillar-card:hover .pillar-icon { transform: none !important; }
+  }
+
+  /* ── Proof / Metrics grid ─────────────────────────── */
+  .proof-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 28px 32px;
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
   }
 
-  .proof-stat {
+  /* 6-up row only when there's genuinely room for each card's content */
+  @media (min-width: 1200px) {
+    .proof-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 0 16px;
-  }
-
-  .proof-number {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .proof-label {
-    font-size: 11px;
-    color: var(--muted);
+    justify-content: center;
+    gap: 10px;
+    padding: 28px 16px;
+    border: 1px solid var(--gb);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.4s ease;
   }
 
-  .proof-divider {
-    width: 1px;
-    background: var(--gb);
-    align-self: stretch;
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.10) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
   }
 
-  /* ── Work preview ─────────────────────────────────── */
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--gap-tile);
-    margin-bottom: 24px;
+  /* Top hairline accent that grows in on hover */
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00E5FF, transparent);
+    transform: translateX(-50%);
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
   }
 
-  .work-card {
-    padding: var(--pad-md);
+  .stat-card > * { position: relative; z-index: 1; }
+
+  .stat-number {
+    font-size: clamp(20px, 1.9vw, 26px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #00E5FF;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.15em;
+    max-width: 100%;
+  }
+
+  .stat-arrow {
+    display: inline-block;
+    color: #00E5FF;
+    opacity: 0.7;
+    transform: translateY(-0.04em);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    max-width: 14ch;
+  }
+
+  @media (hover: hover) {
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 229, 255, 0.28);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.32);
+      background: rgba(0, 229, 255, 0.025);
+    }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card:hover::after { width: 70%; }
+    .stat-card:hover .stat-arrow {
+      transform: translate(4px, -0.04em);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stat-card, .stat-card::after, .stat-arrow { transition: none !important; }
+    .stat-card:hover { transform: none !important; }
+  }
+
+  /* ── Work mosaic gallery ──────────────────────────── */
+  .work-mosaic-header {
+    text-align: left;
+    margin-bottom: 32px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
+  }
+
+  .pill-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    padding: 6px 16px;
+    background: rgba(251, 48, 121, 0.08);
+    border: 1px solid rgba(251, 48, 121, 0.19);
+    border-radius: 100px;
+    font-family: var(--font-primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #FB3079;
+    text-transform: uppercase;
+  }
+  .pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FB3079;
+    box-shadow: 0 0 8px rgba(251, 48, 121, 0.55);
+  }
+
+  .work-mosaic-title {
+    font-size: clamp(28px, 4.6vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .work-mosaic-sub {
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: var(--muted);
+    margin: 0;
+    max-width: 560px;
+    line-height: 1.55;
+  }
+
+  .mosaic-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: minmax(0, 380px) minmax(0, 280px);
+    gap: 8px;
+  }
+
+  /* Card 1 (LAB) — wide top-left | Card 2 (Rob) — top-right
+     Cards 3,4,5 — bottom row spanning all columns */
+  .mosaic-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .mosaic-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .mosaic-card:nth-child(3),
+  .mosaic-card:nth-child(4),
+  .mosaic-card:nth-child(5) { grid-row: 2; }
+
+  /* Bottom row uses sub-grid to get equal thirds spanning the full width */
+  .mosaic-grid::after {
+    content: none;
+  }
+
+  /* Re-layout: bottom row needs three equal cards across both columns.
+     Easiest: switch to two stacked grids via grid-template-areas. */
+  .mosaic-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      "a a a a b b"
+      "c c d d e e";
+  }
+  .mosaic-card:nth-child(1) { grid-area: a; }
+  .mosaic-card:nth-child(2) { grid-area: b; }
+  .mosaic-card:nth-child(3) { grid-area: c; }
+  .mosaic-card:nth-child(4) { grid-area: d; }
+  .mosaic-card:nth-child(5) { grid-area: e; }
+
+  .mosaic-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card, 14px);
+    border: 1px solid var(--gb);
     text-decoration: none;
     color: inherit;
+    background: rgba(255, 255, 255, 0.02);
+    isolation: isolate;
+    transform: translateZ(0);
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.4s ease;
+  }
+  .mosaic-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+    filter: saturate(0.96);
+  }
+  .mosaic-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(7, 9, 15, 0) 0%,
+      rgba(7, 9, 15, 0) 30%,
+      rgba(7, 9, 15, 0.85) 100%
+    );
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .mosaic-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(
+      ellipse at 50% 100%,
+      rgba(0, 229, 255, 0.18) 0%,
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
   }
 
-  .work-card h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin-top: 8px;
-  }
-
-  .work-card p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.55;
-    flex: 1;
-  }
-
-  .work-result {
+  .mosaic-overlay {
+    position: relative;
+    z-index: 3;
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-top: 8px;
-    padding-top: 12px;
-    border-top: 1px solid var(--gb);
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 28px;
+    gap: 6px;
   }
 
-  .work-stat {
-    font-size: 20px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #00E5FF, #7B61FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .mosaic-card:not(.mosaic-card--wide) .mosaic-overlay {
+    padding: 22px;
   }
 
-  .work-stat-label {
-    font-size: 12px;
-    color: var(--dim);
+  .mosaic-tag {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 6px;
+    transform: translateY(6px);
+    opacity: 0;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s,
+      opacity 0.5s ease 0.05s;
   }
+
+  .mosaic-title {
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+    transform: translateY(8px);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mosaic-meta {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+    opacity: 0.9;
+    transform: translateY(8px);
+    transition:
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.04s,
+      opacity 0.4s ease 0.04s;
+  }
+
+  .mosaic-arrow {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translate(-6px, 6px) rotate(-20deg);
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.3s ease;
+  }
+
+  /* Hover state */
+  @media (hover: hover) {
+    .mosaic-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 229, 255, 0.2);
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+    .mosaic-card:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.08);
+    }
+    .mosaic-card:hover::after { opacity: 1; }
+    .mosaic-card:hover .mosaic-title { transform: translateY(0); }
+    .mosaic-card:hover .mosaic-meta { transform: translateY(0); opacity: 1; }
+    .mosaic-card:hover .mosaic-arrow {
+      opacity: 1;
+      transform: translate(0, 0) rotate(0deg);
+      background: rgba(0, 229, 255, 0.85);
+      color: #07090F;
+    }
+  }
+  .mosaic-card:focus-visible {
+    outline: 2px solid #00E5FF;
+    outline-offset: 3px;
+  }
+
+  /* Always show tag (subtle entry from reveal) */
+  .reveal-card.is-visible .mosaic-tag {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card reveal-on-scroll */
+  .reveal-card {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--reveal-i, 0) * 90ms);
+  }
+  .reveal-card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Header reveal-on-scroll */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
 
   .work-cta {
     text-align: center;
-    margin-top: 16px;
+    margin-top: 36px;
+  }
+
+  /* Reduced motion: kill animations + hover transforms */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-card, .reveal-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .mosaic-card, .mosaic-card img, .mosaic-card .mosaic-title,
+    .mosaic-card .mosaic-meta, .mosaic-card .mosaic-tag, .mosaic-card .mosaic-arrow {
+      transition: none !important;
+    }
+    .mosaic-tag, .mosaic-title, .mosaic-meta { opacity: 1 !important; transform: none !important; }
+    .mosaic-arrow { opacity: 1; transform: none; }
+  }
+
+  /* ── Mosaic responsive ────────────────────────────── */
+  @media (max-width: 1024px) {
+    .mosaic-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "a a"
+        "b c"
+        "d e";
+      grid-template-rows: 320px 240px 240px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .mosaic-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "a"
+        "b"
+        "c"
+        "d"
+        "e";
+      grid-template-rows: repeat(5, 220px);
+      gap: 12px;
+    }
+    .work-mosaic-header { margin-bottom: 24px; }
+    .mosaic-overlay,
+    .mosaic-card:not(.mosaic-card--wide) .mosaic-overlay { padding: 18px; }
+    .mosaic-arrow { top: 14px; right: 14px; width: 34px; height: 34px; }
+    /* On touch devices, always show meta + arrow since hover doesn't apply */
+    .mosaic-meta { opacity: 1; transform: none; }
+    .mosaic-arrow { opacity: 1; transform: none; background: rgba(0, 229, 255, 0.85); color: #07090F; }
+    .mosaic-title { transform: none; }
+  }
+
+  /* Touch-only fallback (no hover): always reveal text + arrow */
+  @media (hover: none) {
+    .mosaic-meta { opacity: 1; transform: none; }
+    .mosaic-arrow { opacity: 1; transform: none; background: rgba(0, 229, 255, 0.85); color: #07090F; }
+    .mosaic-title { transform: none; }
   }
 
   /* ── Product preview ──────────────────────────────── */
@@ -894,9 +1438,13 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
 
   /* ── Responsive ───────────────────────────────────── */
   @media (max-width: 768px) {
-    .pillars-grid { grid-template-columns: 1fr; }
-    .proof-bar { grid-template-columns: repeat(2, 1fr); }
-    .proof-divider:nth-child(4) { display: none; }
+    .pillars-grid { grid-template-columns: 1fr; gap: 14px; }
+    .pillar-card { padding: 28px; gap: 18px; }
+    .pillar-icon { width: 46px; height: 46px; border-radius: 12px; }
+    .pillar-card h3 { font-size: 20px; }
+    .pillars-header { margin-bottom: 28px; gap: 12px; }
+    .stat-card { padding: 22px 12px; gap: 8px; }
+    .stat-label { font-size: 11px; }
     .work-grid { grid-template-columns: 1fr; }
     .product-preview-card { padding: 28px 20px; }
     .waitlist-card { padding: 40px 28px 36px; }
@@ -914,7 +1462,10 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
 
   @media (max-width: 640px) {
     .hero { padding-top: 112px; min-height: auto; }
-    .proof-bar { grid-template-columns: 1fr 1fr; }
+    .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .stat-card { padding: 20px 10px; }
+    .stat-number { font-size: 20px; }
+    .stat-label { font-size: 11px; max-width: 16ch; }
     .btn-hero-join { width: 100%; max-width: 320px; justify-content: center; }
     .hero-links { flex-wrap: wrap; justify-content: center; gap: 8px; }
     .hero-link-divider { display: none; }
@@ -969,5 +1520,77 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
     setTimeout(() => {
       setInterval(advance, INTERVAL);
     }, INTERVAL);
+  })();
+
+  /* ── Reveal-on-scroll for work mosaic + section headers ── */
+  (() => {
+    const targets = document.querySelectorAll<HTMLElement>('.reveal-card, .reveal-up');
+    if (!targets.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      }
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+
+    targets.forEach(el => io.observe(el));
+  })();
+</script>
+
+<script>
+  // Lazy-load the abstract Lottie in the hero background.
+  // Skips on reduced-motion; fetches lottie-web ESM only when the element
+  // scrolls into view (first paint is unaffected).
+  (() => {
+    const host = document.querySelector<HTMLElement>('.hero-lottie');
+    if (!host) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const path = host.dataset.lottie;
+    if (!path) return;
+
+    const mount = () => import('https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm')
+      .then(({ default: lottie }) => {
+        const anim = lottie.loadAnimation({
+          container: host,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path,
+          // progressiveLoad:false buffers the whole JSON before first paint —
+          // prevents the loop-boundary flash some browsers show when chunks
+          // are still streaming in. preserveAspectRatio keeps it centered.
+          rendererSettings: { progressiveLoad: false, preserveAspectRatio: 'xMidYMid slice' },
+        });
+
+        // Sub-frame interpolation smooths the transition at the loop seam
+        // (otherwise lottie snaps to discrete integer frames and the jump
+        // from last → first is visible). Slower speed makes the loop feel
+        // ambient instead of hypnotic.
+        anim.setSubframe(true);
+        anim.setSpeed(0.5);
+
+        // Fade in once the first frame has actually rendered to the DOM.
+        anim.addEventListener('DOMLoaded', () => host.classList.add('is-ready'));
+      })
+      .catch(() => { /* silent — hero still renders without it */ });
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        if (entries.some(e => e.isIntersecting)) { obs.disconnect(); mount(); }
+      });
+      io.observe(host);
+    } else {
+      mount();
+    }
   })();
 </script>
