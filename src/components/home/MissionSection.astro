@@ -1,10 +1,4 @@
 ---
-const painPoints = [
-  'Your systems are fragmented.',
-  'Your authority is scattered across tools or locked in your head.',
-  "Deals die because you can't prove value fast enough, or you forgot to follow up.",
-];
-
 const fragCards = [
   { label: 'CRM',      color: 'cyan',   width: '82%' },
   { label: 'Content',  color: 'purple', width: '66%' },
@@ -18,25 +12,24 @@ const fragCards = [
     <div class="mission-left">
       <span class="ms-eyebrow reveal-up">
         <span class="ms-eyebrow-dot"></span>
-        THE MISSION
+        THE PROBLEM
       </span>
 
       <h2 class="ms-heading reveal-up reveal-delay-1">
-        Most high-performing entrepreneurs between
-        <span class="ms-range">$150K&ndash;$5M</span> are stuck because their infrastructure is leaking.
+        You want to build something but don't know where to go to build it.
       </h2>
 
-      <ul class="ms-pains reveal-up reveal-delay-2">
-        {painPoints.map((p, i) => (
-          <li class="ms-pain" style={`--pi:${i}`}>
-            <span class="ms-pain-dot" aria-hidden="true"></span>
-            <span>{p}</span>
-          </li>
-        ))}
-      </ul>
+      <p class="ms-body reveal-up reveal-delay-2">
+        The moment someone decides to monetize a skill, service, product, etc.
+        we enter the world of business. And the world of business is cutthroat — so
+        having systems in place to protect us from bad actors is half the battle.
+      </p>
 
-      <p class="ms-result reveal-up reveal-delay-3">
-        The result? <span class="ms-result-em">You are working harder to earn the same.</span>
+      <p class="ms-body reveal-up reveal-delay-3">
+        <span class="ms-result-em">CWK. is your long-term partner.</span> We install the
+        infrastructure that catches everything, then manage your operations and coordinate
+        your growth. We're not consultants who give advice and leave. We're business
+        managers who acquire a stake in your future and stay for the long game.
       </p>
     </div>
 
@@ -103,59 +96,18 @@ const fragCards = [
   }
 
   .ms-heading {
-    font-size: clamp(24px, 2.8vw, 32px);
+    font-size: clamp(28px, 3.4vw, 40px);
     font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.018em;
+    line-height: 1.15;
+    letter-spacing: -0.022em;
     margin: 0;
   }
-  .ms-range {
-    background: linear-gradient(135deg, #00E5FF, #7B61FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    white-space: nowrap;
-  }
 
-  /* Pain list */
-  .ms-pains {
-    list-style: none;
+  .ms-body {
     margin: 4px 0 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    width: 100%;
-  }
-  .ms-pain {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
     font-size: 16px;
     color: var(--muted);
-    line-height: 1.6;
-    opacity: 0;
-    transform: translateX(-8px);
-    animation: ms-pain-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(0.4s + var(--pi) * 0.12s);
-  }
-  @keyframes ms-pain-in {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .ms-pain-dot {
-    flex-shrink: 0;
-    width: 8px; height: 8px;
-    margin-top: 9px;
-    border-radius: 50%;
-    background: var(--pink);
-    box-shadow: 0 0 10px rgba(251, 48, 121, 0.45);
-  }
-
-  .ms-result {
-    margin: 8px 0 0;
-    font-size: 18px;
-    color: var(--muted);
-    line-height: 1.5;
+    line-height: 1.65;
   }
   .ms-result-em {
     color: var(--text);
@@ -273,8 +225,7 @@ const fragCards = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .frag-card, .spark, .ms-pain { animation: none !important; }
-    .ms-pain { opacity: 1; transform: none; }
+    .frag-card, .spark { animation: none !important; }
     .frag-card:nth-child(1) { transform: rotate(-3deg); }
     .frag-card:nth-child(2) { transform: rotate(2deg); }
     .frag-card:nth-child(3) { transform: rotate(-2deg); }
