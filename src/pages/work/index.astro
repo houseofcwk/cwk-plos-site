@@ -189,7 +189,7 @@ const cases = sanityCases
   .cases-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-tile);
+    gap: clamp(16px, 2vw, 28px);
   }
 
   .case-card {
