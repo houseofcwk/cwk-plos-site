@@ -61,11 +61,16 @@ export default function WaitlistModal() {
 
         <div className="wl-content">
           <span className="wl-eyebrow">Early Access</span>
-          <h2 className="wl-title">Join the Waitlist</h2>
+          <h2 className="wl-title">
+            We're building something for builders &amp; creators who are done going at it alone.
+          </h2>
           <p className="wl-sub">
-            Be first in line when CWK. Agent+ launches. No spam, ever.
+            CWK. Agent+ is the operating system that manages your growth across Mind, Body, Soul, and Pocket. Join the waitlist to get early access when we launch.
           </p>
           <WaitlistForm />
+          <p className="wl-footnote">
+            🔑 This grants you exclusive access to the House of CWK. world.
+          </p>
         </div>
       </div>
 
@@ -181,6 +186,14 @@ export default function WaitlistModal() {
           max-width: 360px;
           line-height: 1.55;
           margin: 0 0 16px;
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .wl-footnote {
+          font-size: 13px;
+          color: rgba(238, 240, 255, 0.55);
+          line-height: 1.5;
+          margin: 14px 0 0;
           font-family: 'DM Sans', sans-serif;
         }
 
