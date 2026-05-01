@@ -92,6 +92,11 @@ const h2 = (text: string): PtBlock => ({
   style: 'h2',
   children: [{ _type: 'span', text }],
 });
+const h3 = (text: string): PtBlock => ({
+  _type: 'block',
+  style: 'h3',
+  children: [{ _type: 'span', text }],
+});
 const quote = (text: string, attribution?: string): PtCallout => ({
   _type: 'callout',
   tone: 'quote',
@@ -282,7 +287,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     resultLabel: 'Grants secured',
     stats: [
       { value: '6-fig', label: 'Grants Secured' },
-      { value: '9', label: 'Public Art Projects' },
+      { value: '9', label: 'High Impact Projects' },
       { value: '3 years', label: 'Engagement' },
     ],
     body: [
@@ -290,16 +295,37 @@ export const CASE_STUDIES: CaseStudy[] = [
       p('Raasin in the Sun is a creative placemaking nonprofit founded by Raasin McIntosh, an Olympian and community builder based in Austin, Texas. I worked with the organization for roughly three years as Head of Content, building the media and documentation foundation for its most formative projects. This was my entry point into telling stories behind large-scale public art.'),
 
       h2('Key Projects Documented'),
-      p("The Alley Project: transforming a dirty alley into a cultural event space."),
-      yt('https://www.youtube.com/embed/OrwPvL4qWec?rel=0', 'The Alley Project'),
-      p('The Delco Project: a home beautification initiative culminating in a $5,000 donation.'),
-      yt('https://www.youtube.com/embed/V9JQMOpFup8?rel=0', 'The Delco Project'),
-      p('Colores de la Cultura: a street mural celebrating Latina identity by two well-known Latina muralists.'),
-      yt('https://www.youtube.com/embed/DIGzsqbQ2bk?rel=0', 'Colores de la Cultura | Part 1'),
-      p('Rise of Masontown: a major mural and documentary on Black land ownership and industrial Austin.'),
-      yt('https://www.youtube.com/embed/AgMQZw7dGnY?rel=0', 'Rise of Masontown | Part 1'),
-      p('Be Well Murals: a 2020 mural series that later won Best of Austin.'),
-      yt('https://www.youtube.com/embed/JbU9nAI8xig?rel=0', 'Be Well Murals'),
+      h3('The Alley Project'),
+      p('Transforming a dirty alley into a cultural event space.'),
+      yt('https://www.youtube.com/embed/OrwPvL4qWec?rel=0', '12th and Chicon Alley Beautification Initiative Recap'),
+
+      h3('The Delco Project'),
+      p('A home-beautification initiative culminating in a $5,000 donation.'),
+      yt('https://www.youtube.com/embed/V9JQMOpFup8?rel=0', 'The Delco Project Documentary By Kris San'),
+
+      h3('Colores de la Cultura'),
+      p('A street mural celebrating Latina identity by two well-known Latina muralists.'),
+      yt('https://www.youtube.com/embed/DIGzsqbQ2bk?rel=0', 'San Marcos Street Mural Promo'),
+
+      h3('Juneteenth with Rev. Dixon'),
+      p('A mobile storytelling project documenting East Austin history.'),
+
+      h3('Rise of Masontown'),
+      p('A major mural and documentary on Black land ownership and industrial Austin.'),
+      yt('https://www.youtube.com/embed/AgMQZw7dGnY?rel=0', 'The Rise of Masontown — Meet the Team'),
+
+      h3('The Story Behind Six Square'),
+      p("A documentary capturing the origin and mission of Six Square, a cultural organization preserving Black history in Central East Austin."),
+
+      h3('Be Well Murals'),
+      p('A 2020 mural series that later won Best of Austin.'),
+      yt('https://www.youtube.com/embed/JbU9nAI8xig?rel=0', 'Be Well Murals Austin'),
+
+      h3('Walls Unite'),
+      p('A large-scale warehouse restoration and outdoor art gallery.'),
+
+      h3('The Master Plan: Where It All Began'),
+      p('Examining gentrification and environmental racism in East Austin since 1928.'),
 
       h2('Impact'),
       bullet('Helped secure multiple six-figure grants, including funding tied directly to documentary work.'),
