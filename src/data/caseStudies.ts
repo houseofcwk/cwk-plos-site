@@ -656,7 +656,7 @@ export const CASE_STUDIES: CaseStudy[] = [
 
       {
         _type: 'gallery',
-        columns: 3,
+        columns: 1,
         images: [
           { src: '/images/case-studies/pay-the-creators/gallery-01.webp', alt: 'Pay the Creators Podcast moment 01' },
           { src: '/images/case-studies/pay-the-creators/gallery-02.webp', alt: 'Pay the Creators Podcast moment 02' },
