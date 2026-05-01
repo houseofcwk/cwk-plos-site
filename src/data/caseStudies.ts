@@ -593,22 +593,73 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '∞', label: 'IP juice added' },
     ],
     body: [
+      {
+        _type: 'image',
+        src: '/images/case-studies/pay-the-creators/hero-01.webp',
+        alt: 'Pay the Creators Podcast — opening hero',
+      },
+
       h2('The Setup'),
-      p('BeatStars is a global marketplace for buying and selling music beats, founded by Abe Batshon. Abe came to me with a simple request: produce a podcast.'),
+      {
+        _type: 'block',
+        style: 'normal',
+        markDefs: [{ _key: 'beatstars', _type: 'link', href: 'https://www.beatstars.com' }],
+        children: [
+          { _type: 'span', text: '' },
+          { _type: 'span', text: 'BeatStars', marks: ['beatstars'] },
+          { _type: 'span', text: ' is a global marketplace for buying and selling music beats, founded by Abe Batshon.' },
+        ],
+      },
+      p('Abe came to me with a simple request: produce a podcast.'),
+
+      {
+        _type: 'image',
+        src: '/images/case-studies/pay-the-creators/hero-02.webp',
+        alt: 'Pay the Creators Podcast — production still',
+      },
 
       h2('Avoiding a Costly Mistake'),
       p('The original name was The Self-Made Podcast. I told him no.'),
       p("No one is self-made. That name worked against BeatStars' core mission. BeatStars exists to protect creators and help them get paid. A podcast called Self-Made diluted that position."),
       p('The show was renamed Pay the Creators Podcast.'),
-      p("That single decision aligned the podcast with the brand's point of view and gave the IP juice."),
-      yt('https://www.youtube.com/embed/d8aTt4qp-HE?rel=0', 'Pay the Creators Podcast | Naming the Show'),
+      {
+        _type: 'block',
+        style: 'normal',
+        markDefs: [{ _key: 'ptc', _type: 'link', href: 'https://paythecreators.com' }],
+        children: [
+          { _type: 'span', text: "That single decision aligned the podcast with the brand's point of view and gave the IP juice. Visit " },
+          { _type: 'span', text: 'paythecreators.com', marks: ['ptc'] },
+          { _type: 'span', text: '.' },
+        ],
+      },
+      yt('https://www.youtube.com/embed/4B9ZH5rMHMU?rel=0', 'Pay The Creators Podcast Intro'),
 
       h2('The Work'),
-      p('Although I was hired strictly for production, I built the foundational structure of the podcast, including show positioning, end-to-end production, crew hiring, location sourcing (Warm Audio Studios), and a repeatable operational setup for recording and release.'),
+      p('Although I was hired strictly for production, I built the foundational structure of the podcast, including:'),
+      bullet('Show positioning and first-layer identity'),
+      bullet('End-to-end production'),
+      bullet('Crew hiring'),
+      bullet('Location sourcing (Warm Audio Studios)'),
+      bullet('A repeatable operational setup for recording and release'),
       p('We produced the first 7 episodes and established a format that could continue without my involvement.'),
-      yt('https://www.youtube.com/embed/DdPKPvg74Ro?rel=0', 'Pay the Creators Podcast | Episode Production'),
+
+      {
+        _type: 'gallery',
+        columns: 3,
+        images: [
+          { src: '/images/case-studies/pay-the-creators/gallery-01.webp', alt: 'Pay the Creators Podcast moment 01' },
+          { src: '/images/case-studies/pay-the-creators/gallery-02.webp', alt: 'Pay the Creators Podcast moment 02' },
+          { src: '/images/case-studies/pay-the-creators/gallery-03.webp', alt: 'Pay the Creators Podcast moment 03' },
+        ],
+      },
+
+      yt('https://www.youtube.com/embed/DdPKPvg74Ro?rel=0', '🎹 Is Producing Enough? #beatstars #paythecreators #podcast #producer #musicproducer #beatmaker'),
 
       h2('What This Case Proves'),
+      p("This wasn't just about producing episodes. It was about:"),
+      bullet('Stopping the wrong idea early'),
+      bullet("Anchoring intellectual property to the brand's truth"),
+      bullet('Building foundations that last beyond the original creator'),
       p("Sometimes the most valuable contribution isn't what's in the contract. It's protecting the client's best interest."),
     ],
   },
