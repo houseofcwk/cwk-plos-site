@@ -122,6 +122,74 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
       <WaitlistForm client:visible />
     </div>
   </section>
+
+  <!-- ── Image lightbox ─────────────────────────────────────── -->
+  <dialog id="csd-lightbox" class="csd-lightbox" aria-label="Image viewer">
+    <button type="button" class="csd-lightbox-close" aria-label="Close image">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+      </svg>
+    </button>
+    <figure class="csd-lightbox-figure">
+      <img alt="" />
+      <figcaption hidden></figcaption>
+    </figure>
+  </dialog>
+
+  <script>
+    const dialog = document.getElementById('csd-lightbox') as HTMLDialogElement | null;
+    if (dialog) {
+      const fig = dialog.querySelector('figure') as HTMLElement;
+      const dialogImg = dialog.querySelector('img') as HTMLImageElement;
+      const dialogCap = dialog.querySelector('figcaption') as HTMLElement;
+      const closeBtn = dialog.querySelector('.csd-lightbox-close') as HTMLButtonElement;
+
+      const open = (img: HTMLImageElement) => {
+        dialogImg.src = img.currentSrc || img.src;
+        dialogImg.alt = img.alt || '';
+        const sourceFig = img.closest('figure');
+        const cap = sourceFig?.querySelector('figcaption');
+        if (cap && cap.textContent && cap.textContent.trim().length > 0) {
+          dialogCap.textContent = cap.textContent.trim();
+          dialogCap.hidden = false;
+        } else {
+          dialogCap.textContent = '';
+          dialogCap.hidden = true;
+        }
+        dialog.showModal();
+        document.body.style.overflow = 'hidden';
+      };
+
+      const close = () => {
+        if (dialog.open) dialog.close();
+        document.body.style.overflow = '';
+      };
+
+      // Bind clicks on body + cover images.
+      const targets = document.querySelectorAll<HTMLImageElement>('.csd-body img, .csd-cover img');
+      targets.forEach((img) => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', (e) => {
+          e.preventDefault();
+          open(img);
+        });
+      });
+
+      closeBtn.addEventListener('click', close);
+
+      // Click on backdrop (anywhere outside the figure) closes.
+      dialog.addEventListener('click', (e) => {
+        if (e.target instanceof Node && !fig.contains(e.target)) {
+          close();
+        }
+      });
+
+      // Native ESC fires the cancel event; ensure scroll restores.
+      dialog.addEventListener('close', () => {
+        document.body.style.overflow = '';
+      });
+    }
+  </script>
 </Base>
 
 <style>
@@ -424,5 +492,85 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
     color: var(--muted);
     max-width: 560px;
     margin: 0 auto 24px;
+  }
+
+  /* ── Lightbox ─────────────────────────────────────────────── */
+  .csd-lightbox {
+    border: 0;
+    padding: 0;
+    margin: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    color: var(--text);
+  }
+  .csd-lightbox::backdrop {
+    background: rgba(8, 10, 16, 0.86);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .csd-lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .csd-lightbox-figure {
+    margin: 0;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: 92vw;
+    max-height: 92vh;
+  }
+  .csd-lightbox-figure img {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    cursor: default;
+  }
+  .csd-lightbox-figure figcaption {
+    max-width: 720px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.5;
+  }
+  .csd-lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(20, 22, 28, 0.65);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .csd-lightbox-close:hover {
+    background: rgba(40, 44, 56, 0.85);
+    border-color: rgba(255, 255, 255, 0.32);
+    transform: scale(1.05);
+  }
+  .csd-lightbox-close:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .csd-lightbox-close { transition: none; }
   }
 </style>
