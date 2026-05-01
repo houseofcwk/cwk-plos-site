@@ -60,6 +60,7 @@ export type PtBlockAny = PtBlock | PtImage | PtGallery | PtVideoEmbed | PtCallou
 export interface CaseStudy {
   slug: string;
   client: string;
+  tagline?: string;
   category: string;
   medium: string;
   cardSurface: CardSurface;
@@ -533,43 +534,79 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'dawa',
     client: 'DAWA',
+    tagline: 'Diversity Awareness & Wellness in Action',
     category: 'NON-PROFIT',
     medium: 'NON-PROFIT',
     cardSurface: 'glass',
     cardAccent: '#00E5FF',
-    cardImage: '/images/work/dawa.webp',
-    cardImageAlt: 'DAWA non-profit education program',
+    cardImage: '/images/case-studies/dawa/cover.webp',
+    cardImageAlt: 'DAWA Diversity Awareness & Wellness in Action',
     cardDescription: "Found the organization's anchor phrase, built its content system, and co-built an education program from zero.",
-    cardStat: { num: '80%', label: 'Messaging Clarity' },
+    cardStat: { num: '100%', label: 'Messaging Clarity' },
     order: 10,
     headline: 'How DAWA Found Its Anchor',
     duration: 'Nearly 2 years',
-    result: '80%',
+    result: '100%',
     resultLabel: 'Messaging clarity',
     stats: [
-      { value: '80%', label: 'Messaging clarity' },
-      { value: '8-person', label: 'Team in 2 weeks' },
+      { value: '100%', label: 'Messaging clarity' },
+      { value: '8-person', label: 'Led Major Campaign' },
       { value: '2 years', label: 'Active building' },
     ],
     body: [
+      {
+        _type: 'image',
+        src: '/images/case-studies/dawa/board-of-directors.webp',
+        alt: "DAWA's founding board of directors",
+      },
+
       h2('The Starting Point'),
       p("Kris joined DAWA's founding board of directors in early 2023. The organization was growing. The mission was strong. The impact was real. But the messaging was scattered. Too many programs. Too many definitions. No clear center of gravity. That was the root problem. DAWA had already been making headlines, but without a unified narrative to anchor its momentum."),
 
+      {
+        _type: 'image',
+        src: '/images/case-studies/dawa/kris-tech-shirt.webp',
+        alt: 'Kris holding the "community is the greatest technology" shirt',
+        caption: 'The main narrative when the work started',
+      },
+
       h2('Naming the Heartbeat'),
       p("The phrase Giving to the Givers already existed inside DAWA. It just wasn't leading."),
-      p('CWK. identified it as the heartbeat of the organization: the one idea expansive enough to hold everything DAWA stood for. From there, the work was simple but relentless: reinforce it everywhere — communications, programming, events, visuals, decision-making.'),
+      p('CWK. identified it as the heartbeat of the organization: the one idea expansive enough to hold everything DAWA stood for. From there, the work was simple but relentless: reinforce it everywhere across communications, programming, events, visuals, and decision-making.'),
 
       h2('A Working Board'),
-      p("DAWA operated with 4 staff members and a working board. Kris wasn't advising from a distance. He was building inside the organization."),
-      p('The biggest push was the five-year anniversary. With a short runway, a temporary content and communications department was built from scratch. An 8-person team was assembled in two weeks. Roles were defined. Campaigns were executed. Content output accelerated.'),
+      p("DAWA operated with 4 staff members and a working board. Kris wasn't advising from a distance. She was building inside the organization."),
+      p('The biggest push was the 5-year anniversary. With a short runway, a temporary content and communications department was built from scratch. An 8-person team was assembled in two weeks. Roles were defined. Campaigns were executed. Content output accelerated.'),
       p("Before this, DAWA didn't have a real content system. After it, they had a social media engine."),
 
+      {
+        _type: 'gallery',
+        columns: 3,
+        images: [
+          { src: '/images/case-studies/dawa/gallery-01.webp', alt: 'DAWA program moment 01' },
+          { src: '/images/case-studies/dawa/gallery-02.webp', alt: 'DAWA program moment 02' },
+          { src: '/images/case-studies/dawa/gallery-03.webp', alt: 'DAWA program moment 03' },
+          { src: '/images/case-studies/dawa/gallery-04.webp', alt: 'DAWA program moment 04' },
+          { src: '/images/case-studies/dawa/gallery-05.webp', alt: 'DAWA program moment 05' },
+          { src: '/images/case-studies/dawa/gallery-06.webp', alt: 'DAWA program moment 06' },
+        ],
+      },
+
+      h2('Training, Teams, and Talent'),
+      p("The work wasn't just external. Internal leadership was trained and developed, including vendors and a key team member, building capacity that would outlast the engagement."),
+      {
+        _type: 'image',
+        src: '/images/case-studies/dawa/training.webp',
+        alt: 'DAWA internal training session',
+      },
+
       h2('Programs Built From Zero'),
-      p('An education and internship program was co-built from scratch in collaboration with local universities including the University of Texas. Interns were placed into a live campaign environment with real responsibilities. The program proved DAWA could operate as a training and development platform, not just a nonprofit.'),
+      p('An education and internship program was co-built from scratch in collaboration with local universities including the University of Texas. Interns were placed into a live campaign environment with real responsibilities. The program proved DAWA could operate as a training and development platform, not just a non-profit.'),
 
       h2('A Clean Close'),
-      p('The chapter with DAWA ended after nearly two years of active building, following the five-year anniversary. The handoff was clean. The narrative was anchored. Systems were in place. Leadership was stronger.'),
+      p('The chapter with DAWA ended after nearly two years of active building, following the 5-year anniversary. The handoff was clean. The narrative was anchored. Systems were in place. Leadership was stronger.'),
       yt('https://www.youtube.com/embed/WpHozkkSssE?rel=0', 'DAWA | Original Testimonials'),
+      yt('https://www.youtube.com/embed/o5QB1gYgIgY?rel=0', 'DAWA Testimonial Trailer'),
     ],
   },
 ];

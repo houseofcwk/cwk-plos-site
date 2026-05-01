@@ -54,6 +54,7 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
       <a href="/case-studies" class="csd-back">← All Case Studies</a>
       <span class="csd-eyebrow">{cs.category}</span>
       <h1 class="csd-headline">{cs.headline ?? cs.client}</h1>
+      {cs.tagline && <p class="csd-tagline">{cs.tagline}</p>}
       <div class="csd-meta">
         <span class="csd-client">{cs.client}</span>
         {cs.duration && <><span class="csd-sep">·</span><span class="csd-duration">{cs.duration}</span></>}
@@ -226,6 +227,14 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
     line-height: 1.1;
     letter-spacing: -0.025em;
     color: var(--text);
+  }
+  .csd-tagline {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--cyan);
+    font-style: italic;
   }
   .csd-meta {
     display: flex;
