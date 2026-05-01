@@ -22,7 +22,7 @@ function buildConfirmationEmail(): string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>You're on the list. — CWK. Experience</title>
+  <title>You're on the list. | CWK. Experience</title>
 </head>
 <body style="margin:0;padding:0;background-color:#0A0A0A;-webkit-font-smoothing:antialiased;">
 <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
@@ -65,7 +65,7 @@ function buildConfirmationEmail(): string {
                       text-transform:uppercase;color:#38B2F6;
                       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
                       Helvetica,Arial,sans-serif;">
-              PLOS — Personal Leverage OS
+              PLOS · Personal Leverage OS
             </p>
 
             <!-- Headline -->
@@ -80,7 +80,7 @@ function buildConfirmationEmail(): string {
             <p style="margin:0 0 14px;font-size:16px;color:#A8A29E;line-height:1.7;
                       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
                       Helvetica,Arial,sans-serif;">
-              We've locked in your spot. When PLOS opens, you'll be among the first to get access — no scrambling, no waiting in line.
+              We've locked in your spot. When PLOS opens, you'll be among the first to get access. No scrambling, no waiting in line.
             </p>
             <p style="margin:0 0 36px;font-size:16px;color:#A8A29E;line-height:1.7;
                       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
@@ -205,26 +205,26 @@ async function sendConfirmation(env: Env, recipientEmail: string): Promise<void>
       from: `${env.FROM_NAME} <${env.FROM_EMAIL}>`,
       to: [recipientEmail],
       reply_to: `${env.REPLY_TO_NAME} <${env.REPLY_TO_EMAIL}>`,
-      subject: "You're on the PLOS waitlist — CWK. Experience",
+      subject: "You're on the PLOS waitlist | CWK. Experience",
       html: buildConfirmationEmail(),
       headers: {
         'List-Unsubscribe': '<mailto:unsubscribe@houseofcwk.com?subject=unsubscribe>',
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
       },
       text: [
-        'CWK. Experience — PLOS Waitlist Confirmation',
+        'CWK. Experience | PLOS Waitlist Confirmation',
         '============================================',
         '',
         "You're on the list.",
         '',
-        "We've reserved your spot. When PLOS opens, you'll be among the first to get access — no scrambling, no waiting in line.",
+        "We've reserved your spot. When PLOS opens, you'll be among the first to get access. No scrambling, no waiting in line.",
         '',
         "In the meantime, take a look at the work. See what's possible when infrastructure stops leaking and your business actually scales.",
         '',
         'See the work: https://houseofcwk.com/work',
         '',
         '----',
-        'PLOS — Personal Leverage OS',
+        'PLOS · Personal Leverage OS',
         'Mind · Body · Soul · Pocket',
         '',
         'Build. Learn. Earn. Play.',

@@ -10,8 +10,8 @@ try { s = await sanity.fetch(JOURNEY_QUERY); } catch { s = null; }
 const heroEyebrow  = s?.heroEyebrow  ?? 'The Journey';
 const heroHeadline = s?.heroHeadline ?? 'Chapter by chapter.';
 
-const pageTitle = s?.seo?.title ?? "Kris's Journey — CWK. Experience";
-const pageDescription = s?.seo?.description ?? 'From Caguas, Puerto Rico to Austin, TX — the chapter-by-chapter story of Kris San, founder of CWK. Experience.';
+const pageTitle = s?.seo?.title ?? "Kris's Journey | CWK. Experience";
+const pageDescription = s?.seo?.description ?? 'From Caguas, Puerto Rico to Austin, TX: the chapter-by-chapter story of Kris San, founder of CWK. Experience.';
 ---
 
 <Base

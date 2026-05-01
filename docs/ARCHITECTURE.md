@@ -361,7 +361,7 @@ graph LR
 | `FROM_EMAIL` | `hello@houseofcwk.com` | `hello@houseofcwk.com` |
 | `FROM_NAME` | `CWK. Experience` | `CWK. Experience` |
 | `REPLY_TO_EMAIL` | `hello@cwkexperience.com` | `hello@cwkexperience.com` |
-| `REPLY_TO_NAME` | `Kris San — CWK.` | `Kris San — CWK.` |
+| `REPLY_TO_NAME` | `Kris San, CWK.` | `Kris San, CWK.` |
 
 ### Secrets (set via `wrangler pages secret put`)
 

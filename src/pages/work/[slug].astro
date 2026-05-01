@@ -38,7 +38,7 @@ if (!cs) {
 ---
 
 <CaseStudy
-  title={cs.seo?.title ?? `${cs.client} — CWK. Experience`}
+  title={cs.seo?.title ?? `${cs.client} | CWK. Experience`}
   description={cs.seo?.description ?? cs.cardDescription ?? ''}
   category={cs.category}
   client={cs.client}
@@ -54,7 +54,7 @@ if (!cs) {
   {cs.testimonial?.quote && (
     <blockquote class="cs-quote">
       <p>"{cs.testimonial.quote}"</p>
-      <footer>— {cs.testimonial.author}{cs.testimonial.role ? `, ${cs.testimonial.role}` : ''}</footer>
+      <footer>– {cs.testimonial.author}{cs.testimonial.role ? `, ${cs.testimonial.role}` : ''}</footer>
     </blockquote>
   )}
 

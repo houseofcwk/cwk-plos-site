@@ -220,8 +220,8 @@ function buildNotificationEmail(sub: StoredSubmission): { html: string; text: st
   const rows: Array<[string, string]> = [
     ['Name', sub.name],
     ['Email', sub.email],
-    ['Company', sub.company || '—'],
-    ['Role', sub.role || '—'],
+    ['Company', sub.company || '–'],
+    ['Role', sub.role || '–'],
     ['Topic', sub.topic],
     ['Submitted', sub.createdAt],
     ['Spam check', sub.spamSignal ?? 'passed'],
@@ -232,7 +232,7 @@ function buildNotificationEmail(sub: StoredSubmission): { html: string; text: st
 <body style="margin:0;padding:24px;background:#0A0A0A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#EEF0FF;">
   <div style="max-width:560px;margin:0 auto;background:#111;border:1px solid rgba(0,229,255,0.18);border-radius:12px;padding:32px;">
     <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#00E5FF;">New contact submission</p>
-    <h1 style="margin:0 0 20px;font-size:22px;font-weight:800;letter-spacing:-0.5px;">${escapeHtml(sub.topic.toUpperCase())} — ${escapeHtml(sub.name)}</h1>
+    <h1 style="margin:0 0 20px;font-size:22px;font-weight:800;letter-spacing:-0.5px;">${escapeHtml(sub.topic.toUpperCase())}: ${escapeHtml(sub.name)}</h1>
     <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin-bottom:20px;">
       ${rows
         .map(
@@ -250,7 +250,7 @@ function buildNotificationEmail(sub: StoredSubmission): { html: string; text: st
 </body></html>`;
 
   const text = [
-    `New contact submission — ${sub.topic.toUpperCase()}`,
+    `New contact submission: ${sub.topic.toUpperCase()}`,
     '============================================',
     ...rows.map(([k, v]) => `${k}: ${v}`),
     '',
@@ -278,7 +278,7 @@ async function sendNotification(env: Env, sub: StoredSubmission): Promise<void> 
       from: `${env.FROM_NAME} <${env.FROM_EMAIL}>`,
       to: [env.CONTACT_INBOX_TO],
       reply_to: `${sub.name} <${sub.email}>`,
-      subject: `[CWK Contact] ${sub.topic} — ${sub.name}`,
+      subject: `[CWK Contact] ${sub.topic}: ${sub.name}`,
       html,
       text,
     }),

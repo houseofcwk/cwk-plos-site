@@ -7,7 +7,7 @@ import { LEGAL_QUERY } from '../lib/queries';
 let data: any = null;
 try { data = await sanity.fetch(LEGAL_QUERY, { slug: 'terms' }); } catch { data = null; }
 
-const pageTitle = data?.seo?.title ?? 'Terms of Service — CWK. Experience';
+const pageTitle = data?.seo?.title ?? 'Terms of Service | CWK. Experience';
 const pageDescription = data?.seo?.description ?? 'Terms governing use of houseofcwk.com and CWK. Experience services.';
 const heading = data?.title ?? 'Terms of Service';
 const updatedLabel = data?.updatedAt
@@ -58,7 +58,7 @@ const updatedLabel = data?.updatedAt
         <div class="prose-section">
           <h2>Intellectual Property</h2>
           <p>
-            All content, copy, design, and brand assets on this site — including text, graphics, logos, and visual identity — are the exclusive property of CWK. LLC. Reproduction, redistribution, or use of any materials without express written permission from CWK. LLC is strictly prohibited.
+            All content, copy, design, and brand assets on this site (including text, graphics, logos, and visual identity) are the exclusive property of CWK. LLC. Reproduction, redistribution, or use of any materials without express written permission from CWK. LLC is strictly prohibited.
           </p>
         </div>
 

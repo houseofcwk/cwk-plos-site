@@ -10,7 +10,7 @@ try { s = await sanity.fetch(SIDE_QUESTS_QUERY); } catch { s = null; }
 const heroEyebrow  = s?.heroEyebrow  ?? 'Side Quests';
 const heroHeadline = s?.heroHeadline ?? 'Welcome to my Side Quests.';
 
-const pageTitle = s?.seo?.title ?? 'Side Quests — CWK. Experience';
+const pageTitle = s?.seo?.title ?? 'Side Quests | CWK. Experience';
 const pageDescription = s?.seo?.description ?? 'Short, self-initiated projects that showcase range, curiosity, and execution outside of core client work.';
 ---
 
@@ -115,7 +115,7 @@ const pageDescription = s?.seo?.description ?? 'Short, self-initiated projects t
       <div class="honorable-mentions">
         <span class="eyebrow">Honorable Mentions</span>
         <p>
-          Beyond these features, a range of smaller experiments, collabs, and creative detours have contributed to the larger body of work — each one a lesson, a connection, or a proof of concept.
+          Beyond these features, a range of smaller experiments, collabs, and creative detours have contributed to the larger body of work. Each one is a lesson, a connection, or a proof of concept.
         </p>
       </div>
     </div>

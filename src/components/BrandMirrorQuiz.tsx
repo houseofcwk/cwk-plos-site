@@ -43,13 +43,13 @@ const RESULT_MAP: Record<string, ResultData> = {
   Overwhelmed: {
     pillar: 'Body',
     bottleneck: 'Your operations are the ceiling.',
-    copy: "You're not failing — your systems are. CWK. installs the infrastructure that catches everything so you can stop running from fire to fire.",
+    copy: "You're not failing. Your systems are. CWK. installs the infrastructure that catches everything so you can stop running from fire to fire.",
     color: '#00E5FF',
   },
   Frustrated: {
     pillar: 'Soul',
     bottleneck: "Your effort isn't compounding.",
-    copy: "You're doing the work but nothing is stacking. CWK. turns your expertise into compounding authority — IP, proof, and positioning that build over time.",
+    copy: "You're doing the work but nothing is stacking. CWK. turns your expertise into compounding authority: IP, proof, and positioning that build over time.",
     color: '#7B61FF',
   },
   Exhausted: {
@@ -61,13 +61,13 @@ const RESULT_MAP: Record<string, ResultData> = {
   Skeptical: {
     pillar: 'Pocket',
     bottleneck: "Your revenue isn't predictable.",
-    copy: "You've tried things that didn't stick. CWK. doesn't give advice and leave — we install the revenue systems and stay for the long game.",
+    copy: "You've tried things that didn't stick. CWK. doesn't give advice and leave. We install the revenue systems and stay for the long game.",
     color: '#FB3079',
   },
   Ready: {
     pillar: 'All Four',
     bottleneck: 'You need a partner, not a consultant.',
-    copy: "You already know what's broken. CWK. is your long-term business manager — we acquire a stake in your future and build alongside you.",
+    copy: "You already know what's broken. CWK. is your long-term business manager. We acquire a stake in your future and build alongside you.",
     color: '#7B61FF',
   },
 };

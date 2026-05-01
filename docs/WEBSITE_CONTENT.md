@@ -1,4 +1,4 @@
-# Website Content — CWK PLOS Site
+# Website Content | CWK PLOS Site
 
 > All page copy organized by page, ready for implementation.
 > Source: [cwkexperience.com](https://cwkexperience.com/) + internal brand documents.
@@ -40,9 +40,9 @@ The result? You're working harder to earn the same.
 
 ### What CWK Does
 
-CWK. is your long-term partner — we install the infrastructure that catches everything, then manage your operations and coordinate your growth. We're not consultants who give advice and leave. We're business managers who acquire a stake in your future and stay for the long game.
+CWK. is your long-term partner. We install the infrastructure that catches everything, then manage your operations and coordinate your growth. We're not consultants who give advice and leave. We're business managers who acquire a stake in your future and stay for the long game.
 
-This is for entrepreneurs who always knew they needed a different kind of partner — one built for leverage, not hustle.
+This is for entrepreneurs who always knew they needed a different kind of partner, one built for leverage, not hustle.
 
 One that doesn't leave after the install.
 
@@ -120,7 +120,7 @@ It was time to start building a cohesive body of work.
 I've stayed in constant motion. Learning & Earning.
 
 **Chapter 6: In Progress**
-*(Open-ended — the story continues)*
+*(Open-ended; the story continues)*
 
 ---
 
@@ -253,10 +253,10 @@ In August 2019, I was hired by Rob Dial. The engagement lasted 3.5 years. The ro
 **From Creative Role to Operational Ownership:**
 The expectation was clear: produce, no matter what. These conditions forged me. What started as a videographer role evolved into full ownership of content operations: planning, production, hiring, systems, and delivery.
 
-**Early Output — Viral Content at Scale:**
+**Early Output: Viral Content at Scale:**
 The first phase focused on short-form, viral talking-head videos, one per week. By late 2019, we moved into weekly produced narrative pieces with a lesson attached. Every week. No missed deadlines. Including during the pandemic. Scripts. Casting. Locations. Production. Editing. Most of it ran out of my apartment.
 
-**The Pivot — Podcast as the Engine:**
+**The Pivot: Podcast as the Engine:**
 Scripted short films became too difficult with social distancing, so we pivoted to producing just the podcast. That meant: building a studio, designing sets, multi-camera recording, editing long-form and short-form assets, creating a repeatable content pipeline.
 
 The result: 84 pieces of content per month. Produced from four recording sessions. This became the core media engine.
@@ -289,38 +289,38 @@ See Your Reflection →
 **Question 1 of 4:**
 Which best describes how you feel about your business right now?
 
-- Overwhelmed — I'm drowning. I can't keep up with everything coming at me.
-- Frustrated — I'm working so hard, but nothing seems to be stacking or building momentum.
-- Exhausted — I'm tired of rebuilding the same momentum every week. It feels like Groundhog Day.
-- Skeptical — I've tried so many things already. Why would this be any different?
-- Ready — I know exactly what's broken. I just need the right partner to help me fix it.
+- Overwhelmed: I'm drowning. I can't keep up with everything coming at me.
+- Frustrated: I'm working so hard, but nothing seems to be stacking or building momentum.
+- Exhausted: I'm tired of rebuilding the same momentum every week. It feels like Groundhog Day.
+- Skeptical: I've tried so many things already. Why would this be any different?
+- Ready: I know exactly what's broken. I just need the right partner to help me fix it.
 
 **Question 2 of 4:**
 Which best describes your revenue situation right now?
 
-- Volatile Revenue — $10K one month, $40K the next. I have no idea what's coming in or when.
-- Stuck at a Ceiling — I'm working harder than ever but making the same amount as last year, or less.
-- Underpricing — I know I'm undercharging, but I'm scared that raising prices will make me lose clients.
-- Low Margins — I'm bringing in revenue, but after expenses, there's almost nothing left.
-- Founder-Dependent — If I stop working, the revenue stops. I can't take time off without losing deals.
+- Volatile Revenue: $10K one month, $40K the next. I have no idea what's coming in or when.
+- Stuck at a Ceiling: I'm working harder than ever but making the same amount as last year, or less.
+- Underpricing: I know I'm undercharging, but I'm scared that raising prices will make me lose clients.
+- Low Margins: I'm bringing in revenue, but after expenses, there's almost nothing left.
+- Founder-Dependent: If I stop working, the revenue stops. I can't take time off without losing deals.
 
 **Question 3 of 4:**
 Which best describes your operational situation?
 
-- Scattered Systems — My tools, content, and client info are spread across a dozen places. It's chaos.
-- Manual Processes — Everything depends on me remembering to do it. There's no automation or system.
-- No Compounding IP — I keep recreating the same assets, proof, and content from scratch every single time.
-- Fragile Authority — I can't find my case studies or proof fast enough when I need them on sales calls.
-- Leaking Deals — Warm leads go cold because I drop the ball on follow-ups. I know it's costing me revenue.
+- Scattered Systems: My tools, content, and client info are spread across a dozen places. It's chaos.
+- Manual Processes: Everything depends on me remembering to do it. There's no automation or system.
+- No Compounding IP: I keep recreating the same assets, proof, and content from scratch every single time.
+- Fragile Authority: I can't find my case studies or proof fast enough when I need them on sales calls.
+- Leaking Deals: Warm leads go cold because I drop the ball on follow-ups. I know it's costing me revenue.
 
 **Question 4 of 4:**
 Which best describes your current team situation?
 
-- Solo (No Team) — It's just me. I can't afford to hire anyone yet, so I'm doing everything myself.
-- Has VAs (Can't Delegate) — I have help, but they can't do anything without me explaining it in detail every single time.
-- Team Exists (No Systems) — My team is talented, but we don't have clear processes, so everything feels chaotic.
-- Team + Systems (Messy) — We have systems, but they're scattered and confusing. No one knows where anything actually is.
-- Ready to Scale — We have a team and some systems in place. We just need to tighten the infrastructure to scale.
+- Solo (No Team): It's just me. I can't afford to hire anyone yet, so I'm doing everything myself.
+- Has VAs (Can't Delegate): I have help, but they can't do anything without me explaining it in detail every single time.
+- Team Exists (No Systems): My team is talented, but we don't have clear processes, so everything feels chaotic.
+- Team + Systems (Messy): We have systems, but they're scattered and confusing. No one knows where anything actually is.
+- Ready to Scale: We have a team and some systems in place. We just need to tighten the infrastructure to scale.
 
 ---
 
@@ -362,13 +362,13 @@ Creative Team: Giovanni Dueña, Casey Alfstad, Hanna Marie, Micalah Jones
 - Work (`/work`)
 - About (`/about`)
 - Side Quests (`/side-quests`)
-- Brand Mirror (`/brand-mirror`) — styled as CTA button
+- Brand Mirror (`/brand-mirror`) · styled as CTA button
 
 ### Footer
 
 **Branding:**
 CWK. Experience
-PLOS — Personal Leverage OS
+PLOS · Personal Leverage OS
 
 **Tagline:**
 Build. Learn. Earn. Play.

@@ -179,7 +179,7 @@ export default function ContactForm() {
         <span className="contact-success-dot" />
         <h3>Message received.</h3>
         <p>
-          Thanks for reaching out — we've got your note. Expect a reply within
+          Thanks for reaching out. We've got your note. Expect a reply within
           1–2 business days. If it's urgent, email{' '}
           <a href="mailto:hello@cwkexperience.com">hello@cwkexperience.com</a>.
         </p>
