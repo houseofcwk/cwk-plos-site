@@ -122,8 +122,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     medium: 'PODCAST',
     cardSurface: 'charcoal',
     cardAccent: '#00E5FF',
-    cardImage: '/images/work/rob-dial.webp',
-    cardImageAlt: 'Rob Dial in his podcast studio',
+    cardImage: '/images/case-studies/rob-dial/hero-01.webp',
+    cardImageAlt: 'Rob Dial — The Mindset Mentor podcast portrait',
     cardDescription: 'Scaled a one-person media role into a full content operation.',
     cardStat: { num: '10x', label: 'Content Output' },
     order: 1,
@@ -137,12 +137,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '84', label: 'Pieces / Month' },
     ],
     body: [
-      {
-        _type: 'image',
-        src: '/images/case-studies/rob-dial/hero-01.webp',
-        alt: 'Rob Dial — opening hero image',
-      },
-
       h2('From Creative Role to Operational Ownership'),
       p('In August 2019, I was hired by Rob Dial. The engagement lasted 3.5 years. The role was simple on paper: personal videographer. The vision was bigger: be the DRock to his Gary V.'),
       p('The expectation was clear: produce, no matter what. These conditions forged me.'),
