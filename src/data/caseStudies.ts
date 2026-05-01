@@ -539,6 +539,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     medium: 'DIGITAL PROPERTY',
     cardSurface: 'wood',
     cardAccent: '#E0A878',
+    cardImage: '/images/case-studies/lifes-tapestry/hero-01.webp',
+    cardImageAlt: "Titi Lee with Kris in front of CWK Consulting screen, sharing thanks for Life's Tapestry",
     cardDescription: "Launched a digital property for a 64-year-old first-time writer; 25+ editions and a growing audience.",
     cardStat: { num: '25+', label: 'Editions Published' },
     order: 7,
@@ -546,6 +548,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     result: '47',
     resultLabel: 'Real subscribers',
     stats: [
+      { value: '1', label: 'Lifelong Dream Come True' },
       { value: '47', label: 'Real Subscribers' },
       { value: '25+', label: 'Published Editions' },
       { value: 'Year 1', label: 'Foundation built' },
@@ -565,7 +568,9 @@ export const CASE_STUDIES: CaseStudy[] = [
 
       h2('The Bigger Picture'),
       p("Life's Tapestry shows what happens when a lifelong dream is given real structure. A place for meaningful work to live and compound."),
-      yt('https://www.youtube.com/embed/GM-G0Cd_fVw?rel=0', "Life's Tapestry | Phase 1 Launch"),
+
+      h2('Watch Us Launch Phase 1'),
+      yt('https://www.youtube.com/embed/3KmCJKIPsz4?rel=0', "BTS of Building Life's Tapestry Blog"),
     ],
   },
 
