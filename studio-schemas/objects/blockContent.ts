@@ -61,5 +61,75 @@ export const blockContent = defineType({
         }),
       ],
     }),
+    defineArrayMember({
+      type: 'object',
+      name: 'gallery',
+      title: 'Image Gallery',
+      fields: [
+        defineField({
+          name: 'images',
+          title: 'Images',
+          type: 'array',
+          of: [
+            {
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+                defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+              ],
+            },
+          ],
+          validation: (Rule) => Rule.min(2).max(12),
+        }),
+        defineField({
+          name: 'columns',
+          title: 'Columns',
+          type: 'number',
+          options: { list: [2, 3] },
+          initialValue: 3,
+        }),
+      ],
+      preview: { select: { images: 'images', columns: 'columns' }, prepare: ({ images, columns }) => ({ title: `Gallery (${images?.length ?? 0} images, ${columns ?? 3}-up)` }) },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'videoEmbed',
+      title: 'Video Embed',
+      fields: [
+        defineField({
+          name: 'url',
+          title: 'YouTube / Vimeo URL',
+          type: 'url',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({ name: 'title', title: 'Title (for accessibility)', type: 'string' }),
+        defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+      ],
+      preview: { select: { title: 'title', subtitle: 'url' } },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'callout',
+      title: 'Callout',
+      fields: [
+        defineField({
+          name: 'tone',
+          title: 'Tone',
+          type: 'string',
+          options: { list: ['info', 'success', 'warn', 'quote'] },
+          initialValue: 'info',
+        }),
+        defineField({
+          name: 'text',
+          title: 'Text',
+          type: 'text',
+          rows: 3,
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({ name: 'attribution', title: 'Attribution (optional)', type: 'string' }),
+      ],
+      preview: { select: { title: 'text', subtitle: 'tone' } },
+    }),
   ],
 });

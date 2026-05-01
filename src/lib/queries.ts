@@ -77,33 +77,39 @@ export const SIDE_QUESTS_QUERY = groq`
   }
 `;
 
-// Card-level fields only — used by /work index grid.
+// Card-level fields only — used by /case-studies index grid.
 export const CASE_LIST_QUERY = groq`
   *[_type == "caseStudy"] | order(order asc, publishedAt desc){
     "slug": slug.current,
     client,
     category,
-    tagClass,
+    medium,
     cardDescription,
+    cardImage{ ..., asset->{ url, metadata } },
+    cardSurface,
+    cardAccent,
     cardStat,
     seo
   }
 `;
 
-// Slug-only list — feeds getStaticPaths() for the dynamic /work/[slug] route.
+// Slug-only list — feeds getStaticPaths() for /case-studies/[slug].
 export const CASE_SLUGS_QUERY = groq`
   *[_type == "caseStudy" && defined(slug.current)][].slug.current
 `;
 
-// Full case study by slug. Inline images in body[] are auto-dereferenced.
+// Full case study by slug. Inline images and gallery images in body[] are auto-dereferenced.
 export const CASE_BY_SLUG_QUERY = groq`
   *[_type == "caseStudy" && slug.current == $slug][0]{
     _id,
     "slug": slug.current,
     client,
     category,
-    tagClass,
+    medium,
     cardDescription,
+    cardImage{ ..., asset->{ url, metadata } },
+    cardSurface,
+    cardAccent,
     cardStat,
     headline,
     duration,
@@ -112,7 +118,8 @@ export const CASE_BY_SLUG_QUERY = groq`
     stats[]{ value, label },
     body[]{
       ...,
-      _type == "image" => { ..., asset->{ url, metadata } }
+      _type == "image" => { ..., asset->{ url, metadata } },
+      _type == "gallery" => { ..., images[]{ ..., asset->{ url, metadata } } }
     },
     images[]{ ..., asset->{ url, metadata } },
     testimonial{ quote, author, role },

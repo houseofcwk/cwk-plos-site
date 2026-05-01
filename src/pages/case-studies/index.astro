@@ -1,0 +1,397 @@
+---
+import Base from '../../layouts/Base.astro';
+import { sanity, urlFor } from '../../lib/sanity';
+import { CASE_LIST_QUERY } from '../../lib/queries';
+import { CASE_STUDIES, type CardSurface } from '../../data/caseStudies';
+
+let sanityCases: any[] | null = null;
+try {
+  const result = await sanity.fetch(CASE_LIST_QUERY);
+  sanityCases = Array.isArray(result) && result.length > 0 ? result : null;
+} catch {
+  sanityCases = null;
+}
+
+interface CardEntry {
+  slug: string;
+  client: string;
+  category: string;
+  medium: string;
+  cardSurface: CardSurface;
+  cardAccent: string;
+  cardImage?: string;
+  cardImageAlt?: string;
+  cardDescription: string;
+  cardStat: { num: string; label: string };
+}
+
+function fromSanity(c: any): CardEntry {
+  let cardImage: string | undefined;
+  if (c.cardImage?.asset) {
+    try {
+      cardImage = urlFor(c.cardImage).width(900).auto('format').url();
+    } catch {
+      cardImage = undefined;
+    }
+  }
+  return {
+    slug: c.slug,
+    client: c.client ?? '',
+    category: c.category ?? '',
+    medium: c.medium ?? '',
+    cardSurface: (c.cardSurface ?? 'glass') as CardSurface,
+    cardAccent: c.cardAccent ?? '#00E5FF',
+    cardImage,
+    cardImageAlt: c.cardImage?.alt ?? c.client ?? '',
+    cardDescription: c.cardDescription ?? '',
+    cardStat: { num: c.cardStat?.num ?? '', label: c.cardStat?.label ?? '' },
+  };
+}
+
+const cards: CardEntry[] = sanityCases
+  ? sanityCases.map(fromSanity)
+  : CASE_STUDIES.map((c) => ({
+      slug: c.slug,
+      client: c.client,
+      category: c.category,
+      medium: c.medium,
+      cardSurface: c.cardSurface,
+      cardAccent: c.cardAccent,
+      cardImage: c.cardImage,
+      cardImageAlt: c.cardImageAlt,
+      cardDescription: c.cardDescription,
+      cardStat: c.cardStat,
+    }));
+
+const pageTitle = 'Case Studies | CWK. Experience';
+const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersive impact. A portfolio of long-term partnerships across podcasts, non-profits, creative founders, and the CWK platform itself.';
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <!-- ── Hero ────────────────────────────────────────────────── -->
+  <section class="cs-hero">
+    <div class="cs-hero-inner">
+      <h1 class="cs-hero-title fade-up">Real brands. <span class="cs-hero-accent">Immersive impact.</span></h1>
+      <p class="cs-hero-sub fade-up fade-up-delay-1">Step into the worlds built by CWK.</p>
+      <a href="#worlds" class="cs-hero-cta fade-up fade-up-delay-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+        </svg>
+        Discover the Worlds
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Grid ───────────────────────────────────────────────── -->
+  <section id="worlds" class="cs-grid-section">
+    <div class="cs-grid-inner">
+      <div class="cs-grid">
+        {cards.map((c, i) => (
+          <a
+            href={`/case-studies/${c.slug}`}
+            class={`cs-card cs-card--${c.cardSurface} reveal-card`}
+            style={`--cs-accent: ${c.cardAccent}; --reveal-i:${i}`}
+          >
+            <span class="cs-card-eyebrow">{c.category}</span>
+            <h2 class="cs-card-title">{c.client}</h2>
+
+            {c.cardImage ? (
+              <div class="cs-card-image">
+                <img src={c.cardImage} alt={c.cardImageAlt ?? c.client} loading="lazy" decoding="async" />
+              </div>
+            ) : (
+              <div class="cs-card-image cs-card-image--empty" aria-hidden="true">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>
+                </svg>
+              </div>
+            )}
+
+            <span class="cs-card-medium">{c.medium}</span>
+            <p class="cs-card-desc">{c.cardDescription}</p>
+
+            <div class="cs-card-stat">
+              <span class="cs-card-stat-num">{c.cardStat.num}</span>
+              <span class="cs-card-stat-label">{c.cardStat.label}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .cs-hero {
+    padding: 144px 24px 56px;
+    text-align: center;
+  }
+  .cs-hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .cs-hero-title {
+    font-size: clamp(34px, 5.4vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin: 0;
+  }
+  .cs-hero-accent {
+    background: linear-gradient(90deg, #00E5FF, #7B61FF 60%, #FB3079);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cs-hero-sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: clamp(15px, 1.5vw, 17px);
+    line-height: 1.6;
+  }
+  .cs-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    margin-top: 12px;
+    border: 1px solid var(--gb2);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  .cs-hero-cta:hover {
+    border-color: var(--cyan);
+    background: rgba(0, 229, 255, 0.06);
+    transform: translateY(-1px);
+  }
+
+  /* ── Grid ─────────────────────────────────────────────────── */
+  .cs-grid-section {
+    padding: 32px 24px 96px;
+  }
+  .cs-grid-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(18px, 2vw, 28px);
+  }
+  @media (max-width: 960px) {
+    .cs-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .cs-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Card base ───────────────────────────────────────────── */
+  .cs-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 22px 24px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: var(--text);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease, box-shadow 0.4s ease;
+    min-height: 460px;
+  }
+  .cs-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.16);
+    box-shadow: 0 18px 46px rgba(0,0,0,0.55);
+  }
+
+  .cs-card-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(255,255,255,0.62);
+  }
+
+  .cs-card-title {
+    margin: 0;
+    font-size: clamp(22px, 2vw, 28px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .cs-card-image {
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-top: 4px;
+  }
+  .cs-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cs-card-image--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.18);
+  }
+
+  .cs-card-medium {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+
+  .cs-card-desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.72);
+    flex: 1;
+  }
+
+  .cs-card-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 14px;
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .cs-card-stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--cs-accent, var(--cyan));
+  }
+  .cs-card-stat-label {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.62);
+  }
+
+  /* ── Bespoke surfaces ────────────────────────────────────── */
+  /* Charcoal: deep slate with a faint vertical sheen */
+  .cs-card--charcoal {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,255,255,0.08), transparent 55%),
+      linear-gradient(180deg, #1c1f26 0%, #11131a 100%);
+  }
+
+  /* Glow blue: dark base with a soft blue spotlight (LAB Miami) */
+  .cs-card--glow-blue {
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(56,178,246,0.45), transparent 70%),
+      linear-gradient(180deg, #0e1a2c 0%, #0a0f1d 100%);
+    border-color: rgba(56,178,246,0.22);
+  }
+
+  /* Marble stone: layered gray tones with subtle texture (Raasin) */
+  .cs-card--marble-stone {
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,0.18), transparent 55%),
+      radial-gradient(120% 80% at 100% 100%, rgba(0,0,0,0.45), transparent 55%),
+      linear-gradient(135deg, #d6d2cc 0%, #a39d96 50%, #6f6a64 100%);
+    border-color: rgba(255,255,255,0.14);
+  }
+  .cs-card--marble-stone .cs-card-eyebrow,
+  .cs-card--marble-stone .cs-card-medium { color: rgba(20,15,12,0.7); }
+  .cs-card--marble-stone .cs-card-title { color: #1b1714; }
+  .cs-card--marble-stone .cs-card-desc { color: rgba(20,15,12,0.78); }
+  .cs-card--marble-stone .cs-card-stat-label { color: rgba(20,15,12,0.62); }
+  .cs-card--marble-stone .cs-card-stat { border-top-color: rgba(20,15,12,0.18); }
+
+  /* Marble light: warm cream stone (Stephy Lee) */
+  .cs-card--marble-light {
+    background:
+      radial-gradient(130% 70% at 100% 0%, rgba(255,255,255,0.7), transparent 60%),
+      linear-gradient(135deg, #f5f1ea 0%, #e6dfd3 60%, #cfc6b6 100%);
+    border-color: rgba(0,0,0,0.05);
+  }
+  .cs-card--marble-light .cs-card-eyebrow,
+  .cs-card--marble-light .cs-card-medium { color: rgba(0,0,0,0.55); }
+  .cs-card--marble-light .cs-card-title { color: #1a1714; }
+  .cs-card--marble-light .cs-card-desc { color: rgba(0,0,0,0.7); }
+  .cs-card--marble-light .cs-card-stat-label { color: rgba(0,0,0,0.55); }
+  .cs-card--marble-light .cs-card-stat { border-top-color: rgba(0,0,0,0.12); }
+
+  /* Wood: warm walnut grain (Life's Tapestry) */
+  .cs-card--wood {
+    background:
+      repeating-linear-gradient(96deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 6px),
+      linear-gradient(135deg, #5a3920 0%, #3b2614 60%, #25170c 100%);
+    border-color: rgba(255,200,140,0.18);
+  }
+  .cs-card--wood .cs-card-eyebrow,
+  .cs-card--wood .cs-card-medium { color: rgba(255,210,170,0.7); }
+  .cs-card--wood .cs-card-desc { color: rgba(255,225,200,0.85); }
+  .cs-card--wood .cs-card-stat { border-top-color: rgba(255,210,170,0.18); }
+
+  /* Holographic: shimmering iridescent gradient (Agent+) */
+  .cs-card--holographic {
+    background:
+      radial-gradient(120% 100% at 0% 0%, rgba(255,255,255,0.35), transparent 60%),
+      linear-gradient(135deg, #6e9bff 0%, #b56dff 35%, #ff7ad9 65%, #ffd370 100%);
+    border-color: rgba(255,255,255,0.35);
+  }
+  .cs-card--holographic .cs-card-eyebrow,
+  .cs-card--holographic .cs-card-medium { color: rgba(20,10,30,0.7); }
+  .cs-card--holographic .cs-card-title { color: #15081f; }
+  .cs-card--holographic .cs-card-desc { color: rgba(20,10,30,0.78); }
+  .cs-card--holographic .cs-card-stat-label { color: rgba(20,10,30,0.62); }
+  .cs-card--holographic .cs-card-stat { border-top-color: rgba(20,10,30,0.18); }
+
+  /* Crimson: deep blood red (Pay the Creators) */
+  .cs-card--crimson {
+    background:
+      radial-gradient(80% 60% at 100% 0%, rgba(255,90,140,0.35), transparent 65%),
+      linear-gradient(160deg, #4d0a1d 0%, #2a050f 100%);
+    border-color: rgba(255,90,140,0.2);
+  }
+
+  /* Isometric dark: deep navy with isometric grid hint (SPRAYCATION) */
+  .cs-card--isometric-dark {
+    background:
+      linear-gradient(60deg, transparent 49.4%, rgba(0,229,255,0.08) 49.6%, rgba(0,229,255,0.08) 50.4%, transparent 50.6%),
+      linear-gradient(-60deg, transparent 49.4%, rgba(123,97,255,0.08) 49.6%, rgba(123,97,255,0.08) 50.4%, transparent 50.6%),
+      linear-gradient(180deg, #131829 0%, #0a0e1a 100%);
+    background-size: 36px 36px, 36px 36px, 100% 100%;
+    border-color: rgba(0,229,255,0.18);
+  }
+
+  /* Glass: existing site glass card */
+  .cs-card--glass {
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(0,229,255,0.06), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-card { transition: none; }
+  }
+</style>
