@@ -38,7 +38,8 @@ const components: PortableTextComponents = {
     gallery: ({ value }: { value: any }) => {
       const items = (value?.images ?? []) as any[];
       if (items.length === 0) return null;
-      const cols = value?.columns === 2 ? 2 : 3;
+      const requested = value?.columns;
+      const cols = requested === 1 || requested === 2 ? requested : 3;
       return (
         <div className={`cs-gallery cs-gallery--cols-${cols}`}>
           {items.map((img, i) => {

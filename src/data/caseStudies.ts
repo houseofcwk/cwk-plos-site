@@ -37,7 +37,7 @@ export interface PtImage {
 
 export interface PtGallery {
   _type: 'gallery';
-  columns?: 2 | 3;
+  columns?: 1 | 2 | 3;
   images: { src: string; alt: string; caption?: string }[];
 }
 
@@ -137,16 +137,40 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '84', label: 'Pieces / Month' },
     ],
     body: [
+      {
+        _type: 'image',
+        src: '/images/case-studies/rob-dial/hero-01.webp',
+        alt: 'Rob Dial — opening hero image',
+      },
+
       h2('From Creative Role to Operational Ownership'),
       p('In August 2019, I was hired by Rob Dial. The engagement lasted 3.5 years. The role was simple on paper: personal videographer. The vision was bigger: be the DRock to his Gary V.'),
       p('The expectation was clear: produce, no matter what. These conditions forged me.'),
       p('What started as a videographer role evolved into full ownership of content operations: planning, production, hiring, systems, and delivery.'),
+
+      {
+        _type: 'image',
+        src: '/images/case-studies/rob-dial/hero-02.webp',
+        alt: 'Rob Dial in production with the team',
+      },
 
       h2('Early Output: Viral Content at Scale'),
       p('The first phase focused on short-form, viral talking-head videos, one per week.'),
       p('From there, the work escalated quickly. By late 2019, we moved into the second phase: weekly produced narrative pieces with a lesson attached.'),
       p('Every week. No missed deadlines. Including during the pandemic.'),
       p('Scripts. Casting. Locations. Production. Editing. Most of it ran out of my apartment.'),
+      p('This continued for 7 months until we were forced to pivot.'),
+
+      {
+        _type: 'gallery',
+        columns: 1,
+        images: [
+          { src: '/images/case-studies/rob-dial/gallery1-01.webp', alt: 'Rob Dial production moment 01' },
+          { src: '/images/case-studies/rob-dial/gallery1-02.webp', alt: 'Rob Dial production moment 02' },
+          { src: '/images/case-studies/rob-dial/gallery1-03.webp', alt: 'Rob Dial production moment 03' },
+          { src: '/images/case-studies/rob-dial/gallery1-04.webp', alt: 'Rob Dial production moment 04' },
+        ],
+      },
 
       h2('The Pivot: Podcast as the Engine'),
       p('Scripted short films became too difficult with social distancing, so we pivoted to producing just the podcast. That meant:'),
@@ -155,15 +179,42 @@ export const CASE_STUDIES: CaseStudy[] = [
       bullet('Multi-camera recording'),
       bullet('Editing long-form and short-form assets'),
       bullet('Creating a repeatable content pipeline'),
-      p('The result: 84 pieces of content per month, produced from four recording sessions. This became the core media engine.'),
-      yt('https://www.youtube.com/embed/MUJjfJDyZhA?rel=0', 'The Mindset Mentor Podcast | Rob Dial'),
+      p('The result: 84 pieces of video content produced from 4 podcast episodes.'),
+      p('This became the core media engine.'),
+
+      {
+        _type: 'gallery',
+        columns: 1,
+        images: [
+          { src: '/images/case-studies/rob-dial/gallery2-01.webp', alt: 'Rob Dial podcast studio 01' },
+          { src: '/images/case-studies/rob-dial/gallery2-02.webp', alt: 'Rob Dial podcast studio 02' },
+          { src: '/images/case-studies/rob-dial/gallery2-03.webp', alt: 'Rob Dial podcast studio 03' },
+          { src: '/images/case-studies/rob-dial/gallery2-04.webp', alt: 'Rob Dial podcast studio 04' },
+          { src: '/images/case-studies/rob-dial/gallery2-05.webp', alt: 'Rob Dial podcast studio 05' },
+          { src: '/images/case-studies/rob-dial/gallery2-06.webp', alt: 'Rob Dial podcast studio 06' },
+        ],
+      },
 
       h2('Building The Team While Shipping'),
-      p('As volume increased, I built the team. At peak, the media operation included five people. I handled vetting, hiring, role definition, and quality of operations. No formal training systems existed, so everything ran on execution, speed, and trust. It was trial by fire. And it worked.'),
+      p('As volume increased, I built the team. At peak, the media operation included five people.'),
+      p('I handled:'),
+      bullet('Vetting'),
+      bullet('Hiring'),
+      bullet('Role definition'),
+      bullet('Quality of Operations'),
+      p('No formal training systems existed, so everything ran on execution, speed, and trust. It was trial by fire. And it worked.'),
 
       h2('A Clean Exit'),
       p("By early 2023, the operation was stable. The media machine was running. The team was in place. The systems didn't require me anymore."),
       p('So I replaced myself and exited cleanly in January 2023.'),
+
+      {
+        _type: 'image',
+        src: '/images/case-studies/rob-dial/closing.webp',
+        alt: 'Rob Dial — closing moment',
+      },
+
+      yt('https://www.youtube.com/embed/MUJjfJDyZhA?rel=0', 'The Mindset Mentor Podcast | Rob Dial'),
     ],
   },
 

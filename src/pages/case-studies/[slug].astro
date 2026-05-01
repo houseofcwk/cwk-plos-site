@@ -394,6 +394,7 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
   }
   .csd-body-inner :global(.cs-gallery--cols-3) { grid-template-columns: repeat(3, 1fr); }
   .csd-body-inner :global(.cs-gallery--cols-2) { grid-template-columns: repeat(2, 1fr); }
+  .csd-body-inner :global(.cs-gallery--cols-1) { grid-template-columns: 1fr; }
   @media (max-width: 720px) {
     .csd-body-inner :global(.cs-gallery--cols-3),
     .csd-body-inner :global(.cs-gallery--cols-2) { grid-template-columns: 1fr; }
@@ -410,6 +411,14 @@ const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
     height: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+  }
+  /* Single-column gallery: let images keep their natural aspect ratio */
+  .csd-body-inner :global(.cs-gallery--cols-1 .cs-gallery-item img) {
+    aspect-ratio: auto;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .csd-body-inner :global(.cs-video) {
