@@ -280,6 +280,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     medium: 'NON-PROFIT',
     cardSurface: 'marble-stone',
     cardAccent: '#FB3079',
+    cardImage: '/images/case-studies/raasin-in-the-sun/cover.webp',
+    cardImageAlt: 'Raasin McIntosh in a TV studio interview during a Raasin in the Sun production',
     cardDescription: 'Documented public art, secured grants, and a placemaking movement.',
     cardStat: { num: '6-fig', label: 'Grants Secured' },
     order: 8,
