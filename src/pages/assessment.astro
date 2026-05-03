@@ -183,6 +183,15 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     progressPillar.textContent = pillar;
     progressNum.textContent = String(i + 1);
     progressBar.style.width = `${((i + 1) / QUESTIONS.length) * 100}%`;
+
+    // Keep the prompt in view as the user advances through Q1 → Q5.
+    // Especially important on mobile where the new question may render below
+    // the user's current scroll position.
+    const stage = sections.questions;
+    if (stage) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      stage.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+    }
   }
 
   function chooseAnswer(qIndex: number, letter: Letter) {
@@ -432,6 +441,7 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     align-items: flex-start;
     gap: 14px;
     width: 100%;
+    min-height: 56px;
     padding: 16px 18px;
     border: 1px solid var(--gb);
     border-radius: 12px;
@@ -440,7 +450,15 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     font: inherit;
     text-align: left;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  /* Disable hover translate on touch — feels jittery on mobile */
+  @media (hover: none) {
+    .as-option:hover { transform: none; }
+  }
+  .as-option:active {
+    transform: scale(0.985);
   }
   .as-option-letter {
     flex-shrink: 0;
@@ -477,15 +495,17 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-back {
     align-self: flex-start;
     margin-top: 4px;
-    padding: 8px 14px;
+    min-height: 44px;
+    padding: 10px 18px;
     background: transparent;
     border: 1px solid var(--gb);
     border-radius: 100px;
     color: var(--dim);
     font: inherit;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   .as-back:hover { color: var(--text); border-color: var(--gb2); }
@@ -699,15 +719,17 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-restart {
     align-self: center;
     margin-top: 12px;
-    padding: 10px 18px;
+    min-height: 44px;
+    padding: 10px 22px;
     background: transparent;
     border: 1px solid var(--gb);
     border-radius: 100px;
     color: var(--dim);
     font: inherit;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   .as-restart:hover { color: var(--text); border-color: var(--gb2); }
@@ -716,7 +738,50 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   @media (max-width: 640px) {
     .as-intro,
     .as-stage,
-    .as-result { padding: 112px 18px 72px; }
+    .as-result { padding: 96px 16px 72px; }
+    .as-intro-inner,
+    .as-stage-inner,
+    .as-result-inner { gap: 14px; }
+
+    .as-h1 { font-size: clamp(30px, 9vw, 44px); line-height: 1.1; }
+    .as-lede { font-size: 15px; }
+    .as-cta { padding: 14px 22px; font-size: 14px; width: 100%; justify-content: center; }
+    .as-pillars { gap: 8px; }
+    .as-pillars li { padding: 6px 12px; font-size: 11.5px; }
+
+    .as-question-prompt { font-size: clamp(20px, 5.4vw, 26px); }
+    .as-option { padding: 14px 14px; gap: 10px; }
+    .as-option-letter { width: 26px; height: 26px; font-size: 11px; }
+    .as-option-text { font-size: 14px; line-height: 1.45; }
+
+    .as-result-name { font-size: clamp(28px, 7.5vw, 40px); }
+    .as-result-tag { font-size: 14.5px; }
+    .as-result-block,
+    .as-mind-mine,
+    .as-environment,
+    .as-one-move { padding: 14px 16px; }
+    .as-cta-block { padding: 18px 18px; }
+    .as-primary-cta { width: 100%; justify-content: center; padding: 14px 20px; }
+    .as-guide-link { width: 100%; justify-content: center; padding: 12px 18px; }
+  }
+
+  /* iOS / mobile-touch tweaks */
+  @media (hover: none) {
+    .as-option:hover {
+      border-color: var(--gb);
+      background: transparent;
+      transform: none;
+    }
+    .as-option:hover .as-option-letter {
+      color: var(--dim);
+      border-color: var(--gb);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .as-option:hover .as-option-text { color: var(--muted); }
+    .as-option:active {
+      border-color: var(--cyan);
+      background: rgba(0, 229, 255, 0.06);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

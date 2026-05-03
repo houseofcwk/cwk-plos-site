@@ -8,6 +8,10 @@
 /work                       /case-studies                 301
 /work/*                     /case-studies/:splat          301
 
+# /brand-mirror → /assessment (Brand Mirror retired)
+/brand-mirror               /assessment                   301
+/brand-mirror/*             /assessment                   301
+
 # Legacy short links → canonical paths
 /aboutkris                  /about                        301
 /krisjourneyarticle         /about                        301
@@ -20,5 +24,5 @@
 /raasininthesunarticle      /case-studies/raasin-in-the-sun  301
 /beatstarsarticle           /case-studies/pay-the-creators   301
 /lifestapestryarticle       /case-studies/lifes-tapestry  301
-/brandmirrorlobby           /brand-mirror                 301
-/brandmirror                /brand-mirror                 301
+/brandmirrorlobby           /assessment                   301
+/brandmirror                /assessment                   301

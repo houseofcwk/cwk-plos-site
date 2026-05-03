@@ -29,7 +29,9 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
       </a>
     </div>
 
-    <div class="nav-actions"></div>
+    <div class="nav-actions">
+      <a href="/assessment" class:list={['btn btn-primary nav-cta-btn', { active: isActive('/assessment') }]}>What Player Are You? →</a>
+    </div>
 
     <!-- Hamburger (mobile only) -->
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
@@ -100,6 +102,17 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
       </span>
       PLOS
       <span class="overlay-soon-badge" aria-label="Coming soon">Soon</span>
+    </a>
+
+    <a href="/assessment" class:list={['overlay-link overlay-link--cta', { active: isActive('/assessment') }]}>
+      <span class="overlay-icon" aria-hidden="true">
+        <!-- Diamond / mirror icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 2L20 11L11 20L2 11L11 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M11 2v18M2 11h18" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" opacity="0.45"/>
+        </svg>
+      </span>
+      What Player Are You?
     </a>
 
   </nav>
