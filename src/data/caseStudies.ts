@@ -669,7 +669,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         _type: 'block',
         style: 'normal',
-        markDefs: [{ _key: 'ptc', _type: 'link', href: 'https://paythecreators.com' }],
+        markDefs: [{ _key: 'ptc', _type: 'link', href: 'https://www.paythecreators.com' }],
         children: [
           { _type: 'span', text: "That single decision aligned the podcast with the brand's point of view and gave the IP juice. Visit " },
           { _type: 'span', text: 'paythecreators.com', marks: ['ptc'] },
