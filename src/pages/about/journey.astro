@@ -9,10 +9,10 @@ let s: any = null;
 try { s = await sanity.fetch(JOURNEY_QUERY); } catch { s = null; }
 
 const heroEyebrow  = s?.heroEyebrow  ?? 'The Journey';
-const heroHeadline = s?.heroHeadline ?? 'A picture story.';
+const heroHeadline = s?.heroHeadline ?? "A bit of where I've been.";
 
 const pageTitle = s?.seo?.title ?? "Kris's Journey | CWK. Experience";
-const pageDescription = s?.seo?.description ?? 'A picture story of Kris San: from Caguas, Puerto Rico to Austin, TX, chapter by chapter.';
+const pageDescription = s?.seo?.description ?? "A bit of where I've been: Kris San from Caguas, Puerto Rico to Austin, TX, chapter by chapter.";
 
 interface Chapter {
   number: number;
@@ -91,7 +91,6 @@ const CHAPTERS: Chapter[] = [
       <a href="/about" class="jr-back">← Back to About</a>
       <span class="eyebrow fade-up">{heroEyebrow}</span>
       <h1 class="jr-hero-headline fade-up fade-up-delay-1">{heroHeadline}</h1>
-      <p class="jr-hero-sub fade-up fade-up-delay-2">Six chapters, one journey, in pictures.</p>
     </div>
   </section>
 
@@ -227,12 +226,6 @@ const CHAPTERS: Chapter[] = [
     letter-spacing: -0.04em;
     color: var(--text);
     margin: 0 0 16px;
-  }
-  .jr-hero-sub {
-    margin: 0;
-    font-size: clamp(15px, 1.6vw, 18px);
-    color: var(--muted);
-    line-height: 1.5;
   }
 
   /* ── Chapter section ──────────────────────────────── */
