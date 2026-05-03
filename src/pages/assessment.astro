@@ -1,0 +1,731 @@
+---
+import Base from '../layouts/Base.astro';
+import { QUESTIONS, ARCHETYPES, type ArchetypeKey } from '../data/assessment';
+
+const pageTitle = 'What Player Are You? | CWK. Archetypes Assessment';
+const pageDescription = 'Five questions. Under 90 seconds. Find out exactly where you sit on the founder progression and what to do next. No email required to see your result.';
+
+const archetypeKeys: ArchetypeKey[] = ['explorer', 'committer', 'builder', 'operator', 'sovereign'];
+
+// Calendly URL placeholder. Swap when the real link is supplied.
+const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <!-- ── Intro ──────────────────────────────────────────────── -->
+  <section class="as-intro" data-step="intro">
+    <div class="as-intro-inner">
+      <span class="as-eyebrow fade-up">Archetypes Assessment</span>
+      <h1 class="as-h1 fade-up fade-up-delay-1">
+        Find out where you <em>actually</em> are.
+      </h1>
+      <p class="as-lede fade-up fade-up-delay-2">
+        Five questions. No fluff. Under 90 seconds. The result tells you which player you are inside the CWK. progression — and the one move worth making this week.
+      </p>
+
+      <ul class="as-pillars fade-up fade-up-delay-3" aria-label="Pillars covered">
+        <li><span class="as-pillar-dot" style="--c:var(--pink)"></span>Soul</li>
+        <li><span class="as-pillar-dot" style="--c:var(--purple)"></span>Mind</li>
+        <li><span class="as-pillar-dot" style="--c:#00E396"></span>Body</li>
+        <li><span class="as-pillar-dot" style="--c:#F2B53A"></span>Pocket</li>
+      </ul>
+
+      <button type="button" class="as-cta fade-up fade-up-delay-4" data-start>
+        Start the assessment →
+      </button>
+
+      <p class="as-fineprint fade-up fade-up-delay-4">
+        No email required to see your full result.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Question stage ─────────────────────────────────────── -->
+  <section class="as-stage" data-step="questions" hidden aria-live="polite">
+    <div class="as-stage-inner">
+      <div class="as-progress" aria-hidden="true">
+        <div class="as-progress-meta">
+          <span class="as-progress-pillar" data-progress-pillar></span>
+          <span class="as-progress-num"><span data-progress-num>1</span>/{QUESTIONS.length}</span>
+        </div>
+        <div class="as-progress-bar"><span data-progress-bar style="width:20%"></span></div>
+      </div>
+
+      {QUESTIONS.map((q, i) => (
+        <div class={`as-question ${i === 0 ? 'is-active' : ''}`} data-question={q.id} data-pillar={q.pillarLabel}>
+          <h2 class="as-question-prompt">{q.prompt}</h2>
+          <ul class="as-options">
+            {q.options.map((opt) => (
+              <li>
+                <button type="button" class="as-option" data-pick={`${q.id}:${opt.letter}`}>
+                  <span class="as-option-letter">{opt.letter}</span>
+                  <span class="as-option-text">{opt.text}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          {i > 0 && (
+            <button type="button" class="as-back" data-back>← Back</button>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Result stage ───────────────────────────────────────── -->
+  <section class="as-result" data-step="result" hidden>
+    <div class="as-result-inner">
+      <header class="as-result-head">
+        <span class="as-result-eyebrow" data-result-eyebrow>Stage 01</span>
+        <h2 class="as-result-name">You are <span data-result-name class="as-result-name-em">Explorer</span></h2>
+        <p class="as-result-tag" data-result-tag></p>
+      </header>
+
+      <aside class="as-mindset-gap" data-mindset-gap hidden>
+        <span class="as-mindset-gap-tag">⚠️ Mindset gap</span>
+        <p>
+          Your behaviour signals the next stage but the revenue reality is not there yet. That is a diagnostic finding, not a penalty. The work right now is closing the gap, not pretending it is not there.
+        </p>
+      </aside>
+
+      <div class="as-result-grid">
+        <article class="as-result-block">
+          <span class="as-result-block-label">What this stage feels like</span>
+          <p data-result-feel></p>
+        </article>
+        <article class="as-result-block">
+          <span class="as-result-block-label">What is actually happening</span>
+          <p data-result-happening></p>
+        </article>
+        <article class="as-result-block">
+          <span class="as-result-block-label">What is working</span>
+          <p data-result-working></p>
+        </article>
+      </div>
+
+      <article class="as-mind-mine">
+        <span class="as-mind-mine-tag">💣 Active Mind Mine</span>
+        <p data-result-mindmine></p>
+      </article>
+
+      <article class="as-environment">
+        <span class="as-environment-tag">🛠 Ideal next environment</span>
+        <p data-result-environment></p>
+      </article>
+
+      <article class="as-one-move">
+        <span class="as-one-move-tag">⚡ The one move (this week)</span>
+        <p data-result-onemove></p>
+      </article>
+
+      <div class="as-cta-block">
+        <a class="as-primary-cta" data-result-cta href="#"></a>
+        <div class="as-guide-cta">
+          <h3>Want to speak with a qualified guide?</h3>
+          <p>Twenty minutes. We look at your result together and tell you exactly what your next move should be.</p>
+          <a class="as-guide-link" data-result-calendly href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a conversation →</a>
+        </div>
+      </div>
+
+      <button type="button" class="as-restart" data-restart>↺ Restart assessment</button>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { QUESTIONS, ARCHETYPES, score, type Letter, type ArchetypeKey } from '../data/assessment';
+
+  type Step = 'intro' | 'questions' | 'result';
+  type Answers = (Letter | null)[];
+
+  const sections: Record<Step, HTMLElement | null> = {
+    intro: document.querySelector('[data-step="intro"]'),
+    questions: document.querySelector('[data-step="questions"]'),
+    result: document.querySelector('[data-step="result"]'),
+  };
+
+  const questionEls = Array.from(
+    document.querySelectorAll<HTMLElement>('.as-question')
+  );
+  const progressBar = document.querySelector<HTMLElement>('[data-progress-bar]')!;
+  const progressNum = document.querySelector<HTMLElement>('[data-progress-num]')!;
+  const progressPillar = document.querySelector<HTMLElement>('[data-progress-pillar]')!;
+
+  const state: { current: number; answers: Answers } = {
+    current: 0,
+    answers: [null, null, null, null, null],
+  };
+
+  function show(step: Step) {
+    (Object.keys(sections) as Step[]).forEach((k) => {
+      const el = sections[k];
+      if (!el) return;
+      if (k === step) {
+        el.removeAttribute('hidden');
+        el.classList.add('is-active');
+      } else {
+        el.setAttribute('hidden', 'hidden');
+        el.classList.remove('is-active');
+      }
+    });
+    if (step === 'questions') {
+      // Scroll to the top of the stage so the question lands cleanly.
+      sections.questions?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function showQuestion(i: number) {
+    state.current = i;
+    questionEls.forEach((el, idx) => {
+      el.classList.toggle('is-active', idx === i);
+    });
+    const pillar = QUESTIONS[i].pillarLabel;
+    progressPillar.textContent = pillar;
+    progressNum.textContent = String(i + 1);
+    progressBar.style.width = `${((i + 1) / QUESTIONS.length) * 100}%`;
+  }
+
+  function chooseAnswer(qIndex: number, letter: Letter) {
+    state.answers[qIndex] = letter;
+    if (qIndex < QUESTIONS.length - 1) {
+      showQuestion(qIndex + 1);
+    } else {
+      // All five answered; render result.
+      const tuple = state.answers as [Letter, Letter, Letter, Letter, Letter];
+      const result = score(tuple);
+      renderResult(result.final, result.mindsetGap);
+      show('result');
+    }
+  }
+
+  function back() {
+    if (state.current > 0) {
+      showQuestion(state.current - 1);
+    } else {
+      show('intro');
+    }
+  }
+
+  function renderResult(key: ArchetypeKey, mindsetGap: boolean) {
+    const a = ARCHETYPES[key];
+    document.querySelector<HTMLElement>('[data-result-eyebrow]')!.textContent = a.eyebrow;
+    document.querySelector<HTMLElement>('[data-result-name]')!.textContent = a.name;
+    document.querySelector<HTMLElement>('[data-result-tag]')!.textContent = a.tagline;
+    document.querySelector<HTMLElement>('[data-result-feel]')!.textContent = a.feel;
+    document.querySelector<HTMLElement>('[data-result-happening]')!.textContent = a.happening;
+    document.querySelector<HTMLElement>('[data-result-working]')!.textContent = a.working;
+    document.querySelector<HTMLElement>('[data-result-mindmine]')!.textContent = a.mindMine;
+    document.querySelector<HTMLElement>('[data-result-environment]')!.textContent = a.environment;
+    document.querySelector<HTMLElement>('[data-result-onemove]')!.textContent = a.oneMove;
+    const cta = document.querySelector<HTMLAnchorElement>('[data-result-cta]')!;
+    cta.textContent = a.primaryCta.label;
+    cta.href = a.primaryCta.href;
+    const gap = document.querySelector<HTMLElement>('[data-mindset-gap]')!;
+    if (mindsetGap) gap.removeAttribute('hidden');
+    else gap.setAttribute('hidden', 'hidden');
+    // Tag the result section with the archetype key for theming.
+    sections.result?.setAttribute('data-archetype', key);
+  }
+
+  function restart() {
+    state.current = 0;
+    state.answers = [null, null, null, null, null];
+    showQuestion(0);
+    show('intro');
+  }
+
+  // Wire up
+  document.querySelector<HTMLButtonElement>('[data-start]')!.addEventListener('click', () => {
+    showQuestion(0);
+    show('questions');
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-pick]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const [qid, letter] = btn.dataset.pick!.split(':') as [string, Letter];
+      const idx = QUESTIONS.findIndex((q) => q.id === qid);
+      if (idx < 0) return;
+      chooseAnswer(idx, letter);
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-back]').forEach((btn) => {
+    btn.addEventListener('click', back);
+  });
+
+  document.querySelector<HTMLButtonElement>('[data-restart]')!.addEventListener('click', restart);
+
+  // Initial render
+  showQuestion(0);
+  show('intro');
+</script>
+
+<style>
+  /* ── Shared shell ───────────────────────────────────────── */
+  .as-intro,
+  .as-stage,
+  .as-result {
+    padding: 144px 24px 96px;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .as-intro-inner,
+  .as-stage-inner,
+  .as-result-inner {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ── Intro ─────────────────────────────────────────────── */
+  .as-intro {
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(0, 229, 255, 0.10), transparent 60%),
+      radial-gradient(50% 60% at 80% 30%, rgba(123, 97, 255, 0.10), transparent 60%),
+      radial-gradient(50% 60% at 20% 30%, rgba(251, 48, 121, 0.08), transparent 60%);
+  }
+  .as-intro-inner { align-items: center; text-align: center; gap: 16px; }
+  .as-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+  .as-h1 {
+    margin: 0;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .as-h1 em {
+    font-style: italic;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF 60%, #FB3079);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .as-lede {
+    margin: 0;
+    color: var(--muted);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.6;
+    max-width: 600px;
+  }
+  .as-pillars {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .as-pillars li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--gb);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .as-pillar-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--c, var(--cyan));
+    box-shadow: 0 0 8px color-mix(in srgb, var(--c, var(--cyan)) 60%, transparent);
+  }
+  .as-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 16px 30px;
+    border: 0;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    color: #0a0e1a;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+  }
+  .as-cta:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .as-fineprint {
+    margin: 0;
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* ── Questions ─────────────────────────────────────────── */
+  .as-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .as-progress-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 700;
+  }
+  .as-progress-pillar { color: var(--cyan); }
+  .as-progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .as-progress-bar > span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    transition: width 0.4s ease;
+  }
+
+  .as-question {
+    display: none;
+    flex-direction: column;
+    gap: 22px;
+    animation: as-fade 0.35s ease both;
+  }
+  .as-question.is-active { display: flex; }
+  @keyframes as-fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .as-question-prompt {
+    margin: 0;
+    font-size: clamp(22px, 2.8vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .as-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .as-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid var(--gb);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  .as-option-letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--gb);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dim);
+  }
+  .as-option-text {
+    flex: 1;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .as-option:hover {
+    border-color: var(--cyan);
+    background: rgba(0, 229, 255, 0.06);
+    transform: translateX(4px);
+  }
+  .as-option:hover .as-option-letter {
+    color: var(--cyan);
+    border-color: rgba(0, 229, 255, 0.4);
+    background: rgba(0, 229, 255, 0.08);
+  }
+  .as-option:hover .as-option-text { color: var(--text); }
+
+  .as-back {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--gb);
+    border-radius: 100px;
+    color: var(--dim);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .as-back:hover { color: var(--text); border-color: var(--gb2); }
+
+  /* ── Result ────────────────────────────────────────────── */
+  .as-result {
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(0, 229, 255, 0.08), transparent 60%),
+      radial-gradient(50% 60% at 80% 30%, rgba(123, 97, 255, 0.08), transparent 60%),
+      radial-gradient(50% 60% at 20% 30%, rgba(251, 48, 121, 0.06), transparent 60%);
+  }
+  .as-result-inner { gap: 22px; animation: as-fade 0.4s ease both; }
+
+  .as-result-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    padding-bottom: 8px;
+  }
+  .as-result-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 700;
+  }
+  .as-result-name {
+    margin: 0;
+    font-size: clamp(28px, 4.5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+  .as-result-name-em {
+    background: linear-gradient(90deg, #00E5FF, #7B61FF, #FB3079);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .as-result-tag {
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .as-mindset-gap {
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 122, 48, 0.32);
+    background: rgba(255, 122, 48, 0.06);
+  }
+  .as-mindset-gap-tag {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #FF7A30;
+    font-weight: 700;
+  }
+  .as-mindset-gap p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .as-result-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .as-result-block {
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid var(--gb);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .as-result-block-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 700;
+  }
+  .as-result-block p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14.5px;
+  }
+
+  .as-mind-mine {
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(251, 48, 121, 0.30);
+    background: rgba(251, 48, 121, 0.06);
+  }
+  .as-mind-mine-tag {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 700;
+  }
+  .as-mind-mine p {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .as-environment,
+  .as-one-move {
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    background: rgba(0, 229, 255, 0.04);
+  }
+  .as-environment-tag,
+  .as-one-move-tag {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 700;
+  }
+  .as-environment p,
+  .as-one-move p {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .as-cta-block {
+    margin-top: 8px;
+    padding: 24px 26px;
+    border-radius: 18px;
+    border: 1px solid var(--gb);
+    background:
+      radial-gradient(80% 60% at 0% 0%, rgba(0, 229, 255, 0.06), transparent 60%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .as-primary-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 26px;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    color: #0a0e1a;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter 0.2s ease, transform 0.15s ease;
+  }
+  .as-primary-cta:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+  .as-guide-cta {
+    border-top: 1px dashed var(--gb);
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .as-guide-cta h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .as-guide-cta p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .as-guide-link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    padding: 12px 22px;
+    border-radius: 100px;
+    border: 1px solid var(--cyan);
+    background: transparent;
+    color: var(--cyan);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .as-guide-link:hover { background: rgba(0, 229, 255, 0.08); transform: translateY(-1px); }
+
+  .as-restart {
+    align-self: center;
+    margin-top: 12px;
+    padding: 10px 18px;
+    background: transparent;
+    border: 1px solid var(--gb);
+    border-radius: 100px;
+    color: var(--dim);
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .as-restart:hover { color: var(--text); border-color: var(--gb2); }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .as-intro,
+    .as-stage,
+    .as-result { padding: 112px 18px 72px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .as-question,
+    .as-result-inner,
+    .as-cta,
+    .as-primary-cta,
+    .as-guide-link,
+    .as-option,
+    .as-progress-bar > span { animation: none; transition: none; }
+  }
+</style>
