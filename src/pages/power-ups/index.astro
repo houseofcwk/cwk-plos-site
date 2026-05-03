@@ -127,6 +127,7 @@ const QUIZ = [
               aria-controls={`panel-${cat}`}
               style={`--accent: ${meta.accent}`}
             >
+              <span class="pu-tab-eyebrow">⚡ Track 0{meta.index}</span>
               <span class="pu-tab-name">{bundle.name}</span>
             </button>
           );
@@ -139,7 +140,8 @@ const QUIZ = [
           aria-selected="false"
           aria-controls="panel-stack"
         >
-          <span class="pu-tab-name">90-Day Stack</span>
+          <span class="pu-tab-eyebrow">🏆 The Stack</span>
+          <span class="pu-tab-name">90-Day Complete</span>
         </button>
       </nav>
 
@@ -157,16 +159,9 @@ const QUIZ = [
             style={`--accent: ${meta.accent}`}
           >
             <header class="pu-panel-banner">
-              <div>
-                <span class="pu-panel-tag">⚡ Track 0{meta.index} · {meta.label}</span>
-                <h2 class="pu-panel-title">{bundle.name}</h2>
-                <p class="pu-panel-blurb">{meta.blurb}</p>
-              </div>
-              <div class="pu-panel-pricebox">
-                <span class="pu-panel-pricebox-label">Bundle price</span>
-                <span class="pu-panel-pricebox-num">{bundle.price}</span>
-                <span class="pu-panel-pricebox-note">Individual total {bundle.individualTotal} · The bundle is an upgrade in experience, not a discount.</span>
-              </div>
+              <span class="pu-panel-tag">⚡ Track 0{meta.index} · {meta.label}</span>
+              <h2 class="pu-panel-title">{bundle.name}</h2>
+              <p class="pu-panel-blurb">{meta.blurb}</p>
             </header>
 
             <ul class="pu-list">
@@ -440,8 +435,6 @@ const QUIZ = [
     t.addEventListener('click', () => {
       const tab = t.dataset.tab as Track | 'stack';
       setTrack(tab);
-      const panel = document.getElementById(`panel-${tab}`);
-      panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -998,39 +991,83 @@ const QUIZ = [
   }
 
   .pu-tab-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    border-bottom: 1px solid var(--gb);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
     margin-bottom: 28px;
   }
   .pu-tab {
     --accent: #00E5FF;
-    flex: 1;
-    min-width: 140px;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 18px 16px;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px 18px 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--gb);
+    border-radius: 14px;
     cursor: pointer;
-    color: var(--dim);
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    text-align: center;
+    color: var(--muted);
+    text-align: left;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
   }
-  .pu-tab:hover { color: var(--muted); background: rgba(255, 255, 255, 0.02); }
+  .pu-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .pu-tab:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--gb));
+    transform: translateY(-1px);
+  }
+  .pu-tab:hover::before { opacity: 0.5; }
   .pu-tab.is-active {
     color: var(--text);
-    border-bottom-color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--gb));
+    background: color-mix(in srgb, var(--accent) 10%, rgba(255, 255, 255, 0.02));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  .pu-tab.is-active::before { opacity: 1; }
+  .pu-tab.is-active .pu-tab-eyebrow { color: var(--accent); }
+  .pu-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .pu-tab-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--dim);
+    transition: color 0.2s ease;
   }
   .pu-tab-name {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
-  .pu-tab--stack { background: rgba(0, 229, 255, 0.04); }
+  .pu-tab--stack {
+    --accent: #7B61FF;
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(123, 97, 255, 0.05) 50%, rgba(251, 48, 121, 0.05));
+  }
+  .pu-tab--stack.is-active {
+    background:
+      linear-gradient(135deg, rgba(0, 229, 255, 0.10), rgba(123, 97, 255, 0.12) 50%, rgba(251, 48, 121, 0.10)),
+      rgba(255, 255, 255, 0.02);
+  }
+  @media (max-width: 720px) {
+    .pu-tab-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 
   .pu-panel {
     display: none;
@@ -1045,10 +1082,9 @@ const QUIZ = [
 
   /* Panel banner */
   .pu-panel-banner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px;
-    align-items: end;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     padding: 24px 26px;
     border-radius: 18px;
     border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--gb));
@@ -1076,35 +1112,7 @@ const QUIZ = [
     color: var(--muted);
     line-height: 1.55;
     font-size: 14.5px;
-    max-width: 480px;
-  }
-  .pu-panel-pricebox {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .pu-panel-pricebox-label {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--dim);
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  .pu-panel-pricebox-num {
-    font-size: clamp(26px, 3vw, 32px);
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  .pu-panel-pricebox-note {
-    margin-top: 4px;
-    font-size: 10.5px;
-    color: var(--dim);
-    max-width: 240px;
-    text-align: right;
-    line-height: 1.4;
+    max-width: 580px;
   }
 
   /* Power Up rows */
@@ -1903,13 +1911,6 @@ const QUIZ = [
     .pu-bundle-cols {
       grid-template-columns: 1fr;
     }
-    .pu-panel-banner {
-      grid-template-columns: 1fr;
-    }
-    .pu-panel-pricebox {
-      text-align: left;
-    }
-    .pu-panel-pricebox-note { text-align: left; max-width: none; }
     .pu-bundle-card footer { flex-direction: column; align-items: stretch; }
   }
 
