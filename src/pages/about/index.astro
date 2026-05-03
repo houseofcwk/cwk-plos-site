@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PortableText from '../../components/PortableText.astro';
+import PlayerXRaySection from '../../components/PlayerXRaySection.astro';
 import { sanity } from '../../lib/sanity';
 import { ABOUT_QUERY } from '../../lib/queries';
 
@@ -80,13 +81,7 @@ const pageDescription = s?.seo?.description ?? 'Kris San is the founder of CWK. 
   )}
 
   <!-- ── Closing CTA ───────────────────────────────────────── -->
-  <section class="section about-cta-section">
-    <div class="section-inner">
-      <div class="about-cta-inner">
-        <a href="/#waitlist" class="btn btn-primary">Join the Waitlist →</a>
-      </div>
-    </div>
-  </section>
+  <PlayerXRaySection />
 </Base>
 
 <style>

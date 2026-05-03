@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PortableText from '../components/PortableText.astro';
+import PlayerXRaySection from '../components/PlayerXRaySection.astro';
 import { sanity } from '../lib/sanity';
 import { SIDE_QUESTS_QUERY } from '../lib/queries';
 
@@ -269,6 +270,8 @@ const quests: Quest[] = [
       <figcaption hidden></figcaption>
     </figure>
   </dialog>
+
+  <PlayerXRaySection />
 </Base>
 
 <script>

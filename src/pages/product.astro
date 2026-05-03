@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PlayerXRaySection from '../components/PlayerXRaySection.astro';
 import MockDashboard from '../components/mocks/MockDashboard.astro';
 import MockRelationships from '../components/mocks/MockRelationships.astro';
 import MockPipeline from '../components/mocks/MockPipeline.astro';
@@ -244,29 +245,7 @@ const pageDescription = s?.seo?.description ?? 'See inside the Agent+ dashboard:
   </section>
 
   <!-- ── Bottom Player X-Ray CTA ────────────────────────────── -->
-  <section id="player-xray" class="section waitlist-bottom xray-cta">
-    <div class="section-inner" style="text-align:center;">
-      <span class="eyebrow">Player X-Ray</span>
-      <h2>The right infrastructure starts with knowing what kind of player you are.</h2>
-      <p class="waitlist-sub">
-        Take the X-Ray. Five questions. Free. Walk away knowing exactly where you
-        are and the right level to start building from.
-      </p>
-
-      <ul class="xray-pills" aria-label="What you get">
-        <li class="xray-pill"><span class="xray-pill-dot"></span>Free</li>
-        <li class="xray-pill"><span class="xray-pill-dot"></span>5 questions</li>
-        <li class="xray-pill"><span class="xray-pill-dot"></span>Long-term clarity</li>
-      </ul>
-
-      <a href="/assessment" class="xray-cta-btn">
-        Take the X-Ray
-        <svg class="xray-cta-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </section>
+  <PlayerXRaySection />
 </Base>
 
 <style>

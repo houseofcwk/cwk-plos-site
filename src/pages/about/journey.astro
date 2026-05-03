@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PortableText from '../../components/PortableText.astro';
+import PlayerXRaySection from '../../components/PlayerXRaySection.astro';
 import { sanity } from '../../lib/sanity';
 import { JOURNEY_QUERY } from '../../lib/queries';
 
@@ -143,16 +144,7 @@ const CHAPTERS: Chapter[] = [
     ))}
 
     <!-- ── CTA ─────────────────────────────────────────────── -->
-    <section class="section jr-cta-section">
-      <div class="section-inner">
-        <div class="jr-cta-block glass-card">
-          <span class="eyebrow">The Work</span>
-          <h2>See what this journey produced.</h2>
-          <p>Every chapter built the foundation for what CWK. does for clients today.</p>
-          <a href="/case-studies" class="btn btn-primary">See The Case Studies →</a>
-        </div>
-      </div>
-    </section>
+    <PlayerXRaySection />
   </>
   )}
 
