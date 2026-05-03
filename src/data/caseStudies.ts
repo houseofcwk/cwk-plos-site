@@ -830,7 +830,6 @@ export const CASE_STUDIES: CaseStudy[] = [
           { src: '/images/case-studies/dawa/closing-02.webp', alt: 'DAWA closing moment 02' },
         ],
       },
-      yt('https://www.youtube.com/embed/WpHozkkSssE?rel=0', 'DAWA | Original Testimonials'),
       yt('https://www.youtube.com/embed/o5QB1gYgIgY?rel=0', 'DAWA Testimonial Trailer'),
     ],
   },
