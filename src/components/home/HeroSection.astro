@@ -114,28 +114,18 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
       <div class="hero-sub fade-up fade-up-delay-2 pt-hero-sub"><PortableText value={subtext} /></div>
     ) : (
       <p class="hero-sub fade-up fade-up-delay-2">
-        We rep your career, install the operations, and manage your growth.
-        All under one house.
+        Everyone is building at a different level.
+        <span class="hero-sub-em">Find yours.</span>
       </p>
     )}
     <div class="hero-ctas fade-up fade-up-delay-3">
       <a href="/assessment" class="btn-hero-primary">
         <span class="btn-emoji" aria-hidden="true">🪞</span>
         What Player Are You?
-        <em class="btn-badge">Free · 90 sec</em>
+        <em class="btn-badge">Free · 2 min</em>
         <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
         </svg>
-      </a>
-      <button class="btn-hero-secondary" data-open-waitlist>
-        {ctaLabel}
-        <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-        </svg>
-      </button>
-      <a href="/product" class="hero-link">
-        <span class="hl-emoji">🔍</span>
-        <span class="hl-text">Explore the Levels (Coming Soon)</span>
       </a>
     </div>
   </div>
@@ -424,11 +414,25 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
 
   /* Subtext */
   .hero-sub {
-    font-size: 18px;
+    font-size: clamp(18px, 1.9vw, 22px);
     color: var(--muted);
     max-width: 580px;
-    line-height: 1.65;
-    margin: 0 0 40px;
+    line-height: 1.55;
+    margin: 0 0 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-sub-em {
+    font-weight: 700;
+    font-size: clamp(20px, 2.1vw, 26px);
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.01em;
   }
 
   /* CTA area */
@@ -476,63 +480,6 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
   }
   .btn-arrow { flex-shrink: 0; }
 
-  /* Secondary CTA — waitlist */
-  .btn-hero-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 11px 22px;
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--gb2);
-    border-radius: 100px;
-    font-family: var(--font-primary);
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  }
-  .btn-hero-secondary:hover {
-    color: var(--text);
-    border-color: rgba(0, 229, 255, 0.5);
-    background: rgba(0, 229, 255, 0.04);
-  }
-
-  /* Tertiary text link — Explore the Levels */
-  .hero-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--dim);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .hl-emoji { font-size: 13px; line-height: 1; }
-  .hl-text {
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--muted) 35%, transparent);
-    text-underline-offset: 3px;
-    transition: text-decoration-color 0.2s ease;
-  }
-  .hl-badge {
-    font-style: normal;
-    font-size: 9px;
-    font-weight: 700;
-    color: #FF7A30;
-    background: rgba(255,122,48,0.12);
-    border-radius: 4px;
-    padding: 2px 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .hero-link:hover { color: var(--text); }
-  .hero-link:hover .hl-text {
-    text-decoration-color: color-mix(in srgb, var(--text) 50%, transparent);
-  }
-
   /* Responsive */
   @media (max-width: 1024px) {
     /* Hide right-side background cards on mid-size screens */
@@ -545,7 +492,6 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
   @media (max-width: 640px) {
     .hero { padding-top: 112px; min-height: auto; }
     .btn-hero-primary { width: 100%; max-width: 360px; justify-content: center; }
-    .btn-hero-secondary { width: 100%; max-width: 360px; justify-content: center; }
   }
 </style>
 
