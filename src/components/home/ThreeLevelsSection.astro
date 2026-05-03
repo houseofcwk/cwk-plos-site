@@ -4,17 +4,15 @@ const levels = [
     n: '01',
     slug: 'sandbox',
     title: 'CWK. Sandbox',
-    archetypes: ['Explorer', 'Committer'],
     body: "You're figuring out the game. We create the space to test, discover, and find your lane without burning everything down on a whim.",
     statusLabel: 'Coming Soon',
-    cta: { kind: 'waitlist', label: 'Join the List' },
+    cta: { kind: 'waitlist', label: 'Join the Waitlist' },
     state: 'soon',
   },
   {
     n: '02',
     slug: 'power-ups',
     title: 'CWK. Power Ups',
-    archetypes: ['Builder', 'Operator'],
     body: "You're in the game but it's chaos. We install the pieces you're missing, one power up at a time or all at once.",
     statusLabel: 'Modular',
     cta: { kind: 'link', href: '/power-ups', label: 'See the Power Ups' },
@@ -24,8 +22,7 @@ const levels = [
     n: '03',
     slug: 'command-center',
     title: 'CWK. Command Center',
-    archetypes: ['Operator', 'Sovereign'],
-    body: "You've built it. Now you need it to run without you. Humans + Kaia + PLOS. The full infrastructure layer.",
+    body: "You've built it. Now you need it to run without you. Humans + Kaia + PLOS. The full squad layer.",
     statusLabel: 'Waitlist',
     cta: { kind: 'waitlist', label: 'Join the Waitlist' },
     state: 'vip',
@@ -78,14 +75,6 @@ const levels = [
           </div>
 
           <h3 class="level-title">{lvl.title}</h3>
-          <p class="level-archetype">
-            {lvl.archetypes.map((a, ai) => (
-              <>
-                {ai > 0 && <span class="level-arch-sep" aria-hidden="true">·</span>}
-                <span class="level-arch-tag">{a}</span>
-              </>
-            ))}
-          </p>
 
           <p class="level-body">{lvl.body}</p>
 
@@ -354,39 +343,6 @@ const levels = [
     color: var(--text);
     line-height: 1.2;
   }
-  .level-archetype {
-    margin: 0 0 14px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 8px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .level-arch-tag {
-    padding: 3px 9px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px;
-  }
-  .level-card--live .level-arch-tag {
-    background: rgba(0,229,255,0.06);
-    border-color: rgba(0,229,255,0.18);
-    color: #9be7f3;
-  }
-  .level-card--vip .level-arch-tag {
-    background: rgba(123,97,255,0.08);
-    border-color: rgba(123,97,255,0.28);
-    color: #c9c2ff;
-  }
-  .level-arch-sep {
-    color: rgba(255,255,255,0.18);
-    font-weight: 700;
-  }
-
   /* ── Body copy ───────────────────────────────────────── */
   .level-body {
     margin: 0 0 24px;
