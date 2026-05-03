@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { QUESTIONS, ARCHETYPES, type ArchetypeKey } from '../data/assessment';
 
 const pageTitle = 'What Player Are You? | CWK. Archetypes Assessment';
-const pageDescription = 'Five questions. Under 90 seconds. Find out exactly where you sit on the founder progression and what to do next. No email required to see your result.';
+const pageDescription = 'Five questions. Under 2 min. Find out exactly which World you are in inside the CWK. progression and the one move worth making this week.';
 
 const archetypeKeys: ArchetypeKey[] = ['explorer', 'committer', 'builder', 'operator', 'sovereign'];
 
@@ -20,7 +20,7 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
         Find out where you <em>actually</em> are.
       </h1>
       <p class="as-lede fade-up fade-up-delay-2">
-        Five questions. No fluff. Under 90 seconds. The result tells you which player you are inside the CWK. progression — and the one move worth making this week.
+        Five questions. Under 2 min. The result tells you which World you are inside the CWK. progression, and the one move worth making this week.
       </p>
 
       <ul class="as-pillars fade-up fade-up-delay-3" aria-label="Pillars covered">
@@ -31,7 +31,7 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
       </ul>
 
       <button type="button" class="as-cta fade-up fade-up-delay-4" data-start>
-        Start the assessment →
+        Start the journey →
       </button>
 
       <p class="as-fineprint fade-up fade-up-delay-4">
@@ -570,42 +570,50 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-back:hover { color: var(--text); border-color: var(--gb2); }
 
   /* ── Result ────────────────────────────────────────────── */
-  /* Per-archetype theme tokens. The data-archetype attribute is set on the
-     section after scoring; every accent below references --as-accent so the
-     result stays visually coherent with the archetype the user landed on. */
+  /* Per-archetype theme tokens. --as-accent is the saturated brand color
+     used for buttons and dots. --as-accent-text is a lighter shade used
+     for label text where the saturated tone would be too hard to read on
+     dark. Every accent below references these tokens so the result stays
+     visually coherent with the archetype the user landed on. */
   .as-result {
     --as-accent: #00E5FF;
     --as-accent-2: #7B61FF;
+    --as-accent-text: #9be7f3;
     --as-accent-rgb: 0, 229, 255;
     --as-glow: rgba(0, 229, 255, 0.08);
   }
   .as-result[data-archetype="explorer"] {
     --as-accent: #00E5FF;
     --as-accent-2: #38B2F6;
+    --as-accent-text: #9be7f3;
     --as-accent-rgb: 0, 229, 255;
     --as-glow: rgba(0, 229, 255, 0.10);
   }
   .as-result[data-archetype="committer"] {
     --as-accent: #FF7A30;
     --as-accent-2: #E0A878;
+    --as-accent-text: #FFC399;
     --as-accent-rgb: 255, 122, 48;
     --as-glow: rgba(255, 122, 48, 0.10);
   }
   .as-result[data-archetype="builder"] {
     --as-accent: #FB3079;
     --as-accent-2: #FF7A30;
+    --as-accent-text: #FF9CBE;
     --as-accent-rgb: 251, 48, 121;
     --as-glow: rgba(251, 48, 121, 0.10);
   }
   .as-result[data-archetype="operator"] {
     --as-accent: #7B61FF;
     --as-accent-2: #C9C2FF;
+    --as-accent-text: #C9C2FF;
     --as-accent-rgb: 123, 97, 255;
     --as-glow: rgba(123, 97, 255, 0.10);
   }
   .as-result[data-archetype="sovereign"] {
     --as-accent: #00E5FF;
     --as-accent-2: #FB3079;
+    --as-accent-text: #C9C2FF;
     --as-accent-rgb: 123, 97, 255;
     --as-glow: rgba(123, 97, 255, 0.12);
   }
@@ -708,11 +716,11 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     height: 32px;
   }
   .as-result-eyebrow {
-    font-size: 11px;
+    font-size: 11.5px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--as-accent);
-    font-weight: 700;
+    color: var(--as-accent-text);
+    font-weight: 800;
   }
   .as-result-name {
     margin: 0;
@@ -774,19 +782,30 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     background: rgba(255, 255, 255, 0.02);
   }
   .as-result-block-label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--as-accent);
-    font-weight: 700;
+    color: var(--as-accent-text);
+    font-weight: 800;
+  }
+  .as-result-block-label::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--as-accent);
+    box-shadow: 0 0 8px rgba(var(--as-accent-rgb), 0.55);
   }
   .as-result-block p {
     margin: 0;
-    color: var(--muted);
-    line-height: 1.6;
-    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.86);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.005em;
   }
 
   .as-mind-mine {
@@ -827,12 +846,12 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-environment-tag,
   .as-one-move-tag {
     display: inline-block;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-size: 11px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--as-accent);
-    font-weight: 700;
+    color: var(--as-accent-text);
+    font-weight: 800;
   }
   .as-environment p,
   .as-one-move p {
