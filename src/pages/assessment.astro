@@ -75,7 +75,17 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   <!-- ── Result stage ───────────────────────────────────────── -->
   <section class="as-result" data-step="result" hidden>
     <div class="as-result-inner">
+      <!-- Stage progression: five dots, current one filled with archetype color -->
+      <ol class="as-stage-track" aria-label="Founder progression">
+        <li class="as-stage-step" data-stage="1"><span class="as-stage-dot" aria-hidden="true"></span><span class="as-stage-label">Explorer</span></li>
+        <li class="as-stage-step" data-stage="2"><span class="as-stage-dot" aria-hidden="true"></span><span class="as-stage-label">Committer</span></li>
+        <li class="as-stage-step" data-stage="3"><span class="as-stage-dot" aria-hidden="true"></span><span class="as-stage-label">Builder</span></li>
+        <li class="as-stage-step" data-stage="4"><span class="as-stage-dot" aria-hidden="true"></span><span class="as-stage-label">Operator</span></li>
+        <li class="as-stage-step" data-stage="5"><span class="as-stage-dot" aria-hidden="true"></span><span class="as-stage-label">Sovereign</span></li>
+      </ol>
+
       <header class="as-result-head">
+        <span class="as-result-icon" aria-hidden="true" data-result-icon></span>
         <span class="as-result-eyebrow" data-result-eyebrow>Stage 01</span>
         <h2 class="as-result-name">You are <span data-result-name class="as-result-name-em">Explorer</span></h2>
         <p class="as-result-tag" data-result-tag></p>
@@ -168,9 +178,13 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
         el.classList.remove('is-active');
       }
     });
-    if (step === 'questions') {
-      // Scroll to the top of the stage so the question lands cleanly.
-      sections.questions?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = sections[step];
+    if (target) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Defer one frame so the section is unhidden before we scroll to it.
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      });
     }
   }
 
@@ -215,6 +229,20 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     }
   }
 
+  // Stage index per archetype, used to drive the 5-dot progression visual.
+  const STAGE_INDEX: Record<ArchetypeKey, number> = {
+    explorer: 1, committer: 2, builder: 3, operator: 4, sovereign: 5,
+  };
+
+  // Per-archetype glyph (inline SVG strings). Kept terse; theming lives in CSS.
+  const ICONS: Record<ArchetypeKey, string> = {
+    explorer:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>',
+    committer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v10l8 5 8-5V7z"/><path d="m4 7 8 5 8-5"/><path d="M12 22V12"/></svg>',
+    builder:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    operator:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+    sovereign: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h2l3 11h13l4-8H7"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 4 12 1l4 3"/></svg>',
+  };
+
   function renderResult(key: ArchetypeKey, mindsetGap: boolean) {
     const a = ARCHETYPES[key];
     document.querySelector<HTMLElement>('[data-result-eyebrow]')!.textContent = a.eyebrow;
@@ -234,6 +262,18 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     else gap.setAttribute('hidden', 'hidden');
     // Tag the result section with the archetype key for theming.
     sections.result?.setAttribute('data-archetype', key);
+
+    // Inject the archetype icon.
+    const iconSlot = document.querySelector<HTMLElement>('[data-result-icon]');
+    if (iconSlot) iconSlot.innerHTML = ICONS[key];
+
+    // Update progression: mark steps up to and including current as reached.
+    const stage = STAGE_INDEX[key];
+    document.querySelectorAll<HTMLElement>('.as-stage-step').forEach((el) => {
+      const n = Number(el.dataset.stage);
+      el.classList.toggle('is-current', n === stage);
+      el.classList.toggle('is-reached', n <= stage);
+    });
   }
 
   function restart() {
@@ -271,9 +311,13 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
 
 <style>
   /* ── Shared shell ───────────────────────────────────────── */
-  .as-intro,
-  .as-stage,
-  .as-result {
+  /* Use :not([hidden]) so the HTML `hidden` attribute actually hides the
+     section. Without this guard, `display: flex` would win against the UA
+     `[hidden] { display: none }` rule (same specificity, author wins),
+     and all three stages would stack permanently. */
+  .as-intro:not([hidden]),
+  .as-stage:not([hidden]),
+  .as-result:not([hidden]) {
     padding: 144px 24px 96px;
     min-height: calc(100vh - 64px);
     display: flex;
@@ -421,11 +465,13 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   }
 
   .as-question-prompt {
-    margin: 0;
-    font-size: clamp(22px, 2.8vw, 32px);
+    margin: 0 0 4px;
+    font-size: clamp(24px, 3vw, 34px);
     font-weight: 800;
     letter-spacing: -0.02em;
-    line-height: 1.25;
+    line-height: 1.22;
+    color: var(--text);
+    max-width: 720px;
   }
 
   .as-options {
@@ -434,24 +480,28 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
   .as-option {
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
+    align-items: center;
+    gap: 16px;
     width: 100%;
-    min-height: 56px;
-    padding: 16px 18px;
-    border: 1px solid var(--gb);
-    border-radius: 12px;
-    background: transparent;
+    min-height: 64px;
+    padding: 18px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
     color: var(--text);
     font: inherit;
     text-align: left;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.15s ease,
+      box-shadow 0.2s ease;
   }
   /* Disable hover translate on touch — feels jittery on mobile */
   @media (hover: none) {
@@ -462,35 +512,44 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   }
   .as-option-letter {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--gb);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--dim);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
   .as-option-text {
     flex: 1;
-    font-size: 14.5px;
-    line-height: 1.5;
-    color: var(--muted);
+    font-size: 15.5px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: -0.005em;
   }
   .as-option:hover {
-    border-color: var(--cyan);
+    border-color: rgba(0, 229, 255, 0.55);
     background: rgba(0, 229, 255, 0.06);
+    box-shadow: 0 6px 24px rgba(0, 229, 255, 0.10);
     transform: translateX(4px);
   }
   .as-option:hover .as-option-letter {
-    color: var(--cyan);
-    border-color: rgba(0, 229, 255, 0.4);
-    background: rgba(0, 229, 255, 0.08);
+    color: #07090F;
+    background: var(--cyan);
+    border-color: var(--cyan);
   }
   .as-option:hover .as-option-text { color: var(--text); }
+  .as-option:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+  }
 
   .as-back {
     align-self: flex-start;
@@ -511,26 +570,148 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-back:hover { color: var(--text); border-color: var(--gb2); }
 
   /* ── Result ────────────────────────────────────────────── */
+  /* Per-archetype theme tokens. The data-archetype attribute is set on the
+     section after scoring; every accent below references --as-accent so the
+     result stays visually coherent with the archetype the user landed on. */
+  .as-result {
+    --as-accent: #00E5FF;
+    --as-accent-2: #7B61FF;
+    --as-accent-rgb: 0, 229, 255;
+    --as-glow: rgba(0, 229, 255, 0.08);
+  }
+  .as-result[data-archetype="explorer"] {
+    --as-accent: #00E5FF;
+    --as-accent-2: #38B2F6;
+    --as-accent-rgb: 0, 229, 255;
+    --as-glow: rgba(0, 229, 255, 0.10);
+  }
+  .as-result[data-archetype="committer"] {
+    --as-accent: #FF7A30;
+    --as-accent-2: #E0A878;
+    --as-accent-rgb: 255, 122, 48;
+    --as-glow: rgba(255, 122, 48, 0.10);
+  }
+  .as-result[data-archetype="builder"] {
+    --as-accent: #FB3079;
+    --as-accent-2: #FF7A30;
+    --as-accent-rgb: 251, 48, 121;
+    --as-glow: rgba(251, 48, 121, 0.10);
+  }
+  .as-result[data-archetype="operator"] {
+    --as-accent: #7B61FF;
+    --as-accent-2: #C9C2FF;
+    --as-accent-rgb: 123, 97, 255;
+    --as-glow: rgba(123, 97, 255, 0.10);
+  }
+  .as-result[data-archetype="sovereign"] {
+    --as-accent: #00E5FF;
+    --as-accent-2: #FB3079;
+    --as-accent-rgb: 123, 97, 255;
+    --as-glow: rgba(123, 97, 255, 0.12);
+  }
+
   .as-result {
     background:
-      radial-gradient(60% 50% at 50% 0%, rgba(0, 229, 255, 0.08), transparent 60%),
-      radial-gradient(50% 60% at 80% 30%, rgba(123, 97, 255, 0.08), transparent 60%),
-      radial-gradient(50% 60% at 20% 30%, rgba(251, 48, 121, 0.06), transparent 60%);
+      radial-gradient(70% 50% at 50% 0%, var(--as-glow), transparent 65%),
+      radial-gradient(50% 60% at 85% 30%, rgba(var(--as-accent-rgb), 0.06), transparent 65%);
   }
   .as-result-inner { gap: 22px; animation: as-fade 0.4s ease both; }
+
+  /* Stage progression track */
+  .as-stage-track {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    position: relative;
+  }
+  .as-stage-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .as-stage-step::after {
+    /* connector line to the next dot */
+    content: '';
+    position: absolute;
+    top: 7px;
+    height: 1px;
+    width: calc(20% - 16px);
+    background: rgba(255, 255, 255, 0.12);
+    z-index: 0;
+  }
+  .as-stage-step:nth-child(1)::after { left: calc(10% + 8px); }
+  .as-stage-step:nth-child(2)::after { left: calc(30% + 8px); }
+  .as-stage-step:nth-child(3)::after { left: calc(50% + 8px); }
+  .as-stage-step:nth-child(4)::after { left: calc(70% + 8px); }
+  .as-stage-step:nth-child(5)::after { display: none; }
+  .as-stage-step.is-reached::after {
+    background: linear-gradient(90deg, var(--as-accent), rgba(var(--as-accent-rgb), 0.35));
+  }
+  .as-stage-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+  .as-stage-step.is-reached .as-stage-dot {
+    background: var(--as-accent);
+    border-color: var(--as-accent);
+    box-shadow: 0 0 12px rgba(var(--as-accent-rgb), 0.4);
+  }
+  .as-stage-step.is-current .as-stage-dot {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 0 4px rgba(var(--as-accent-rgb), 0.18), 0 0 22px rgba(var(--as-accent-rgb), 0.55);
+  }
+  .as-stage-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    transition: color 0.3s ease;
+  }
+  .as-stage-step.is-reached .as-stage-label { color: var(--muted); }
+  .as-stage-step.is-current .as-stage-label { color: var(--text); }
 
   .as-result-head {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    gap: 10px;
     text-align: center;
-    padding-bottom: 8px;
+    padding: 8px 0 4px;
+  }
+  .as-result-icon {
+    width: 64px;
+    height: 64px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(var(--as-accent-rgb), 0.16), rgba(var(--as-accent-rgb), 0.05));
+    border: 1px solid rgba(var(--as-accent-rgb), 0.32);
+    color: var(--as-accent);
+    box-shadow: 0 0 30px rgba(var(--as-accent-rgb), 0.22);
+    margin-bottom: 4px;
+  }
+  .as-result-icon :global(svg) {
+    width: 32px;
+    height: 32px;
   }
   .as-result-eyebrow {
     font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--as-accent);
     font-weight: 700;
   }
   .as-result-name {
@@ -541,9 +722,14 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     line-height: 1.05;
   }
   .as-result-name-em {
-    background: linear-gradient(90deg, #00E5FF, #7B61FF, #FB3079);
+    background: linear-gradient(90deg, var(--as-accent), var(--as-accent-2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .as-result[data-archetype="sovereign"] .as-result-name-em {
+    background: linear-gradient(90deg, #00E5FF, #7B61FF 50%, #FB3079);
+    -webkit-background-clip: text;
     background-clip: text;
   }
   .as-result-tag {
@@ -593,7 +779,7 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--as-accent);
     font-weight: 700;
   }
   .as-result-block p {
@@ -629,8 +815,14 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
   .as-one-move {
     padding: 18px 22px;
     border-radius: 14px;
-    border: 1px solid rgba(0, 229, 255, 0.22);
-    background: rgba(0, 229, 255, 0.04);
+    border: 1px solid rgba(var(--as-accent-rgb), 0.28);
+    background: rgba(var(--as-accent-rgb), 0.05);
+  }
+  .as-one-move {
+    /* The most important takeaway — bumped weight + accent border */
+    border-width: 1px;
+    background: linear-gradient(135deg, rgba(var(--as-accent-rgb), 0.10), rgba(var(--as-accent-rgb), 0.03));
+    box-shadow: 0 8px 32px rgba(var(--as-accent-rgb), 0.10);
   }
   .as-environment-tag,
   .as-one-move-tag {
@@ -639,7 +831,7 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--as-accent);
     font-weight: 700;
   }
   .as-environment p,
@@ -649,14 +841,15 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     line-height: 1.6;
     font-size: 15px;
   }
+  .as-one-move p { font-size: 16px; font-weight: 500; }
 
   .as-cta-block {
     margin-top: 8px;
     padding: 24px 26px;
     border-radius: 18px;
-    border: 1px solid var(--gb);
+    border: 1px solid rgba(var(--as-accent-rgb), 0.28);
     background:
-      radial-gradient(80% 60% at 0% 0%, rgba(0, 229, 255, 0.06), transparent 60%),
+      radial-gradient(80% 60% at 0% 0%, rgba(var(--as-accent-rgb), 0.10), transparent 60%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
     display: flex;
     flex-direction: column;
@@ -669,14 +862,19 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     gap: 6px;
     padding: 14px 26px;
     border-radius: 100px;
-    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    background: linear-gradient(90deg, var(--as-accent), var(--as-accent-2));
     color: #0a0e1a;
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    transition: filter 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 8px 28px rgba(var(--as-accent-rgb), 0.30);
+    transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   }
-  .as-primary-cta:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .as-primary-cta:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 36px rgba(var(--as-accent-rgb), 0.42);
+  }
 
   .as-guide-cta {
     border-top: 1px dashed var(--gb);
@@ -706,15 +904,15 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     margin-top: 4px;
     padding: 12px 22px;
     border-radius: 100px;
-    border: 1px solid var(--cyan);
+    border: 1px solid var(--as-accent);
     background: transparent;
-    color: var(--cyan);
+    color: var(--as-accent);
     font-size: 13.5px;
     font-weight: 700;
     text-decoration: none;
     transition: background 0.2s ease, transform 0.15s ease;
   }
-  .as-guide-link:hover { background: rgba(0, 229, 255, 0.08); transform: translateY(-1px); }
+  .as-guide-link:hover { background: rgba(var(--as-accent-rgb), 0.10); transform: translateY(-1px); }
 
   .as-restart {
     align-self: center;
@@ -749,10 +947,14 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     .as-pillars { gap: 8px; }
     .as-pillars li { padding: 6px 12px; font-size: 11.5px; }
 
-    .as-question-prompt { font-size: clamp(20px, 5.4vw, 26px); }
-    .as-option { padding: 14px 14px; gap: 10px; }
-    .as-option-letter { width: 26px; height: 26px; font-size: 11px; }
-    .as-option-text { font-size: 14px; line-height: 1.45; }
+    .as-question-prompt { font-size: clamp(22px, 6vw, 28px); }
+    .as-option { padding: 16px 16px; gap: 12px; min-height: 60px; }
+    .as-option-letter { width: 32px; height: 32px; font-size: 12px; }
+    .as-option-text { font-size: 15px; line-height: 1.5; }
+    .as-stage-track { gap: 4px; }
+    .as-stage-label { font-size: 9px; letter-spacing: 0.06em; }
+    .as-stage-dot { width: 12px; height: 12px; }
+    .as-stage-step.is-current .as-stage-dot { width: 14px; height: 14px; }
 
     .as-result-name { font-size: clamp(28px, 7.5vw, 40px); }
     .as-result-tag { font-size: 14.5px; }
@@ -765,22 +967,23 @@ const CALENDLY_URL = 'https://calendly.com/cwk-experience/intro';
     .as-guide-link { width: 100%; justify-content: center; padding: 12px 18px; }
   }
 
-  /* iOS / mobile-touch tweaks */
+  /* iOS / mobile-touch tweaks — neutralize the desktop hover style on touch
+     but keep the base contrast (text/borders) so options stay readable. */
   @media (hover: none) {
     .as-option:hover {
-      border-color: var(--gb);
-      background: transparent;
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.025);
       transform: none;
     }
     .as-option:hover .as-option-letter {
-      color: var(--dim);
-      border-color: var(--gb);
-      background: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.85);
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
     }
-    .as-option:hover .as-option-text { color: var(--muted); }
+    .as-option:hover .as-option-text { color: rgba(255, 255, 255, 0.92); }
     .as-option:active {
       border-color: var(--cyan);
-      background: rgba(0, 229, 255, 0.06);
+      background: rgba(0, 229, 255, 0.08);
     }
   }
 
