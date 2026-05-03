@@ -113,10 +113,16 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
     {subtext ? (
       <div class="hero-sub fade-up fade-up-delay-2 pt-hero-sub"><PortableText value={subtext} /></div>
     ) : (
-      <p class="hero-sub fade-up fade-up-delay-2">
-        Everyone is building at a different level.
-        <span class="hero-sub-em">Find yours.</span>
-      </p>
+      <div class="hero-sub fade-up fade-up-delay-2">
+        <p class="hero-sub-lead">
+          We rep your career, install the operations, and manage your growth.
+          <span class="hero-sub-lead-strong">All under one house.</span>
+        </p>
+        <p class="hero-sub-tag">
+          Everyone is building at a different level.
+          <span class="hero-sub-em">Find yours.</span>
+        </p>
+      </div>
     )}
     <div class="hero-ctas fade-up fade-up-delay-3">
       <a href="/assessment" class="btn-hero-primary">
@@ -414,25 +420,46 @@ const { eyebrow, headline, phrases, ctaLabel, subtext } = Astro.props;
 
   /* Subtext */
   .hero-sub {
-    font-size: clamp(18px, 1.9vw, 22px);
-    color: var(--muted);
-    max-width: 580px;
-    line-height: 1.55;
+    max-width: 640px;
     margin: 0 0 36px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 14px;
     align-items: center;
     text-align: center;
   }
+  .hero-sub-lead,
+  .hero-sub-tag {
+    margin: 0;
+    line-height: 1.5;
+  }
+  .hero-sub-lead {
+    font-size: clamp(17px, 1.8vw, 20px);
+    color: rgba(255, 255, 255, 0.86);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .hero-sub-lead-strong {
+    color: var(--text);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .hero-sub-tag {
+    font-size: clamp(16px, 1.6vw, 18px);
+    color: var(--muted);
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
+    max-width: 520px;
+  }
   .hero-sub-em {
     font-weight: 700;
-    font-size: clamp(20px, 2.1vw, 26px);
     background: linear-gradient(90deg, #00E5FF, #7B61FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
+    margin-left: 4px;
   }
 
   /* CTA area */
