@@ -276,32 +276,51 @@ const QUIZ = [
       <article id="panel-stack" class="pu-panel pu-panel--stack" data-panel="stack" role="tabpanel">
         <div class="pu-stack-card">
           <span class="pu-stack-tag">🏆 The 90-Day Complete Stack</span>
-          <h2>All three bundles. 90 days. Complete business.</h2>
-          <p>Identity. Sales. Presence. In that order. In 90 days. Run them sequentially and you build a complete business in three months.</p>
+          <h2 class="pu-stack-headline">All three bundles. 90 days. Complete business.</h2>
+          <p class="pu-stack-lede">Identity. Sales. Presence. In that order. Run them sequentially and you build a complete business in three months.</p>
 
-          <ol class="pu-stack-list">
-            <li><strong>Days 1–30</strong> Brand in a Box · Identity built. <em>Clock starts at onboarding.</em></li>
-            <li><strong>Days 31–60</strong> Sales in a Box · Revenue system installed. <em>Clock starts at first advertising execution or first booking attempt.</em></li>
-            <li><strong>Days 61–90</strong> Presence in a Box · Market presence deployed. <em>Clock starts at first post going live.</em></li>
+          <ol class="pu-stack-phases" aria-label="The 90-day timeline">
+            <li class="pu-stack-phase">
+              <span class="pu-stack-phase-num">01</span>
+              <span class="pu-stack-phase-window">Days 1 – 30</span>
+              <h4 class="pu-stack-phase-name">Brand in a Box</h4>
+              <p class="pu-stack-phase-desc">Identity built.</p>
+              <span class="pu-stack-phase-clock">Clock starts at onboarding.</span>
+            </li>
+            <li class="pu-stack-phase">
+              <span class="pu-stack-phase-num">02</span>
+              <span class="pu-stack-phase-window">Days 31 – 60</span>
+              <h4 class="pu-stack-phase-name">Sales in a Box</h4>
+              <p class="pu-stack-phase-desc">Revenue system installed.</p>
+              <span class="pu-stack-phase-clock">Clock starts at first advertising execution or first booking attempt.</span>
+            </li>
+            <li class="pu-stack-phase">
+              <span class="pu-stack-phase-num">03</span>
+              <span class="pu-stack-phase-window">Days 61 – 90</span>
+              <h4 class="pu-stack-phase-name">Presence in a Box</h4>
+              <p class="pu-stack-phase-desc">Market presence deployed.</p>
+              <span class="pu-stack-phase-clock">Clock starts at first post going live.</span>
+            </li>
           </ol>
 
-          <div class="pu-stack-math">
-            <span>Brand <strong>$6,500</strong></span>
-            <span class="pu-stack-plus">+</span>
-            <span>Sales <strong>$16,500</strong></span>
-            <span class="pu-stack-plus">+</span>
-            <span>Presence <strong>$20,000</strong></span>
-          </div>
+          <div class="pu-stack-summary">
+            <ul class="pu-stack-breakdown" aria-label="Cost breakdown">
+              <li><span class="pu-stack-breakdown-label">Brand</span><span class="pu-stack-breakdown-num">$6,500</span></li>
+              <li><span class="pu-stack-breakdown-label">Sales</span><span class="pu-stack-breakdown-num">$16,500</span></li>
+              <li><span class="pu-stack-breakdown-label">Presence</span><span class="pu-stack-breakdown-num">$20,000</span></li>
+            </ul>
 
-          <div class="pu-stack-total">
-            <span>Total</span>
-            <span class="pu-stack-total-num">{COMPLETE_STACK_PRICE}</span>
+            <div class="pu-stack-summary-foot">
+              <div class="pu-stack-total">
+                <span class="pu-stack-total-label">Total · 90 days</span>
+                <span class="pu-stack-total-num">{COMPLETE_STACK_PRICE}</span>
+              </div>
+              <button type="button" class="pu-stack-cta" data-stack-toggle>
+                <span class="pu-stack-cta-add">Reserve The Complete Stack →</span>
+                <span class="pu-stack-cta-on">✓ Stack selected, clear to build à la carte</span>
+              </button>
+            </div>
           </div>
-
-          <button type="button" class="pu-stack-cta" data-stack-toggle>
-            <span class="pu-stack-cta-add">Reserve The Complete Stack →</span>
-            <span class="pu-stack-cta-on">✓ Stack selected — clear to build à la carte</span>
-          </button>
         </div>
       </article>
     </div>
@@ -1440,14 +1459,13 @@ const QUIZ = [
     --accent: #7B61FF;
   }
   .pu-stack-card {
-    padding: 36px;
+    padding: clamp(28px, 4vw, 44px);
     border-radius: 22px;
     border: 1px solid rgba(123, 97, 255, 0.32);
     background:
       radial-gradient(60% 60% at 50% 0%, rgba(0, 229, 255, 0.10), transparent 60%),
       radial-gradient(50% 60% at 80% 50%, rgba(123, 97, 255, 0.10), transparent 60%),
       radial-gradient(50% 60% at 20% 50%, rgba(251, 48, 121, 0.10), transparent 60%);
-    text-align: center;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .pu-stack-card.is-selected {
@@ -1455,68 +1473,158 @@ const QUIZ = [
     box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.32);
   }
   .pu-stack-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border: 1px solid rgba(0, 229, 255, 0.28);
+    border-radius: 100px;
+    background: rgba(0, 229, 255, 0.06);
     font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--cyan);
-    font-weight: 700;
+    font-weight: 800;
   }
-  .pu-stack-card h2 {
-    margin: 8px 0 8px;
+  .pu-stack-headline {
+    margin: 16px 0 10px;
     font-size: clamp(24px, 3.4vw, 36px);
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--text);
+    max-width: 760px;
   }
-  .pu-stack-card > p {
-    margin: 0 auto 20px;
+  .pu-stack-lede {
+    margin: 0 0 28px;
     color: var(--muted);
-    max-width: 540px;
-    line-height: 1.55;
+    max-width: 600px;
+    line-height: 1.6;
+    font-size: 15.5px;
   }
-  .pu-stack-list {
-    margin: 0 auto 24px;
-    padding-left: 18px;
-    text-align: left;
-    max-width: 540px;
-    color: var(--muted);
-    line-height: 1.7;
-    font-size: 14px;
+
+  /* 3-card phase timeline */
+  .pu-stack-phases {
+    list-style: none;
+    margin: 0 0 28px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
   }
-  .pu-stack-list strong { color: var(--text); }
-  .pu-stack-list em { color: var(--dim); font-style: italic; }
-  .pu-stack-math {
+  .pu-stack-phase {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 14px;
-    color: var(--muted);
-    font-size: 14.5px;
-    margin-bottom: 14px;
-  }
-  .pu-stack-math strong { color: var(--text); }
-  .pu-stack-plus { color: var(--dim); }
-  .pu-stack-total {
-    margin: 8px auto 18px;
-    padding: 18px 32px;
-    border: 1px solid var(--gb);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.03);
-    display: inline-flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    gap: 6px;
+    padding: 18px 18px 20px;
+    border: 1px solid var(--gb);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    text-align: left;
   }
-  .pu-stack-total > span:first-child {
+  .pu-stack-phase-num {
     font-size: 11px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 800;
+  }
+  .pu-stack-phase-window {
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--dim);
     font-weight: 700;
+  }
+  .pu-stack-phase-name {
+    margin: 2px 0 0;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .pu-stack-phase-desc {
+    margin: 2px 0 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .pu-stack-phase-clock {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    font-size: 11.5px;
+    color: var(--dim);
+    line-height: 1.45;
+    font-style: italic;
+  }
+
+  /* Summary card: cost breakdown + total + CTA */
+  .pu-stack-summary {
+    padding: 22px 24px 24px;
+    border: 1px solid var(--gb);
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  }
+  .pu-stack-breakdown {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0 0 18px;
+    border-bottom: 1px solid var(--gb);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .pu-stack-breakdown li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 14px;
+    border-left: 2px solid rgba(123, 97, 255, 0.32);
+  }
+  .pu-stack-breakdown li:nth-child(1) { border-left-color: rgba(0, 229, 255, 0.45); }
+  .pu-stack-breakdown li:nth-child(2) { border-left-color: rgba(123, 97, 255, 0.45); }
+  .pu-stack-breakdown li:nth-child(3) { border-left-color: rgba(251, 48, 121, 0.45); }
+  .pu-stack-breakdown-label {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 800;
+  }
+  .pu-stack-breakdown-num {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .pu-stack-summary-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .pu-stack-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .pu-stack-total-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 800;
   }
   .pu-stack-total-num {
     font-size: clamp(40px, 6vw, 56px);
     font-weight: 800;
     letter-spacing: -0.03em;
+    line-height: 1;
     background: linear-gradient(90deg, #00E5FF, #7B61FF, #FB3079);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1526,27 +1634,41 @@ const QUIZ = [
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 16px 30px;
+    padding: 16px 28px;
     border: 0;
     border-radius: 100px;
     background: linear-gradient(90deg, #00E5FF, #7B61FF, #FB3079);
     color: #0a0e1a;
-    font-size: 15px;
-    font-weight: 700;
-    font: inherit;
-    font-weight: 700;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
     cursor: pointer;
-    transition: filter 0.2s ease, transform 0.15s ease;
+    font: inherit;
+    font-weight: 800;
+    box-shadow: 0 12px 30px rgba(123, 97, 255, 0.28);
+    transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
   }
-  .pu-stack-cta:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .pu-stack-cta:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 36px rgba(123, 97, 255, 0.36);
+  }
   .pu-stack-cta-on { display: none; }
   .pu-stack-card.is-selected .pu-stack-cta {
     background: transparent;
     border: 1px solid var(--cyan);
     color: var(--cyan);
+    box-shadow: none;
   }
   .pu-stack-card.is-selected .pu-stack-cta-add { display: none; }
   .pu-stack-card.is-selected .pu-stack-cta-on { display: inline; }
+
+  @media (max-width: 760px) {
+    .pu-stack-phases { grid-template-columns: 1fr; }
+    .pu-stack-breakdown { grid-template-columns: 1fr; gap: 12px; }
+    .pu-stack-summary-foot { flex-direction: column; align-items: stretch; }
+    .pu-stack-cta { justify-content: center; }
+  }
 
   /* ── Cart bar (collapsed) ──────────────────────────────── */
   .visually-hidden {
