@@ -471,7 +471,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     cardImage: '/images/case-studies/spraycation/gallery-03.webp',
     cardImageAlt: 'Zuzu standing in front of the You Are Magic SPRAYCATION mural',
     cardDescription: 'Built brand foundation and operational backbone for a female-led art movement.',
-    cardStat: { num: '5', label: 'City National Tours' },
+    cardStat: { num: '5', label: 'City National Tour' },
     order: 1,
     headline: 'Building an Experiential Campaign While in Motion',
     duration: 'Jan–Nov 2025',

@@ -80,12 +80,6 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
     <div class="cs-hero-inner">
       <h1 class="cs-hero-title fade-up">Real brands. <span class="cs-hero-accent">Immersive impact.</span></h1>
       <p class="cs-hero-sub fade-up fade-up-delay-1">Step into the worlds built by CWK.</p>
-      <a href="#worlds" class="cs-hero-cta fade-up fade-up-delay-2">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
-        </svg>
-        Discover the Worlds
-      </a>
     </div>
   </section>
 
@@ -96,8 +90,8 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
         {cards.map((c, i) => (
           <a
             href={`/case-studies/${c.slug}`}
-            class={`cs-card cs-card--${c.cardSurface} reveal-card`}
-            style={`--cs-accent: ${c.cardAccent}; --reveal-i:${i}`}
+            class="cs-card reveal-card"
+            style={`--reveal-i:${i}`}
           >
             <span class="cs-card-eyebrow">{c.category}</span>
             <h2 class="cs-card-title">{c.client}</h2>
@@ -164,27 +158,6 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
     font-size: clamp(15px, 1.5vw, 17px);
     line-height: 1.6;
   }
-  .cs-hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 22px;
-    margin-top: 12px;
-    border: 1px solid var(--gb2);
-    border-radius: 100px;
-    background: rgba(255,255,255,0.02);
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-  }
-  .cs-hero-cta:hover {
-    border-color: var(--cyan);
-    background: rgba(0, 229, 255, 0.06);
-    transform: translateY(-1px);
-  }
-
   /* ── Grid ─────────────────────────────────────────────────── */
   .cs-grid-section {
     padding: 32px 24px 96px;
@@ -217,14 +190,19 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
     text-decoration: none;
     color: var(--text);
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease, box-shadow 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(0, 229, 255, 0.05), transparent 55%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.01) 100%);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease, box-shadow 0.4s ease, background 0.3s ease;
     min-height: 460px;
   }
   .cs-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(255,255,255,0.16);
-    box-shadow: 0 18px 46px rgba(0,0,0,0.55);
+    border-color: rgba(0, 229, 255, 0.28);
+    box-shadow:
+      0 18px 46px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(0, 229, 255, 0.08);
   }
 
   .cs-card-eyebrow {
@@ -294,110 +272,12 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.025em;
-    color: var(--cs-accent, var(--cyan));
+    color: var(--cyan);
   }
   .cs-card-stat-label {
     font-size: 12px;
     letter-spacing: 0.05em;
     color: rgba(255,255,255,0.62);
-  }
-
-  /* ── Bespoke surfaces ────────────────────────────────────── */
-  /* Charcoal: deep slate with a faint vertical sheen */
-  .cs-card--charcoal {
-    background:
-      radial-gradient(circle at 18% 12%, rgba(255,255,255,0.08), transparent 55%),
-      linear-gradient(180deg, #1c1f26 0%, #11131a 100%);
-  }
-
-  /* Glow blue: dark base with a soft blue spotlight (LAB Miami) */
-  .cs-card--glow-blue {
-    background:
-      radial-gradient(60% 40% at 50% 0%, rgba(56,178,246,0.45), transparent 70%),
-      linear-gradient(180deg, #0e1a2c 0%, #0a0f1d 100%);
-    border-color: rgba(56,178,246,0.22);
-  }
-
-  /* Marble stone: layered gray tones with subtle texture (Raasin) */
-  .cs-card--marble-stone {
-    background:
-      radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,0.18), transparent 55%),
-      radial-gradient(120% 80% at 100% 100%, rgba(0,0,0,0.45), transparent 55%),
-      linear-gradient(135deg, #d6d2cc 0%, #a39d96 50%, #6f6a64 100%);
-    border-color: rgba(255,255,255,0.14);
-  }
-  .cs-card--marble-stone .cs-card-eyebrow,
-  .cs-card--marble-stone .cs-card-medium { color: rgba(20,15,12,0.7); }
-  .cs-card--marble-stone .cs-card-title { color: #1b1714; }
-  .cs-card--marble-stone .cs-card-desc { color: rgba(20,15,12,0.78); }
-  .cs-card--marble-stone .cs-card-stat-label { color: rgba(20,15,12,0.62); }
-  .cs-card--marble-stone .cs-card-stat { border-top-color: rgba(20,15,12,0.18); }
-
-  /* Marble light: warm cream stone (Stephy Lee) */
-  .cs-card--marble-light {
-    background:
-      radial-gradient(130% 70% at 100% 0%, rgba(255,255,255,0.7), transparent 60%),
-      linear-gradient(135deg, #f5f1ea 0%, #e6dfd3 60%, #cfc6b6 100%);
-    border-color: rgba(0,0,0,0.05);
-  }
-  .cs-card--marble-light .cs-card-eyebrow,
-  .cs-card--marble-light .cs-card-medium { color: rgba(0,0,0,0.55); }
-  .cs-card--marble-light .cs-card-title { color: #1a1714; }
-  .cs-card--marble-light .cs-card-desc { color: rgba(0,0,0,0.7); }
-  .cs-card--marble-light .cs-card-stat-label { color: rgba(0,0,0,0.55); }
-  .cs-card--marble-light .cs-card-stat { border-top-color: rgba(0,0,0,0.12); }
-
-  /* Wood: warm walnut grain (Life's Tapestry) */
-  .cs-card--wood {
-    background:
-      repeating-linear-gradient(96deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 6px),
-      linear-gradient(135deg, #5a3920 0%, #3b2614 60%, #25170c 100%);
-    border-color: rgba(255,200,140,0.18);
-  }
-  .cs-card--wood .cs-card-eyebrow,
-  .cs-card--wood .cs-card-medium { color: rgba(255,210,170,0.7); }
-  .cs-card--wood .cs-card-desc { color: rgba(255,225,200,0.85); }
-  .cs-card--wood .cs-card-stat { border-top-color: rgba(255,210,170,0.18); }
-
-  /* Holographic: shimmering iridescent gradient (Agent+) */
-  .cs-card--holographic {
-    background:
-      radial-gradient(120% 100% at 0% 0%, rgba(255,255,255,0.35), transparent 60%),
-      linear-gradient(135deg, #6e9bff 0%, #b56dff 35%, #ff7ad9 65%, #ffd370 100%);
-    border-color: rgba(255,255,255,0.35);
-  }
-  .cs-card--holographic .cs-card-eyebrow,
-  .cs-card--holographic .cs-card-medium { color: rgba(20,10,30,0.7); }
-  .cs-card--holographic .cs-card-title { color: #15081f; }
-  .cs-card--holographic .cs-card-desc { color: rgba(20,10,30,0.78); }
-  .cs-card--holographic .cs-card-stat-label { color: rgba(20,10,30,0.62); }
-  .cs-card--holographic .cs-card-stat { border-top-color: rgba(20,10,30,0.18); }
-
-  /* Crimson: deep blood red (Pay the Creators) */
-  .cs-card--crimson {
-    background:
-      radial-gradient(80% 60% at 100% 0%, rgba(255,90,140,0.35), transparent 65%),
-      linear-gradient(160deg, #4d0a1d 0%, #2a050f 100%);
-    border-color: rgba(255,90,140,0.2);
-  }
-
-  /* Isometric dark: deep navy with isometric grid hint (SPRAYCATION) */
-  .cs-card--isometric-dark {
-    background:
-      linear-gradient(60deg, transparent 49.4%, rgba(0,229,255,0.08) 49.6%, rgba(0,229,255,0.08) 50.4%, transparent 50.6%),
-      linear-gradient(-60deg, transparent 49.4%, rgba(123,97,255,0.08) 49.6%, rgba(123,97,255,0.08) 50.4%, transparent 50.6%),
-      linear-gradient(180deg, #131829 0%, #0a0e1a 100%);
-    background-size: 36px 36px, 36px 36px, 100% 100%;
-    border-color: rgba(0,229,255,0.18);
-  }
-
-  /* Glass: existing site glass card */
-  .cs-card--glass {
-    background:
-      radial-gradient(120% 80% at 0% 0%, rgba(0,229,255,0.06), transparent 55%),
-      linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
 
   @media (prefers-reduced-motion: reduce) {
