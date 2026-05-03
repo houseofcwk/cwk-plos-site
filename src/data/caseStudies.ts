@@ -489,6 +489,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       p('CWK. began working with Zuzu in January 2025. The tour launched in June and ran through November.'),
       yt('https://www.youtube.com/embed/indEyPSLvlI?rel=0', 'SPRAYCATION Mural Tour 2025 Kick-off'),
 
+      h2('The Work'),
       {
         _type: 'gallery',
         columns: 2,
@@ -499,8 +500,6 @@ export const CASE_STUDIES: CaseStudy[] = [
           { src: '/images/case-studies/spraycation/gallery-04.webp', alt: 'SPRAYCATION tour moment' },
         ],
       },
-
-      h2('The Work'),
       p("CWK.'s role was to build the brand foundation and operational backbone while the tour was already in motion."),
       bullet('Centered the entire tour around a single narrative.'),
       bullet('Hired and coordinated an operations team in real time.'),
@@ -509,17 +508,16 @@ export const CASE_STUDIES: CaseStudy[] = [
       bullet('Supported Zuzu in the mural reveal events in select cities.'),
       p('Everything was built under live conditions.'),
 
-      {
-        _type: 'image',
-        src: '/images/case-studies/spraycation/zoom-cover.webp',
-        alt: 'SPRAYCATION campaign cover',
-      },
-
       h2('The Result'),
       p('SPRAYCATION moved from an ambitious art idea to a repeatable, fundable experiential brand. The tour proved the message holds across cities, the model works beyond one-off murals, and the experience can be packaged, sold, and scaled.'),
       p('2024 proved the concept. 2025 refined the narrative. 2026 is built for scale.'),
 
       h2('Credibility'),
+      {
+        _type: 'image',
+        src: '/images/case-studies/spraycation/zoom-cover.webp',
+        alt: 'SPRAYCATION team on a working call during the live tour build',
+      },
       {
         _type: 'gallery',
         columns: 2,
