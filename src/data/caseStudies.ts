@@ -316,7 +316,8 @@ export const CASE_STUDIES: CaseStudy[] = [
 
       h3('Rise of Masontown'),
       p('A major mural and documentary on Black land ownership and industrial Austin.'),
-      yt('https://www.youtube.com/embed/AgMQZw7dGnY?rel=0', 'The Rise of Masontown — Meet the Team'),
+      yt('https://www.youtube.com/embed/AgMQZw7dGnY?rel=0', 'The Rise of Masontown, Meet the Team'),
+      yt('https://www.youtube.com/embed/MSCBcXB8Mpc?rel=0', 'The Story Behind The Mason Town Mural in East Austin'),
 
       h3('The Story Behind Six Square'),
       p("A documentary capturing the origin and mission of Six Square, a cultural organization preserving Black history in Central East Austin."),
@@ -341,7 +342,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       bullet('Established Raasin McIntosh as a leading voice in creative placemaking.'),
 
       h2('What This Case Proves'),
-      p('Raasin in the Sun is where I learned how to produce meaning, not just content.'),
+      p('Raasin in the Sun is where we learned how to produce meaning, not just content.'),
     ],
   },
 
