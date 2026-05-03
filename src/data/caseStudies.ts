@@ -67,6 +67,7 @@ export interface CaseStudy {
   cardAccent: string;
   cardImage?: string;
   cardImageAlt?: string;
+  cardThumbnail?: string;
   cardDescription: string;
   cardStat: { num: string; label: string };
   order: number;
@@ -225,7 +226,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     medium: 'LAB/HUB',
     cardSurface: 'glow-blue',
     cardAccent: '#38B2F6',
-    cardImage: '/images/work/lab-miami.webp',
+    cardImage: '/images/case-studies/the-lab-miami/hero-01.webp',
     cardImageAlt: 'The LAB Miami innovation campus',
     cardDescription: 'Content infrastructure and positioning clarity for an innovation campus.',
     cardStat: { num: '30%', label: 'Faster Sales Cycles' },
@@ -585,6 +586,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     cardAccent: '#E0A878',
     cardImage: '/images/case-studies/lifes-tapestry/hero-01.webp',
     cardImageAlt: "Titi Lee with Kris in front of CWK Consulting screen, sharing thanks for Life's Tapestry",
+    cardThumbnail: '/images/case-studies/lifes-tapestry/card.webp',
     cardDescription: "Launched a digital property for a 64-year-old first-time writer; 25+ editions and a growing audience.",
     cardStat: { num: '25+', label: 'Editions Published' },
     order: 4,
@@ -752,6 +754,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     cardAccent: '#00E5FF',
     cardImage: '/images/case-studies/dawa/cover.webp',
     cardImageAlt: 'DAWA Diversity Awareness & Wellness in Action',
+    cardThumbnail: '/images/case-studies/dawa/card.webp',
     cardDescription: "Found the organization's anchor phrase, built its content system, and co-built an education program from zero.",
     cardStat: { num: '100%', label: 'Messaging Clarity' },
     order: 2,

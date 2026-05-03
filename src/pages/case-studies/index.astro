@@ -22,6 +22,7 @@ interface CardEntry {
   cardAccent: string;
   cardImage?: string;
   cardImageAlt?: string;
+  cardThumbnail?: string;
   cardDescription: string;
   cardStat: { num: string; label: string };
 }
@@ -44,6 +45,7 @@ function fromSanity(c: any): CardEntry {
     cardAccent: c.cardAccent ?? '#00E5FF',
     cardImage,
     cardImageAlt: c.cardImage?.alt ?? c.client ?? '',
+    cardThumbnail: undefined, // Sanity schema does not yet model thumbnails; fall back to cardImage.
     cardDescription: c.cardDescription ?? '',
     cardStat: { num: c.cardStat?.num ?? '', label: c.cardStat?.label ?? '' },
   };
@@ -60,6 +62,7 @@ const cards: CardEntry[] = (sanityCases
       cardAccent: c.cardAccent,
       cardImage: c.cardImage,
       cardImageAlt: c.cardImageAlt,
+      cardThumbnail: c.cardThumbnail,
       cardDescription: c.cardDescription,
       cardStat: c.cardStat,
     }))
@@ -99,9 +102,9 @@ const pageDescription = 'Step into the worlds built by CWK. Real brands. Immersi
             <span class="cs-card-eyebrow">{c.category}</span>
             <h2 class="cs-card-title">{c.client}</h2>
 
-            {c.cardImage ? (
+            {(c.cardThumbnail ?? c.cardImage) ? (
               <div class="cs-card-image">
-                <img src={c.cardImage} alt={c.cardImageAlt ?? c.client} loading="lazy" decoding="async" />
+                <img src={c.cardThumbnail ?? c.cardImage} alt={c.cardImageAlt ?? c.client} loading="lazy" decoding="async" />
               </div>
             ) : (
               <div class="cs-card-image cs-card-image--empty" aria-hidden="true">

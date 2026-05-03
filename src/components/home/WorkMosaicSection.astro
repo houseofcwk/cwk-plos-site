@@ -33,7 +33,7 @@ const portfolio = CASE_STUDIES
           >
             <div class="portfolio-card-img">
               <img
-                src={c.cardImage}
+                src={c.cardThumbnail ?? c.cardImage}
                 alt={c.cardImageAlt ?? c.client}
                 width="900"
                 height="600"
