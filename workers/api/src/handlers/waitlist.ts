@@ -250,7 +250,7 @@ async function sendConfirmation(env: Env, recipientEmail: string): Promise<void>
 
 // ─── Slack notification ───────────────────────────────────────────────────────
 
-async function sendSlackNotification(env: Env, email: string, joinedAt: string): Promise<void> {
+async function sendSlackNotification(env: Env, email: string): Promise<void> {
   if (!env.SLACK_WEBHOOK_URL) return;
 
   const payload = {
@@ -264,13 +264,6 @@ async function sendSlackNotification(env: Env, email: string, joinedAt: string):
         type: 'section',
         fields: [
           { type: 'mrkdwn', text: `*Email*\n${email}` },
-          { type: 'mrkdwn', text: `*Joined*\n${joinedAt}` },
-        ],
-      },
-      {
-        type: 'context',
-        elements: [
-          { type: 'mrkdwn', text: `env: \`${env.ENVIRONMENT}\` · source: houseofcwk.com` },
         ],
       },
     ],
@@ -377,7 +370,7 @@ export async function handleWaitlistPost(request: Request, env: Env, ctx: Execut
       ctx.waitUntil(sendTeamNotification(env, rawEmail, entry.joinedAt).catch(() => {}));
     }
     if (env.SLACK_WEBHOOK_URL) {
-      ctx.waitUntil(sendSlackNotification(env, rawEmail, entry.joinedAt).catch(() => {}));
+      ctx.waitUntil(sendSlackNotification(env, rawEmail).catch(() => {}));
     }
 
     return json({ success: true }, 200, env);
