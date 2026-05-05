@@ -16,6 +16,7 @@ import { statItem } from './objects/statItem';
 import { featureBlock } from './objects/featureBlock';
 import { pillarBlock } from './objects/pillarBlock';
 import { blockContent } from './objects/blockContent';
+import { googleReview } from './objects/googleReview';
 
 export {
   siteSettings,
@@ -33,6 +34,7 @@ export {
   featureBlock,
   pillarBlock,
   blockContent,
+  googleReview,
 };
 
 export const schemaTypes = [
@@ -53,4 +55,5 @@ export const schemaTypes = [
   featureBlock,
   pillarBlock,
   blockContent,
+  googleReview,
 ];

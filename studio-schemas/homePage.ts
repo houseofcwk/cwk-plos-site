@@ -60,6 +60,30 @@ export const homePage = defineType({
       of: [{ type: 'featureBlock' }],
     }),
     defineField({
+      name: 'googleReviews',
+      title: 'Google Reviews (curated)',
+      type: 'array',
+      description:
+        'Manually copied from the public Google Maps page. Section auto-hides if this is empty. Refresh quarterly.',
+      of: [{ type: 'googleReview' }],
+    }),
+    defineField({
+      name: 'googleReviewsAggregateRating',
+      title: 'Aggregate Rating',
+      type: 'number',
+      description:
+        'Average star rating shown in the section header (e.g. 5, 4.9). Optional.',
+      validation: (Rule) => Rule.min(0).max(5),
+    }),
+    defineField({
+      name: 'googleReviewsTotalCount',
+      title: 'Total Review Count',
+      type: 'number',
+      description:
+        'Total number of Google reviews shown in the section header. Optional.',
+      validation: (Rule) => Rule.min(0).integer(),
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo',

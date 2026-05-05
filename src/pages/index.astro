@@ -34,6 +34,9 @@ const wordPhrases: string[] = (Array.isArray(s?.wordFlipPhrases) && s.wordFlipPh
   ? s.wordFlipPhrases : HARDCODED_PHRASES;
 const heroCtaLabel    = s?.heroCta?.label   ?? 'Join Waitlist';
 const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars : HARDCODED_PILLARS;
+const googleReviews = Array.isArray(s?.googleReviews) ? s.googleReviews : null;
+const googleReviewsAggregateRating = typeof s?.googleReviewsAggregateRating === 'number' ? s.googleReviewsAggregateRating : null;
+const googleReviewsTotalCount = typeof s?.googleReviewsTotalCount === 'number' ? s.googleReviewsTotalCount : null;
 ---
 
 <Base title={pageTitle} description={pageDescription}>
@@ -48,7 +51,11 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
   <ThreeLevelsSection />
   <PillarsSection pillars={pillars} />
   <WorkMosaicSection />
-  <GoogleReviewsSection />
+  <GoogleReviewsSection
+    reviews={googleReviews}
+    aggregateRating={googleReviewsAggregateRating}
+    totalCount={googleReviewsTotalCount}
+  />
   <ProductPreviewSection />
   <PlayerXRaySection />
 

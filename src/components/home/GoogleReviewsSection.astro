@@ -1,139 +1,89 @@
 ---
-const API_BASE = import.meta.env.PUBLIC_API_BASE_URL ?? 'https://api.houseofcwk.com';
-const REVIEWS_URL = `${API_BASE}/google-reviews`;
-const REVIEW_URL = 'https://maps.app.goo.gl/whHe4p6cdjgJyZXp8';
+export interface CuratedReview {
+  author: string;
+  rating: number;
+  text: string;
+  relativeTime?: string | null;
+  authorUrl?: string | null;
+  profilePhotoUrl?: string | null;
+}
+
+interface Props {
+  reviews?: CuratedReview[] | null;
+  aggregateRating?: number | null;
+  totalCount?: number | null;
+}
+
+const { reviews, aggregateRating, totalCount } = Astro.props;
+
+const list = (reviews ?? []).filter((r) => r && r.author && r.text).slice(0, 6);
+const REVIEW_URL = 'https://maps.app.goo.gl/NWYxzWR38jGLfsNU7';
+
+const renderStars = (n: number) => {
+  const full = Math.round(Math.max(0, Math.min(5, n)));
+  return '★★★★★☆☆☆☆☆'.slice(5 - full, 10 - full);
+};
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((s) => s[0]!.toUpperCase())
+    .join('');
+
+const showHeaderMeta =
+  typeof aggregateRating === 'number' && aggregateRating > 0 && typeof totalCount === 'number' && totalCount > 0;
 ---
 
-<section
-  class="section reviews-section"
-  aria-labelledby="reviews-heading"
-  data-reviews-section
-  data-reviews-url={REVIEWS_URL}
-  hidden
->
-  <div class="section-inner">
-    <header class="reviews-header">
-      <span class="pill-eyebrow reveal-up">
-        <span class="pill-dot" aria-hidden="true"></span>
-        From Google
-      </span>
-      <h2 id="reviews-heading" class="reviews-title reveal-up reveal-delay-1">
-        What founders say about CWK.
-      </h2>
-      <div class="reviews-meta reveal-up reveal-delay-2" data-reviews-meta hidden>
-        <span class="reviews-stars" data-reviews-stars></span>
-        <span class="reviews-rating" data-reviews-rating></span>
-        <span class="reviews-count" data-reviews-count></span>
-        <a class="reviews-link" href={REVIEW_URL} target="_blank" rel="noopener noreferrer">View on Google</a>
-      </div>
-    </header>
-
-    <ul class="reviews-grid" data-reviews-grid></ul>
-
-    <template data-review-template>
-      <li class="review-card reveal-card">
-        <header class="review-card-head">
-          <div class="review-avatar" data-avatar></div>
-          <div class="review-author-meta">
-            <span class="review-author" data-author></span>
-            <span class="review-time" data-time></span>
+{list.length > 0 && (
+  <section class="section reviews-section" aria-labelledby="reviews-heading">
+    <div class="section-inner">
+      <header class="reviews-header">
+        <span class="pill-eyebrow reveal-up">
+          <span class="pill-dot" aria-hidden="true"></span>
+          From Google
+        </span>
+        <h2 id="reviews-heading" class="reviews-title reveal-up reveal-delay-1">
+          What founders say about CWK.
+        </h2>
+        {showHeaderMeta && (
+          <div class="reviews-meta reveal-up reveal-delay-2">
+            <span class="reviews-stars" aria-hidden="true">{renderStars(aggregateRating!)}</span>
+            <span class="reviews-rating">{aggregateRating!.toFixed(1)}</span>
+            <span class="reviews-count">({totalCount!.toLocaleString()} Google reviews)</span>
+            <a class="reviews-link" href={REVIEW_URL} target="_blank" rel="noopener noreferrer">View on Google</a>
           </div>
-        </header>
-        <span class="review-stars" data-stars aria-hidden="true"></span>
-        <p class="review-text" data-text></p>
-      </li>
-    </template>
-  </div>
-</section>
+        )}
+        {!showHeaderMeta && (
+          <div class="reviews-meta reveal-up reveal-delay-2">
+            <a class="reviews-link" href={REVIEW_URL} target="_blank" rel="noopener noreferrer">View all on Google</a>
+          </div>
+        )}
+      </header>
 
-<script>
-  const root = document.querySelector<HTMLElement>('[data-reviews-section]');
-  if (root) {
-    const url = root.dataset.reviewsUrl!;
-    const grid = root.querySelector<HTMLElement>('[data-reviews-grid]')!;
-    const meta = root.querySelector<HTMLElement>('[data-reviews-meta]')!;
-    const ratingEl = root.querySelector<HTMLElement>('[data-reviews-rating]')!;
-    const countEl = root.querySelector<HTMLElement>('[data-reviews-count]')!;
-    const starsEl = root.querySelector<HTMLElement>('[data-reviews-stars]')!;
-    const tpl = root.querySelector<HTMLTemplateElement>('[data-review-template]')!;
-
-    type SlimReview = {
-      author: string;
-      profilePhoto: string | null;
-      authorUrl: string | null;
-      text: string;
-      rating: number;
-      time: string;
-      relativeTime: string;
-    };
-    type Payload = {
-      rating: number | null;
-      total: number;
-      reviews: SlimReview[];
-      stale?: boolean;
-    };
-
-    const renderStars = (n: number) => {
-      const full = Math.round(Math.max(0, Math.min(5, n)));
-      return '★★★★★☆☆☆☆☆'.slice(5 - full, 10 - full);
-    };
-
-    const initials = (name: string) =>
-      name
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((s) => s[0]!.toUpperCase())
-        .join('');
-
-    const render = (data: Payload) => {
-      if (!data.reviews?.length) return;
-
-      if (typeof data.rating === 'number' && data.total > 0) {
-        starsEl.textContent = renderStars(data.rating);
-        ratingEl.textContent = data.rating.toFixed(1);
-        countEl.textContent = `(${data.total.toLocaleString()} Google reviews)`;
-        meta.hidden = false;
-      }
-
-      const frag = document.createDocumentFragment();
-      data.reviews.slice(0, 5).forEach((r, i) => {
-        const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
-        node.style.setProperty('--reveal-i', String(i));
-
-        const avatar = node.querySelector<HTMLElement>('[data-avatar]')!;
-        if (r.profilePhoto) {
-          const img = document.createElement('img');
-          img.src = r.profilePhoto;
-          img.alt = '';
-          img.loading = 'lazy';
-          img.referrerPolicy = 'no-referrer';
-          avatar.appendChild(img);
-        } else {
-          avatar.textContent = initials(r.author);
-          avatar.classList.add('review-avatar--initials');
-        }
-
-        node.querySelector<HTMLElement>('[data-author]')!.textContent = r.author;
-        node.querySelector<HTMLElement>('[data-time]')!.textContent = r.relativeTime;
-        node.querySelector<HTMLElement>('[data-stars]')!.textContent = renderStars(r.rating);
-        node.querySelector<HTMLElement>('[data-text]')!.textContent = r.text;
-        frag.appendChild(node);
-      });
-      grid.replaceChildren(frag);
-      root.hidden = false;
-    };
-
-    fetch(url, { mode: 'cors', credentials: 'omit' })
-      .then((r) => (r.ok ? (r.json() as Promise<Payload>) : null))
-      .then((data) => {
-        if (data && data.reviews?.length) render(data);
-      })
-      .catch(() => {
-        // Silent: section stays hidden, no layout impact.
-      });
-  }
-</script>
+      <ul class="reviews-grid">
+        {list.map((r, i) => (
+          <li class="review-card reveal-card" style={`--reveal-i:${i}`}>
+            <header class="review-card-head">
+              <div class={`review-avatar${r.profilePhotoUrl ? '' : ' review-avatar--initials'}`}>
+                {r.profilePhotoUrl
+                  ? <img src={r.profilePhotoUrl} alt="" loading="lazy" referrerpolicy="no-referrer" />
+                  : initials(r.author)}
+              </div>
+              <div class="review-author-meta">
+                <span class="review-author">{r.author}</span>
+                {r.relativeTime && <span class="review-time">{r.relativeTime}</span>}
+              </div>
+            </header>
+            <span class="review-stars" aria-label={`${r.rating} out of 5 stars`}>{renderStars(r.rating)}</span>
+            <p class="review-text">{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
 
 <style>
   .reviews-section {
@@ -196,14 +146,12 @@ const REVIEW_URL = 'https://maps.app.goo.gl/whHe4p6cdjgJyZXp8';
 
   .reviews-grid {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 auto;
+    padding: 0 24px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
   }
 
   .review-card {
@@ -292,9 +240,10 @@ const REVIEW_URL = 'https://maps.app.goo.gl/whHe4p6cdjgJyZXp8';
     line-height: 1.6;
     color: var(--muted);
     display: -webkit-box;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    white-space: pre-line;
   }
 
   @media (max-width: 960px) {

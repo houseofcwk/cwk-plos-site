@@ -25,6 +25,16 @@ export const HOME_QUERY = groq`
     heroCta,
     pillars[]{ key, title, body },
     features[]{ id, headline, body, highlights },
+    googleReviews[]{
+      author,
+      rating,
+      text,
+      relativeTime,
+      authorUrl,
+      "profilePhotoUrl": profilePhoto.asset->url
+    },
+    googleReviewsAggregateRating,
+    googleReviewsTotalCount,
     seo
   }
 `;
