@@ -102,6 +102,17 @@ const showHeaderMeta =
     gap: 14px;
   }
 
+  /* Override the global .pill-eyebrow's align-self: flex-start so the
+     eyebrow centers under the flex parent. Lift contrast at the same
+     time — brighter text on a slightly stronger fill reads better
+     against the section's --bg2 background. */
+  .reviews-header .pill-eyebrow {
+    align-self: center;
+    color: #ffd6e3;
+    background: rgba(251, 48, 121, 0.16);
+    border-color: rgba(251, 48, 121, 0.42);
+  }
+
   .reviews-title {
     font-size: clamp(28px, 3.4vw, 40px);
     font-weight: 700;
