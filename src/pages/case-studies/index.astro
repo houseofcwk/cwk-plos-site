@@ -36,18 +36,33 @@ function fromSanity(c: any): CardEntry {
       cardImage = undefined;
     }
   }
+  let cardThumbnail: string | undefined;
+  if (c.cardThumbnail?.asset) {
+    try {
+      cardThumbnail = urlFor(c.cardThumbnail).width(900).auto('format').url();
+    } catch {
+      cardThumbnail = undefined;
+    }
+  }
+  // Per-field fallback: if Sanity is missing this study's image, use the
+  // hardcoded entry so the listing never renders empty placeholders for
+  // studies that have static art.
+  const staticEntry = CASE_STUDIES.find((s) => s.slug === c.slug);
   return {
     slug: c.slug,
-    client: c.client ?? '',
-    category: c.category ?? '',
-    medium: c.medium ?? '',
-    cardSurface: (c.cardSurface ?? 'glass') as CardSurface,
-    cardAccent: c.cardAccent ?? '#00E5FF',
-    cardImage,
-    cardImageAlt: c.cardImage?.alt ?? c.client ?? '',
-    cardThumbnail: undefined, // Sanity schema does not yet model thumbnails; fall back to cardImage.
-    cardDescription: c.cardDescription ?? '',
-    cardStat: { num: c.cardStat?.num ?? '', label: c.cardStat?.label ?? '' },
+    client: c.client ?? staticEntry?.client ?? '',
+    category: c.category ?? staticEntry?.category ?? '',
+    medium: c.medium ?? staticEntry?.medium ?? '',
+    cardSurface: (c.cardSurface ?? staticEntry?.cardSurface ?? 'glass') as CardSurface,
+    cardAccent: c.cardAccent ?? staticEntry?.cardAccent ?? '#00E5FF',
+    cardImage: cardImage ?? staticEntry?.cardImage,
+    cardImageAlt: c.cardImage?.alt ?? staticEntry?.cardImageAlt ?? c.client ?? '',
+    cardThumbnail: cardThumbnail ?? staticEntry?.cardThumbnail,
+    cardDescription: c.cardDescription ?? staticEntry?.cardDescription ?? '',
+    cardStat: {
+      num: c.cardStat?.num ?? staticEntry?.cardStat?.num ?? '',
+      label: c.cardStat?.label ?? staticEntry?.cardStat?.label ?? '',
+    },
   };
 }
 

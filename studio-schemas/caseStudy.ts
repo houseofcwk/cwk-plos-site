@@ -46,10 +46,10 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'cardImage',
-      title: 'Card Image',
+      title: 'Card Image (cover)',
       type: 'image',
       options: { hotspot: true },
-      description: 'Hero thumbnail for the index card.',
+      description: 'Full cover image. Used on the case study slug page hero, and on the index card when no thumbnail is provided.',
       fields: [
         defineField({
           name: 'alt',
@@ -58,6 +58,13 @@ export const caseStudy = defineType({
           validation: (Rule) => Rule.required().error('Alt text is required for accessibility.'),
         }),
       ],
+    }),
+    defineField({
+      name: 'cardThumbnail',
+      title: 'Card Thumbnail',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optional smaller thumbnail used on the home portfolio grid and the /case-studies index. Falls back to cardImage when blank.',
     }),
     defineField({
       name: 'cardSurface',
