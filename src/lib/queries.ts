@@ -4,15 +4,48 @@ import groq from 'groq';
 // Image dereferencing always pulls asset->{ url, metadata } so the static build
 // can read width/height + LQIP without a follow-up request.
 
+// Standard projection for the seo object — used everywhere we attach SEO to a doc.
+const SEO_PROJECTION = `seo{
+  title,
+  description,
+  canonicalUrl,
+  ogType,
+  twitterCard,
+  robots,
+  ogImage{ alt, asset->{ url, metadata } }
+}`;
+
 export const SITE_SETTINGS_QUERY = groq`
   *[_type == "siteSettings"][0]{
     nav,
     footer,
+    twitterHandle,
     defaultSeo{
       title,
       description,
-      ogImage{ ..., asset->{ url, metadata } }
-    }
+      canonicalUrl,
+      ogType,
+      twitterCard,
+      robots,
+      ogImage{ alt, asset->{ url, metadata } }
+    },
+    organization{
+      name,
+      alternateName,
+      slogan,
+      description,
+      foundingDate,
+      founderName,
+      founderJobTitle,
+      founderSameAs,
+      addressLocality,
+      addressRegion,
+      addressCountry,
+      areaServed,
+      knowsAbout
+    },
+    faqs[]{ question, answer },
+    llmsTxt
   }
 `;
 
@@ -35,7 +68,7 @@ export const HOME_QUERY = groq`
     },
     googleReviewsAggregateRating,
     googleReviewsTotalCount,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -45,7 +78,7 @@ export const PRODUCT_QUERY = groq`
     heroHeadline,
     heroSubtext,
     features[]{ id, headline, body, highlights },
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -54,7 +87,7 @@ export const ABOUT_QUERY = groq`
     heroHeadline,
     bio,
     stats[]{ value, label },
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -63,7 +96,7 @@ export const JOURNEY_QUERY = groq`
     heroEyebrow,
     heroHeadline,
     body,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -74,7 +107,7 @@ export const BRAND_MIRROR_QUERY = groq`
     heroSubtext,
     body,
     quizCta,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -83,7 +116,7 @@ export const SIDE_QUESTS_QUERY = groq`
     heroEyebrow,
     heroHeadline,
     body,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -99,7 +132,7 @@ export const CASE_LIST_QUERY = groq`
     cardSurface,
     cardAccent,
     cardStat,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -134,7 +167,7 @@ export const CASE_BY_SLUG_QUERY = groq`
     images[]{ ..., asset->{ url, metadata } },
     testimonial{ quote, author, role },
     publishedAt,
-    seo
+    ${SEO_PROJECTION}
   }
 `;
 
@@ -144,6 +177,6 @@ export const LEGAL_QUERY = groq`
     title,
     updatedAt,
     body,
-    seo
+    ${SEO_PROJECTION}
   }
 `;

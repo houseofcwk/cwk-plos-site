@@ -4,17 +4,87 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistModal from '../components/WaitlistModal';
 import '../styles/global.css';
+import { getSiteSettings } from '../lib/sanity';
+import { ORGANIZATION_FALLBACK, TWITTER_HANDLE } from '../lib/seoFallbacks';
 
 interface Props {
   title: string;
   description: string;
-  ogImage?: string;
-  canonical?: string;
+  ogImage?: string | null;
+  ogImageAlt?: string | null;
+  canonical?: string | null;
+  ogType?: string | null;
+  twitterCard?: string | null;
+  robots?: string | null;
+  /** Optional extra JSON-LD blocks injected per page (FAQPage, Article, etc.). */
+  extraJsonLd?: object | object[] | null;
 }
 
-const { title, description, ogImage, canonical } = Astro.props;
+const {
+  title,
+  description,
+  ogImage,
+  ogImageAlt,
+  canonical,
+  ogType,
+  twitterCard,
+  robots,
+  extraJsonLd,
+} = Astro.props;
+
 const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
+
+// Site settings drive twitter handle, default OG image, and Organization JSON-LD.
+// getSiteSettings is memoized + crash-safe; null when Sanity is empty/down.
+const settings = await getSiteSettings();
+
+const twitterHandle = settings?.twitterHandle ?? TWITTER_HANDLE;
+const defaultOgImage =
+  ogImage ?? settings?.defaultSeo?.ogImage?.asset?.url ?? null;
+const defaultOgImageAlt =
+  ogImageAlt ?? settings?.defaultSeo?.ogImage?.alt ?? null;
+
+// Merge Sanity organization fields over hardcoded fallback so missing fields
+// never produce empty JSON-LD values.
+const org = settings?.organization ?? null;
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: org?.name ?? ORGANIZATION_FALLBACK.name,
+  alternateName: org?.alternateName ?? ORGANIZATION_FALLBACK.alternateName,
+  url: ORGANIZATION_FALLBACK.url,
+  logo: ORGANIZATION_FALLBACK.logo,
+  description: org?.description ?? ORGANIZATION_FALLBACK.description,
+  slogan: org?.slogan ?? ORGANIZATION_FALLBACK.slogan,
+  foundingDate: org?.foundingDate ?? ORGANIZATION_FALLBACK.foundingDate,
+  founder: {
+    '@type': 'Person',
+    name: org?.founderName ?? ORGANIZATION_FALLBACK.founder.name,
+    jobTitle: org?.founderJobTitle ?? ORGANIZATION_FALLBACK.founder.jobTitle,
+    sameAs:
+      Array.isArray(org?.founderSameAs) && org.founderSameAs.length > 0
+        ? org.founderSameAs
+        : ORGANIZATION_FALLBACK.founder.sameAs,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: org?.addressLocality ?? ORGANIZATION_FALLBACK.address.addressLocality,
+    addressRegion: org?.addressRegion ?? ORGANIZATION_FALLBACK.address.addressRegion,
+    addressCountry: org?.addressCountry ?? ORGANIZATION_FALLBACK.address.addressCountry,
+  },
+  areaServed: org?.areaServed ?? ORGANIZATION_FALLBACK.areaServed,
+  knowsAbout:
+    Array.isArray(org?.knowsAbout) && org.knowsAbout.length > 0
+      ? org.knowsAbout
+      : ORGANIZATION_FALLBACK.knowsAbout,
+};
+
+const extraBlocks = extraJsonLd
+  ? Array.isArray(extraJsonLd)
+    ? extraJsonLd
+    : [extraJsonLd]
+  : [];
 ---
 
 <!doctype html>
@@ -32,13 +102,28 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#07090F" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <SEO
       title={title}
       description={description}
-      ogImage={ogImage}
+      ogImage={defaultOgImage}
+      ogImageAlt={defaultOgImageAlt}
       canonical={canonical}
+      ogType={ogType}
+      twitterCard={twitterCard}
+      twitterHandle={twitterHandle}
+      robots={robots}
     />
+
+    <!-- JSON-LD: Organization (site-wide) -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationJsonLd)}
+    />
+    {extraBlocks.map((block) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+
     {analyticsToken && (
       <script
         is:inline

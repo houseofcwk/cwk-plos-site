@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PortableText from '../components/PortableText.astro';
 import { sanity } from '../lib/sanity';
 import { LEGAL_QUERY } from '../lib/queries';
+import { seoBaseProps } from '../lib/seoProps';
 
 let data: any = null;
 try { data = await sanity.fetch(LEGAL_QUERY, { slug: 'terms' }); } catch { data = null; }
@@ -15,10 +16,7 @@ const updatedLabel = data?.updatedAt
   : 'April 2026';
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
->
+<Base title={pageTitle} description={pageDescription} {...seoBaseProps(data?.seo)}>
   <!-- ── Hero ──────────────────────────────────────────────── -->
   <section class="legal-hero">
     <div class="legal-hero-inner">

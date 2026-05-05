@@ -79,7 +79,15 @@ export interface CaseStudy {
   stats?: { value: string; label: string }[];
   body: PtBlockAny[];
   testimonial?: { quote: string; author: string; role?: string };
-  seo?: { title?: string; description?: string };
+  seo?: {
+    title?: string;
+    description?: string;
+    canonicalUrl?: string;
+    ogType?: string;
+    twitterCard?: string;
+    robots?: string;
+    ogImage?: { alt?: string; asset?: { url?: string } } | null;
+  };
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────────

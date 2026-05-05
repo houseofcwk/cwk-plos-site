@@ -87,6 +87,36 @@ export const siteSettings = defineType({
       description:
         'Fallback SEO used when a page does not specify its own.',
     }),
+    defineField({
+      name: 'twitterHandle',
+      title: 'Twitter / X Handle',
+      type: 'string',
+      description:
+        'Used for the twitter:site meta tag. Include the leading "@", e.g. @houseofcwk.',
+    }),
+    defineField({
+      name: 'organization',
+      title: 'Organization (Schema.org)',
+      type: 'organizationSchema',
+      description:
+        'Drives the site-wide Organization JSON-LD. Missing fields fall back to hardcoded values.',
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs (FAQPage JSON-LD)',
+      type: 'array',
+      of: [{ type: 'faqItem' }],
+      description:
+        'Powers the FAQPage structured data on the home page (and /about/faq when it ships).',
+    }),
+    defineField({
+      name: 'llmsTxt',
+      title: 'llms.txt body',
+      type: 'text',
+      rows: 18,
+      description:
+        'Plain text served at /llms.txt for LLM crawlers. Edit here and re-deploy. Falls back to hardcoded copy when blank.',
+    }),
   ],
   preview: {
     prepare: () => ({ title: 'Site Settings' }),

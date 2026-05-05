@@ -1,38 +1,87 @@
 ---
+// Single source of truth for the page <head>. Renders the full meta + OG +
+// Twitter set defined in the SEO/AEO source-of-truth plan.
+//
+// Crash-safe: every input has a hardcoded fallback. If Sanity is empty or
+// unreachable, every required tag still ships with sensible defaults.
+
+import {
+  SITE_URL,
+  TWITTER_HANDLE,
+  DEFAULT_OG_IMAGE,
+  LEGACY_OG_IMAGE,
+  DEFAULT_OG_TYPE,
+  DEFAULT_TWITTER_CARD,
+  DEFAULT_ROBOTS,
+} from '../lib/seoFallbacks';
+
 interface Props {
   title: string;
   description: string;
-  ogImage?: string;
-  canonical?: string;
-  type?: 'website' | 'article';
+  ogImage?: string | null;
+  ogImageAlt?: string | null;
+  canonical?: string | null;
+  ogType?: string | null;
+  twitterCard?: string | null;
+  twitterHandle?: string | null;
+  robots?: string | null;
 }
 
 const {
   title,
   description,
-  ogImage = '/og-image.png',
-  type = 'website',
+  ogImage,
+  ogImageAlt,
+  canonical: canonicalProp,
+  ogType: ogTypeProp,
+  twitterCard: twitterCardProp,
+  twitterHandle: twitterHandleProp,
+  robots: robotsProp,
 } = Astro.props;
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'https://houseofcwk.com';
-const canonical = Astro.props.canonical ?? new URL(Astro.url.pathname, siteUrl).href;
-const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? SITE_URL;
+const canonical = canonicalProp ?? new URL(Astro.url.pathname, siteUrl).href;
+const ogType = ogTypeProp || DEFAULT_OG_TYPE;
+const twitterCard = twitterCardProp || DEFAULT_TWITTER_CARD;
+const twitterHandle = twitterHandleProp || TWITTER_HANDLE;
+const robots = robotsProp || DEFAULT_ROBOTS;
+
+// Resolve OG image: explicit prop -> default OG -> legacy png. Always absolute.
+const rawOgImage = ogImage || DEFAULT_OG_IMAGE;
+const ogImageUrl = rawOgImage.startsWith('http') ? rawOgImage : `${siteUrl}${rawOgImage}`;
+const ogImageFallbackUrl = `${siteUrl}${LEGACY_OG_IMAGE}`;
+const ogAlt = ogImageAlt || title;
 ---
 
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+<meta name="robots" content={robots} />
 
 <!-- Open Graph -->
-<meta property="og:type" content={type} />
-<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="CWK. Experience" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content={ogType} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImageUrl} />
-<meta property="og:site_name" content="CWK. Experience" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={ogAlt} />
+<meta property="og:image:secure_url" content={ogImageFallbackUrl} />
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
+<!-- Twitter / X -->
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:site" content={twitterHandle} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:alt" content={ogAlt} />
+
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />

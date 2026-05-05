@@ -17,6 +17,8 @@ import { featureBlock } from './objects/featureBlock';
 import { pillarBlock } from './objects/pillarBlock';
 import { blockContent } from './objects/blockContent';
 import { googleReview } from './objects/googleReview';
+import { faqItem } from './objects/faqItem';
+import { organizationSchema } from './objects/organizationSchema';
 
 export {
   siteSettings,
@@ -35,6 +37,8 @@ export {
   pillarBlock,
   blockContent,
   googleReview,
+  faqItem,
+  organizationSchema,
 };
 
 export const schemaTypes = [
@@ -56,4 +60,6 @@ export const schemaTypes = [
   pillarBlock,
   blockContent,
   googleReview,
+  faqItem,
+  organizationSchema,
 ];

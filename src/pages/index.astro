@@ -9,12 +9,14 @@ import WorkMosaicSection from '../components/home/WorkMosaicSection.astro';
 import ProductPreviewSection from '../components/home/ProductPreviewSection.astro';
 import GoogleReviewsSection from '../components/home/GoogleReviewsSection.astro';
 import PlayerXRaySection from '../components/PlayerXRaySection.astro';
-import { sanity } from '../lib/sanity';
+import { sanity, getSiteSettings } from '../lib/sanity';
 import { HOME_QUERY } from '../lib/queries';
+import { FAQS_FALLBACK } from '../lib/seoFallbacks';
 
 // Sanity-first; fall through to hardcoded copy when the homePage doc isn't published.
 let s: any = null;
 try { s = await sanity.fetch(HOME_QUERY); } catch { s = null; }
+const siteSettings = await getSiteSettings();
 
 const HARDCODED_PHRASES = [
   'partner', 'operator', 'architect', 'co-founder', 'infrastructure',
@@ -27,7 +29,27 @@ const HARDCODED_PILLARS = [
 ];
 
 const pageTitle       = s?.seo?.title       ?? 'CWK. Experience | The Sports Agent for Entrepreneurs';
-const pageDescription = s?.seo?.description ?? "CWK. installs the infrastructure that scales high-performing entrepreneurs. Long-term business management, not consulting.";
+const pageDescription = s?.seo?.description ?? 'CWK. is the long-term partner for entrepreneurs. We rep your career, install the operations, and manage your growth, all under one house.';
+const pageOgImage     = s?.seo?.ogImage?.asset?.url ?? null;
+const pageOgImageAlt  = s?.seo?.ogImage?.alt ?? null;
+const pageCanonical   = s?.seo?.canonicalUrl ?? null;
+const pageOgType      = s?.seo?.ogType ?? 'website';
+const pageTwitterCard = s?.seo?.twitterCard ?? null;
+const pageRobots      = s?.seo?.robots ?? null;
+
+// FAQPage JSON-LD: Sanity-managed faqs, fallback to the curated 4 in seoFallbacks.
+const faqs = (Array.isArray(siteSettings?.faqs) && siteSettings.faqs.length > 0)
+  ? siteSettings.faqs.filter((f: any) => f?.question && f?.answer)
+  : FAQS_FALLBACK;
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f: { question: string; answer: string }) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
 const heroEyebrow     = s?.heroEyebrow      ?? 'Personal Leverage OS';
 const heroHeadline    = s?.heroHeadline     ?? 'CWK. is like a';
 const wordPhrases: string[] = (Array.isArray(s?.wordFlipPhrases) && s.wordFlipPhrases.length > 0)
@@ -39,7 +61,17 @@ const googleReviewsAggregateRating = typeof s?.googleReviewsAggregateRating === 
 const googleReviewsTotalCount = typeof s?.googleReviewsTotalCount === 'number' ? s.googleReviewsTotalCount : null;
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={pageOgImage}
+  ogImageAlt={pageOgImageAlt}
+  canonical={pageCanonical}
+  ogType={pageOgType}
+  twitterCard={pageTwitterCard}
+  robots={pageRobots}
+  extraJsonLd={faqJsonLd}
+>
   <HeroSection
     eyebrow={heroEyebrow}
     headline={heroHeadline}
@@ -58,14 +90,4 @@ const googleReviewsTotalCount = typeof s?.googleReviewsTotalCount === 'number' ?
   />
   <ProductPreviewSection />
   <PlayerXRaySection />
-
-  <!-- JSON-LD Organization structured data -->
-  <script is:inline type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "CWK. Experience",
-    "url": "https://houseofcwk.com",
-    "description": "CWK. is the sports agent for entrepreneurs. We install the infrastructure that scales high-performing founders.",
-    "logo": "https://houseofcwk.com/og-image.png"
-  })} />
 </Base>

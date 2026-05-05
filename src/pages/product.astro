@@ -9,6 +9,7 @@ import MockKaia from '../components/mocks/MockKaia.astro';
 import MockDestination from '../components/mocks/MockDestination.astro';
 import { sanity } from '../lib/sanity';
 import { PRODUCT_QUERY } from '../lib/queries';
+import { seoBaseProps } from '../lib/seoProps';
 
 // Sanity-first; intentional swallow so a missing doc doesn't break the build.
 let s: any = null;
@@ -98,10 +99,7 @@ const pageTitle = s?.seo?.title ?? 'CWK. Agent+ | The Operating System for Entre
 const pageDescription = s?.seo?.description ?? 'See inside the Agent+ dashboard: daily actions, relationship tracking, AI strategy, pipeline management, and goal sprints. Built on the PLOS framework.';
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
->
+<Base title={pageTitle} description={pageDescription} {...seoBaseProps(s?.seo)}>
   <!-- ── Product Hero ─────────────────────────────────────── -->
   <section class="product-hero">
     <div class="product-hero-inner">

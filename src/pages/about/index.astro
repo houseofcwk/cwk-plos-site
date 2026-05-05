@@ -4,6 +4,7 @@ import PortableText from '../../components/PortableText.astro';
 import PlayerXRaySection from '../../components/PlayerXRaySection.astro';
 import { sanity } from '../../lib/sanity';
 import { ABOUT_QUERY } from '../../lib/queries';
+import { seoBaseProps } from '../../lib/seoProps';
 
 let s: any = null;
 try { s = await sanity.fetch(ABOUT_QUERY); } catch { s = null; }
@@ -12,12 +13,10 @@ const heroHeadline = s?.heroHeadline ?? 'My Why.';
 
 const pageTitle = s?.seo?.title ?? 'About Kris San | CWK. Experience';
 const pageDescription = s?.seo?.description ?? 'Kris San is the founder of CWK. Experience, the sports agent for entrepreneurs. Long-term business management, not consulting.';
+const pageOgType = s?.seo?.ogType ?? 'profile';
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
->
+<Base title={pageTitle} description={pageDescription} {...seoBaseProps(s?.seo)} ogType={pageOgType}>
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
     <video

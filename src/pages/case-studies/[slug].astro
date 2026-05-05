@@ -47,9 +47,42 @@ const testimonial = cms?.testimonial ?? fallback?.testimonial;
 
 const pageTitle = cs.seo?.title ?? `${cs.client} | CWK. Case Study`;
 const pageDescription = cs.seo?.description ?? cs.cardDescription ?? '';
+const pageOgImage = cs.seo?.ogImage?.asset?.url ?? cardImage ?? null;
+const pageOgImageAlt = cs.seo?.ogImage?.alt ?? cs.cardImageAlt ?? cs.client;
+const pageCanonical = cs.seo?.canonicalUrl ?? null;
+const pageOgType = cs.seo?.ogType ?? 'article';
+const pageTwitterCard = cs.seo?.twitterCard ?? null;
+const pageRobots = cs.seo?.robots ?? null;
+
+const SITE_URL = import.meta.env.PUBLIC_SITE_URL ?? 'https://houseofcwk.com';
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: pageTitle,
+  description: pageDescription,
+  image: pageOgImage ? (pageOgImage.startsWith('http') ? pageOgImage : `${SITE_URL}${pageOgImage}`) : undefined,
+  url: `${SITE_URL}/case-studies/${slug}`,
+  datePublished: (cs as any).publishedAt ?? undefined,
+  author: { '@type': 'Person', name: 'Kris San' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'CWK. Experience',
+    logo: { '@type': 'ImageObject', url: `${SITE_URL}/og/cwk-logo.png` },
+  },
+};
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={pageOgImage}
+  ogImageAlt={pageOgImageAlt}
+  canonical={pageCanonical}
+  ogType={pageOgType}
+  twitterCard={pageTwitterCard}
+  robots={pageRobots}
+  extraJsonLd={articleJsonLd}
+>
   <!-- ── Hero ───────────────────────────────────────────────── -->
   <section class="csd-hero">
     <div class="csd-hero-inner">

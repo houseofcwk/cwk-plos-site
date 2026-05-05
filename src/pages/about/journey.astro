@@ -4,6 +4,7 @@ import PortableText from '../../components/PortableText.astro';
 import PlayerXRaySection from '../../components/PlayerXRaySection.astro';
 import { sanity } from '../../lib/sanity';
 import { JOURNEY_QUERY } from '../../lib/queries';
+import { seoBaseProps } from '../../lib/seoProps';
 
 let s: any = null;
 try { s = await sanity.fetch(JOURNEY_QUERY); } catch { s = null; }
@@ -81,10 +82,7 @@ const CHAPTERS: Chapter[] = [
 ];
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
->
+<Base title={pageTitle} description={pageDescription} {...seoBaseProps(s?.seo)}>
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="jr-hero">
     <div class="jr-hero-inner">
