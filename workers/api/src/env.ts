@@ -11,6 +11,7 @@ export interface Env {
   RESEND_API?: string;
   TURNSTILE_SECRET?: string;
   HASH_SALT?: string;
+  SLACK_WEBHOOK_URL?: string;
 
   // Plain text vars (wrangler.toml)
   ENVIRONMENT: string;
@@ -20,4 +21,5 @@ export interface Env {
   REPLY_TO_EMAIL: string;
   REPLY_TO_NAME: string;
   CONTACT_INBOX_TO: string;
+  WAITLIST_INBOX_TO?: string;
 }

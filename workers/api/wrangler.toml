@@ -11,13 +11,14 @@ compatibility_flags = ["nodejs_compat_v2"]
 # Owns api.houseofcwk.com as a Custom Domain in env.production.
 
 [vars]
-ENVIRONMENT      = "preview"
-ALLOWED_ORIGIN   = "https://houseofcwk.pages.dev"
-FROM_EMAIL       = "hello@houseofcwk.com"
-FROM_NAME        = "CWK. Experience"
-REPLY_TO_EMAIL   = "hello@cwkexperience.com"
-REPLY_TO_NAME    = "Kris San, CWK."
-CONTACT_INBOX_TO = "hello@cwkexperience.com"
+ENVIRONMENT       = "preview"
+ALLOWED_ORIGIN    = "https://houseofcwk.pages.dev"
+FROM_EMAIL        = "hello@houseofcwk.com"
+FROM_NAME         = "CWK. Experience"
+REPLY_TO_EMAIL    = "hello@cwkexperience.com"
+REPLY_TO_NAME     = "Kris San, CWK."
+CONTACT_INBOX_TO  = "hello@cwkexperience.com"
+WAITLIST_INBOX_TO = "hello@cwkexperience.com"
 
 [[kv_namespaces]]
 binding    = "WAITLIST"
@@ -42,13 +43,14 @@ routes = [
 ]
 
 [env.production.vars]
-ENVIRONMENT      = "production"
-ALLOWED_ORIGIN   = "https://houseofcwk.com"
-FROM_EMAIL       = "hello@houseofcwk.com"
-FROM_NAME        = "CWK. Experience"
-REPLY_TO_EMAIL   = "hello@cwkexperience.com"
-REPLY_TO_NAME    = "Kris San, CWK."
-CONTACT_INBOX_TO = "hello@cwkexperience.com"
+ENVIRONMENT       = "production"
+ALLOWED_ORIGIN    = "https://houseofcwk.com"
+FROM_EMAIL        = "hello@houseofcwk.com"
+FROM_NAME         = "CWK. Experience"
+REPLY_TO_EMAIL    = "hello@cwkexperience.com"
+REPLY_TO_NAME     = "Kris San, CWK."
+CONTACT_INBOX_TO  = "hello@cwkexperience.com"
+WAITLIST_INBOX_TO = "hello@cwkexperience.com"
 
 # Existing KV namespace IDs — data from cwk-waitlist-prod and cwk-contact-prod
 # carries over because we rebind rather than recreate.
