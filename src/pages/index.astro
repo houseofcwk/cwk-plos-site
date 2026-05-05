@@ -7,6 +7,7 @@ import ThreeLevelsSection from '../components/home/ThreeLevelsSection.astro';
 import PillarsSection from '../components/home/PillarsSection.astro';
 import WorkMosaicSection from '../components/home/WorkMosaicSection.astro';
 import ProductPreviewSection from '../components/home/ProductPreviewSection.astro';
+import GoogleReviewsSection from '../components/home/GoogleReviewsSection.astro';
 import PlayerXRaySection from '../components/PlayerXRaySection.astro';
 import { sanity } from '../lib/sanity';
 import { HOME_QUERY } from '../lib/queries';
@@ -47,6 +48,7 @@ const pillars = (Array.isArray(s?.pillars) && s.pillars.length > 0) ? s.pillars 
   <ThreeLevelsSection />
   <PillarsSection pillars={pillars} />
   <WorkMosaicSection />
+  <GoogleReviewsSection />
   <ProductPreviewSection />
   <PlayerXRaySection />
 

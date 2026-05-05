@@ -12,6 +12,7 @@ export interface Env {
   TURNSTILE_SECRET?: string;
   HASH_SALT?: string;
   SLACK_WEBHOOK_URL?: string;
+  GOOGLE_PLACES_KEY?: string;
 
   // Plain text vars (wrangler.toml)
   ENVIRONMENT: string;
@@ -22,4 +23,5 @@ export interface Env {
   REPLY_TO_NAME: string;
   CONTACT_INBOX_TO: string;
   WAITLIST_INBOX_TO?: string;
+  CWK_PLACE_ID?: string;
 }

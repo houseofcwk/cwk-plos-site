@@ -5,6 +5,7 @@ import type { Env } from './env';
 import { corsHeaders } from './lib/cors';
 import { handleWaitlistPost } from './handlers/waitlist';
 import { handleContactPost } from './handlers/contact';
+import { handleGoogleReviewsGet } from './handlers/googleReviews';
 
 type Method = 'GET' | 'POST' | 'OPTIONS' | string;
 
@@ -41,6 +42,12 @@ export default {
     if (pathname === '/contact') {
       if (method === 'POST') return handleContactPost(request, env, ctx);
       return methodNotAllowed('POST, OPTIONS', env);
+    }
+
+    // ── Google reviews ──────────────────────────────────────────────────
+    if (pathname === '/google-reviews') {
+      if (method === 'GET') return handleGoogleReviewsGet(request, env, ctx);
+      return methodNotAllowed('GET, OPTIONS', env);
     }
 
     return new Response('Not Found', { status: 404 });

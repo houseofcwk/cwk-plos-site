@@ -6,6 +6,7 @@ compatibility_flags = ["nodejs_compat_v2"]
 # The single API worker for houseofcwk.com. Internally routes:
 #   POST /waitlist           -> handlers/waitlist.ts  (confirmation email)
 #   POST /contact            -> handlers/contact.ts   (notification + rate limit + spam)
+#   GET  /google-reviews     -> handlers/googleReviews.ts (Places API + 6h cache)
 #   GET  /healthz            -> { ok: true }
 #   GET  /contact/healthz    -> { ok: true }          (kept for backward compat)
 # Owns api.houseofcwk.com as a Custom Domain in env.production.
@@ -13,12 +14,15 @@ compatibility_flags = ["nodejs_compat_v2"]
 [vars]
 ENVIRONMENT       = "preview"
 ALLOWED_ORIGIN    = "https://houseofcwk.pages.dev"
-FROM_EMAIL        = "hello@cwkexperience.com"
+FROM_EMAIL        = "hello@houseofcwk.com"
 FROM_NAME         = "CWK. Experience"
 REPLY_TO_EMAIL    = "hello@cwkexperience.com"
 REPLY_TO_NAME     = "Kris San, CWK."
 CONTACT_INBOX_TO  = "hello@cwkexperience.com"
 WAITLIST_INBOX_TO = "hello@cwkexperience.com"
+# Google Maps place_id for "CWK. Experience" — set once resolved.
+# Format is the new ChIJ-prefixed Place ID. See workers/api/README.md.
+CWK_PLACE_ID      = ""
 
 [[kv_namespaces]]
 binding    = "WAITLIST"
@@ -45,12 +49,13 @@ routes = [
 [env.production.vars]
 ENVIRONMENT       = "production"
 ALLOWED_ORIGIN    = "https://houseofcwk.com"
-FROM_EMAIL        = "hello@cwkexperience.com"
+FROM_EMAIL        = "hello@houseofcwk.com"
 FROM_NAME         = "CWK. Experience"
 REPLY_TO_EMAIL    = "hello@cwkexperience.com"
 REPLY_TO_NAME     = "Kris San, CWK."
 CONTACT_INBOX_TO  = "hello@cwkexperience.com"
 WAITLIST_INBOX_TO = "hello@cwkexperience.com"
+CWK_PLACE_ID      = ""
 
 # Existing KV namespace IDs — data from cwk-waitlist-prod and cwk-contact-prod
 # carries over because we rebind rather than recreate.

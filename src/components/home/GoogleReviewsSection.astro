@@ -1,0 +1,307 @@
+---
+const API_BASE = import.meta.env.PUBLIC_API_BASE_URL ?? 'https://api.houseofcwk.com';
+const REVIEWS_URL = `${API_BASE}/google-reviews`;
+const REVIEW_URL = 'https://maps.app.goo.gl/whHe4p6cdjgJyZXp8';
+---
+
+<section
+  class="section reviews-section"
+  aria-labelledby="reviews-heading"
+  data-reviews-section
+  data-reviews-url={REVIEWS_URL}
+  hidden
+>
+  <div class="section-inner">
+    <header class="reviews-header">
+      <span class="pill-eyebrow reveal-up">
+        <span class="pill-dot" aria-hidden="true"></span>
+        From Google
+      </span>
+      <h2 id="reviews-heading" class="reviews-title reveal-up reveal-delay-1">
+        What founders say about CWK.
+      </h2>
+      <div class="reviews-meta reveal-up reveal-delay-2" data-reviews-meta hidden>
+        <span class="reviews-stars" data-reviews-stars></span>
+        <span class="reviews-rating" data-reviews-rating></span>
+        <span class="reviews-count" data-reviews-count></span>
+        <a class="reviews-link" href={REVIEW_URL} target="_blank" rel="noopener noreferrer">View on Google</a>
+      </div>
+    </header>
+
+    <ul class="reviews-grid" data-reviews-grid></ul>
+
+    <template data-review-template>
+      <li class="review-card reveal-card">
+        <header class="review-card-head">
+          <div class="review-avatar" data-avatar></div>
+          <div class="review-author-meta">
+            <span class="review-author" data-author></span>
+            <span class="review-time" data-time></span>
+          </div>
+        </header>
+        <span class="review-stars" data-stars aria-hidden="true"></span>
+        <p class="review-text" data-text></p>
+      </li>
+    </template>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-reviews-section]');
+  if (root) {
+    const url = root.dataset.reviewsUrl!;
+    const grid = root.querySelector<HTMLElement>('[data-reviews-grid]')!;
+    const meta = root.querySelector<HTMLElement>('[data-reviews-meta]')!;
+    const ratingEl = root.querySelector<HTMLElement>('[data-reviews-rating]')!;
+    const countEl = root.querySelector<HTMLElement>('[data-reviews-count]')!;
+    const starsEl = root.querySelector<HTMLElement>('[data-reviews-stars]')!;
+    const tpl = root.querySelector<HTMLTemplateElement>('[data-review-template]')!;
+
+    type SlimReview = {
+      author: string;
+      profilePhoto: string | null;
+      authorUrl: string | null;
+      text: string;
+      rating: number;
+      time: string;
+      relativeTime: string;
+    };
+    type Payload = {
+      rating: number | null;
+      total: number;
+      reviews: SlimReview[];
+      stale?: boolean;
+    };
+
+    const renderStars = (n: number) => {
+      const full = Math.round(Math.max(0, Math.min(5, n)));
+      return '★★★★★☆☆☆☆☆'.slice(5 - full, 10 - full);
+    };
+
+    const initials = (name: string) =>
+      name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((s) => s[0]!.toUpperCase())
+        .join('');
+
+    const render = (data: Payload) => {
+      if (!data.reviews?.length) return;
+
+      if (typeof data.rating === 'number' && data.total > 0) {
+        starsEl.textContent = renderStars(data.rating);
+        ratingEl.textContent = data.rating.toFixed(1);
+        countEl.textContent = `(${data.total.toLocaleString()} Google reviews)`;
+        meta.hidden = false;
+      }
+
+      const frag = document.createDocumentFragment();
+      data.reviews.slice(0, 5).forEach((r, i) => {
+        const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+        node.style.setProperty('--reveal-i', String(i));
+
+        const avatar = node.querySelector<HTMLElement>('[data-avatar]')!;
+        if (r.profilePhoto) {
+          const img = document.createElement('img');
+          img.src = r.profilePhoto;
+          img.alt = '';
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          avatar.appendChild(img);
+        } else {
+          avatar.textContent = initials(r.author);
+          avatar.classList.add('review-avatar--initials');
+        }
+
+        node.querySelector<HTMLElement>('[data-author]')!.textContent = r.author;
+        node.querySelector<HTMLElement>('[data-time]')!.textContent = r.relativeTime;
+        node.querySelector<HTMLElement>('[data-stars]')!.textContent = renderStars(r.rating);
+        node.querySelector<HTMLElement>('[data-text]')!.textContent = r.text;
+        frag.appendChild(node);
+      });
+      grid.replaceChildren(frag);
+      root.hidden = false;
+    };
+
+    fetch(url, { mode: 'cors', credentials: 'omit' })
+      .then((r) => (r.ok ? (r.json() as Promise<Payload>) : null))
+      .then((data) => {
+        if (data && data.reviews?.length) render(data);
+      })
+      .catch(() => {
+        // Silent: section stays hidden, no layout impact.
+      });
+  }
+</script>
+
+<style>
+  .reviews-section {
+    background: var(--bg2);
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  .reviews-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .reviews-title {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.022em;
+    margin: 0;
+  }
+
+  .reviews-meta {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .reviews-stars {
+    color: #ffb547;
+    letter-spacing: 2px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .reviews-rating {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .reviews-link {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.4);
+    padding-bottom: 1px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .reviews-link:hover {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  .reviews-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .review-card {
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 16px;
+    padding: 24px 22px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .review-card:hover {
+      border-color: var(--gb2);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  .review-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--gb);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .review-avatar--initials {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .review-author-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .review-author {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .review-time {
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .review-stars {
+    color: #ffb547;
+    letter-spacing: 2px;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .review-text {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 960px) {
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .reviews-section { padding-top: 64px; padding-bottom: 64px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+  }
+</style>
