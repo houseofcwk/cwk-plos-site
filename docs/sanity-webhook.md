@@ -44,7 +44,7 @@ Generate, **copy the token now** (it won't be shown again).
 | **Dataset** | `production` |
 | **Trigger on** | Create, Update, Delete |
 | **Filter** (GROQ) | see below |
-| **Projection** | leave empty |
+| **Projection** (= request body) | see below |
 | **URL** | `https://api.github.com/repos/houseofcwk/website/actions/workflows/deploy.yml/dispatches` |
 | **HTTP method** | `POST` |
 | **HTTP Headers** | see below |
@@ -77,12 +77,18 @@ _type in [
 | `Accept` | `application/vnd.github+json` |
 | `X-GitHub-Api-Version` | `2022-11-28` |
 
-**Body** (Sanity's "HTTP body" / "Projection" field; pick the body slot, not
-the projection slot):
+**Projection** (this becomes the POST request body — GitHub's API expects a
+fixed JSON shape, so we use a constant GROQ object literal that ignores the
+incoming document):
 
-```json
+```groq
 { "ref": "main", "inputs": { "source": "sanity" } }
 ```
+
+> Sanity webhooks don't have a separate "HTTP body" field. The **Projection**
+> field defines the body; GROQ supports object literals, so a constant
+> projection lets us send GitHub the fixed payload it requires regardless of
+> which document triggered the webhook.
 
 Save.
 
