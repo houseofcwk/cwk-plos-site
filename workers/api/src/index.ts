@@ -6,6 +6,7 @@ import { corsHeaders } from './lib/cors';
 import { handleWaitlistPost } from './handlers/waitlist';
 import { handleContactPost } from './handlers/contact';
 import { handleGoogleReviewsGet } from './handlers/googleReviews';
+import { handleLifestyleCalculatorPost } from './handlers/lifestyleCalculator';
 
 type Method = 'GET' | 'POST' | 'OPTIONS' | string;
 
@@ -48,6 +49,12 @@ export default {
     if (pathname === '/google-reviews') {
       if (method === 'GET') return handleGoogleReviewsGet(request, env, ctx);
       return methodNotAllowed('GET, OPTIONS', env);
+    }
+
+    // ── Lifestyle calculator ────────────────────────────────────────────
+    if (pathname === '/lifestyle-calculator') {
+      if (method === 'POST') return handleLifestyleCalculatorPost(request, env, ctx);
+      return methodNotAllowed('POST, OPTIONS', env);
     }
 
     return new Response('Not Found', { status: 404 });

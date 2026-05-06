@@ -21,9 +21,10 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
 
     <!-- Desktop nav links (no icons) -->
     <div class="nav-links">
-      <a href="/case-studies" class:list={['nav-link', { active: isActive('/case-studies') }]}>Case Studies</a>
-      <a href="/about"        class:list={['nav-link', { active: isActive('/about') }]}>About</a>
-      <a href="/product"      class:list={['nav-link nav-link--soon', { active: isActive('/product') }]}>
+      <a href="/case-studies"        class:list={['nav-link', { active: isActive('/case-studies') }]}>Case Studies</a>
+      <a href="/lifestyle-calculator" class:list={['nav-link', { active: isActive('/lifestyle-calculator') }]}>Calculator</a>
+      <a href="/about"               class:list={['nav-link', { active: isActive('/about') }]}>About</a>
+      <a href="/product"             class:list={['nav-link nav-link--soon', { active: isActive('/product') }]}>
         PLOS
         <span class="nav-soon-badge" aria-label="Coming soon">Soon</span>
       </a>
@@ -77,6 +78,23 @@ const isActive = (path: string) => currentPath === path || currentPath.startsWit
         </svg>
       </span>
       Case Studies
+    </a>
+
+    <a href="/lifestyle-calculator" class:list={['overlay-link', { active: isActive('/lifestyle-calculator') }]}>
+      <span class="overlay-icon" aria-hidden="true">
+        <!-- Calculator icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="7" y="5" width="8" height="3" rx="0.5" stroke="currentColor" stroke-width="1.25"/>
+          <circle cx="8" cy="12" r="0.8" fill="currentColor"/>
+          <circle cx="11" cy="12" r="0.8" fill="currentColor"/>
+          <circle cx="14" cy="12" r="0.8" fill="currentColor"/>
+          <circle cx="8" cy="15.5" r="0.8" fill="currentColor"/>
+          <circle cx="11" cy="15.5" r="0.8" fill="currentColor"/>
+          <circle cx="14" cy="15.5" r="0.8" fill="currentColor"/>
+        </svg>
+      </span>
+      Lifestyle Calculator
     </a>
 
     <a href="/about" class:list={['overlay-link', { active: isActive('/about') }]}>

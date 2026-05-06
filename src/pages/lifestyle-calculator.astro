@@ -1,0 +1,1891 @@
+---
+import Base from '../layouts/Base.astro';
+import {
+  CATEGORIES,
+  ARCHETYPES,
+  SPEEDS,
+  MINES,
+} from '../data/lifestyleCalculator';
+
+const pageTitle = 'Lifestyle Calculator | CWK. Experience';
+const pageDescription =
+  'Turn your lifestyle aspirations into a concrete income target and a plan that fits the pace you can actually keep. Six squares. Real numbers. No fluff.';
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section class="lc-page">
+    <div class="lc-wrap">
+
+      <!-- Board path indicator -->
+      <div class="lc-board-wrap">
+        <div class="lc-board" id="lcBoard"></div>
+      </div>
+
+      <!-- ── SECTION 01: YOUR EDGE ─────────────────────────── -->
+      <div id="lc-step-0" class="lc-step is-active">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 01 / YOUR CATEGORY</span>
+        <h1 class="lc-h1">What does your<br><span class="lc-grad">lifestyle really cost?</span></h1>
+        <p class="lc-sub">Pick the category that matches what you want to monetize.</p>
+
+        <div class="lc-cat-grid">
+          {CATEGORIES.map((cat) => (
+            <button type="button" class={`lc-cat-tile lc-${cat.key}`} data-cat={cat.key}>
+              <span class="lc-cat-icon" aria-hidden="true">
+                {cat.icon === 'mind' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a4 4 0 0 0-4 4v1a3 3 0 0 0-2 2.83v.34A3 3 0 0 0 5 14v.5A3.5 3.5 0 0 0 8.5 18H9v3h2V3Z"/><path d="M15 3a4 4 0 0 1 4 4v1a3 3 0 0 1 2 2.83v.34A3 3 0 0 1 19 14v.5A3.5 3.5 0 0 1 15.5 18H15v3h-2V3Z"/></svg>
+                )}
+                {cat.icon === 'body' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
+                )}
+                {cat.icon === 'soul' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>
+                )}
+                {cat.icon === 'pocket' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h2"/></svg>
+                )}
+              </span>
+              <span class="lc-cat-label">{cat.label}</span>
+              <span class="lc-cat-desc">{cat.desc}</span>
+              <span class="lc-cat-check" aria-hidden="true">✓</span>
+            </button>
+          ))}
+        </div>
+
+        <div class="lc-sub-wrap" id="lcSubWrap" hidden>
+          <div class="lc-sub-label">WHAT SPECIFICALLY?</div>
+          <div class="lc-sub-grid" id="lcSubGrid"></div>
+        </div>
+
+        <div class="lc-nav-row" style="margin-top:28px;">
+          <button type="button" class="lc-btn-next" data-next="0">Continue →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION 02: YOUR STAGE ────────────────────────── -->
+      <div id="lc-step-1" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 02 / YOUR STAGE</span>
+        <h1 class="lc-h1">Where are you<br><span class="lc-grad">right now?</span></h1>
+        <p class="lc-sub">Not where you want to be. Where you actually are today. Read each one and pick the card that sounds like your internal monologue this week.</p>
+
+        <div class="lc-arch-list">
+          {ARCHETYPES.map((a) => (
+            <button type="button" class="lc-arch-card" data-arch={a.key}>
+              <span class="lc-arch-check" aria-hidden="true">✓</span>
+              <div class="lc-arch-header">
+                <div class="lc-arch-name-wrap">
+                  <span class="lc-arch-tag">{a.tag}</span>
+                  <div class="lc-arch-name">{a.name}</div>
+                </div>
+                <div class="lc-arch-dots" aria-hidden="true">
+                  {[1, 2, 3, 4, 5].map((d) => (
+                    <span class={`lc-arch-dot ${d === a.stage ? 'is-active' : ''}`}></span>
+                  ))}
+                </div>
+              </div>
+              <div class="lc-arch-feeling">{a.feeling}</div>
+              <div class="lc-arch-cost-row">
+                <span class="lc-arch-cost-tag">THE COST</span>
+                <span class="lc-arch-cost-val">{a.cost}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div class="lc-nav-row">
+          <button type="button" class="lc-btn-back" data-back="1">←</button>
+          <button type="button" class="lc-btn-next" data-next="1">Continue →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION 03: THE PRIZE ─────────────────────────── -->
+      <div id="lc-step-2" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 03 / THE PRIZE</span>
+        <h1 class="lc-h1">Where do you<br><span class="lc-grad">want to be?</span></h1>
+        <p class="lc-sub">Let's calculate what it would take to bring this to life.</p>
+        <p class="lc-section-tag">The real numbers to get to where you want to be.</p>
+
+        <div class="lc-field-grid">
+          <div class="lc-field-group">
+            <label class="lc-field-label" for="lc-monthly-goal">How much do you want to make a month?</label>
+            <div class="lc-field-prefix">
+              <span class="lc-field-prefix-mark">$</span>
+              <input type="number" id="lc-monthly-goal" placeholder="10,000" min="1" inputmode="numeric" />
+            </div>
+          </div>
+          <div class="lc-field-group">
+            <label class="lc-field-label" for="lc-offer-price">How much is your service or product?</label>
+            <div class="lc-field-prefix">
+              <span class="lc-field-prefix-mark">$</span>
+              <input type="number" id="lc-offer-price" placeholder="2,500" min="1" inputmode="numeric" />
+            </div>
+          </div>
+        </div>
+
+        <div class="lc-field-grid" style="margin-top:2px;">
+          <div class="lc-field-group">
+            <label class="lc-field-label" for="lc-hours-week">Hours a week you can invest</label>
+            <input type="number" id="lc-hours-week" placeholder="15" min="1" max="168" inputmode="numeric" />
+          </div>
+          <div class="lc-field-group">
+            <label class="lc-field-label" for="lc-time-months">Months to hit your goal</label>
+            <input type="number" id="lc-time-months" placeholder="12" min="1" inputmode="numeric" />
+          </div>
+        </div>
+
+        <div class="lc-nav-row">
+          <button type="button" class="lc-btn-back" data-back="2">←</button>
+          <button type="button" class="lc-btn-next" data-next="2">Continue →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION 04: GAME SPEED ────────────────────────── -->
+      <div id="lc-step-3" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 04 / GAME SPEED</span>
+        <h1 class="lc-h1">How fast are<br><span class="lc-grad">you willing to move?</span></h1>
+        <p class="lc-sub">Every speed is real. Every speed has a real cost. Pick the one you will actually show up at, not the one that sounds like the right answer.</p>
+
+        <div class="lc-speed-grid">
+          {SPEEDS.map((s) => (
+            <button type="button" class={`lc-speed-card lc-speed-${s.key}`} data-speed={s.key}>
+              <span class="lc-speed-symbol" aria-hidden="true">
+                {s.key === 'turtle' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16a5 5 0 0 0 5-5 5 5 0 0 0-10 0 5 5 0 0 0 5 5z"/><path d="M5 11a7 7 0 0 1 14 0"/><path d="M3 16h2"/><path d="M19 16h2"/><path d="M5 19l1-2"/><path d="M19 19l-1-2"/><path d="M9 19l-1 2"/><path d="M15 19l1 2"/></svg>
+                )}
+                {s.key === 'car' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+                )}
+                {s.key === 'rocket' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                )}
+              </span>
+              <span class="lc-speed-label">{s.label}</span>
+              <span class="lc-speed-time">{s.time}</span>
+              <span class="lc-speed-desc">{s.desc}</span>
+              <span class="lc-speed-check" aria-hidden="true">✓</span>
+            </button>
+          ))}
+        </div>
+
+        <div class="lc-nav-row">
+          <button type="button" class="lc-btn-back" data-back="3">←</button>
+          <button type="button" class="lc-btn-next" data-next="3">Continue →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION 05: THE TWO BRIDGES ───────────────────── -->
+      <div id="lc-step-4" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 05 / THE TWO BRIDGES</span>
+        <h1 class="lc-h1">Here's what<br><span class="lc-grad">the numbers say.</span></h1>
+        <p class="lc-sub">Two bridges sit between your idea and your income. Bridge one: strangers to interested leads. Bridge two: leads to buyers. Defaults below assume 1% and 20%, honest baselines for someone with no existing audience. Adjust if you have real data.</p>
+
+        <div class="lc-funnel-top" id="lcFunnelTop"></div>
+        <div class="lc-funnel-arrows" id="lcFunnelArrows"></div>
+        <div class="lc-funnel-bottom" id="lcFunnelBottom"></div>
+
+        <hr class="lc-divider" />
+
+        <div class="lc-adjust-block">
+          <div class="lc-adjust-title">Adjust for your real conversion rates</div>
+          <div class="lc-adjust-grid">
+            <div class="lc-adjust-field">
+              <label for="lc-s2l-rate">Stranger → Lead (%)</label>
+              <input type="number" id="lc-s2l-rate" placeholder="1" min="0.1" max="100" step="0.1" />
+            </div>
+            <div class="lc-adjust-field">
+              <label for="lc-l2s-rate">Lead → Sale (%)</label>
+              <input type="number" id="lc-l2s-rate" placeholder="20" min="0.1" max="100" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <div class="lc-nav-row">
+          <button type="button" class="lc-btn-back" data-back="4">←</button>
+          <button type="button" class="lc-btn-next" data-next="4">Continue →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION 06: MIND MINES ────────────────────────── -->
+      <div id="lc-step-5" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>SECTION 06 / MIND MINES</span>
+        <h1 class="lc-h1">What's<br><span class="lc-grad">in your way?</span></h1>
+        <p class="lc-sub">These are not character flaws. They are the actual cost of playing. Select every one that is true right now. The more honest you are here, the more useful your map becomes.</p>
+
+        <div class="lc-mine-list">
+          {MINES.map((m) => (
+            <div class="lc-mine-item" data-mine={m.key}>
+              <div class="lc-mine-stat-bar">{m.stat}</div>
+              <div class="lc-mine-body">
+                <div class="lc-mine-check" aria-hidden="true">✓</div>
+                <div class="lc-mine-content">
+                  <div class="lc-mine-label">{m.label}</div>
+                  <div class="lc-mine-desc">{m.desc}</div>
+                  <div class="lc-mine-fix">{m.fix}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+          <div class="lc-mine-item" data-mine="none">
+            <div class="lc-mine-body">
+              <div class="lc-mine-check" aria-hidden="true">✓</div>
+              <div class="lc-mine-content">
+                <div class="lc-mine-label">None of these. I am clear.</div>
+                <div class="lc-mine-desc">You have done the inner work, or none of these are active blocks right now.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lc-nav-row">
+          <button type="button" class="lc-btn-back" data-back="5">←</button>
+          <button type="button" class="lc-btn-next" data-next="5">Build my lifestyle map →</button>
+        </div>
+      </div>
+
+      <!-- ── RESULTS ──────────────────────────────────────── -->
+      <div id="lc-step-6" class="lc-step">
+        <span class="lc-eyebrow"><span class="lc-eyebrow-dot"></span>YOUR LIFESTYLE MAP</span>
+        <h1 class="lc-h1"><span class="lc-grad">Your complete<br>picture.</span></h1>
+        <p class="lc-sub">Where you are. Where you want to be. What it actually takes to get there. Everything in one place so you can make a real decision.</p>
+
+        <!-- Identity Header -->
+        <div class="lc-player-header">
+          <div class="lc-player-badges" id="lcPlayerBadges"></div>
+          <div class="lc-player-headline" id="lcPlayerHeadline"></div>
+          <div class="lc-player-stats" id="lcPlayerStats"></div>
+        </div>
+
+        <!-- Where you are now -->
+        <span class="lc-section-label">WHERE YOU ARE RIGHT NOW</span>
+        <div id="lcResArchetype"></div>
+
+        <!-- Where you want to be -->
+        <span class="lc-section-label">WHERE YOU WANT TO BE</span>
+        <div id="lcResDestination"></div>
+
+        <!-- Timeline -->
+        <span class="lc-section-label">YOUR TIMELINE</span>
+        <div id="lcResTimeline"></div>
+
+        <!-- Tools -->
+        <span class="lc-section-label">RECOMMENDED TOOLS</span>
+        <div id="lcResTools"></div>
+
+        <!-- Skills -->
+        <span class="lc-section-label">SKILLS TO BUILD</span>
+        <div id="lcResSkills"></div>
+
+        <!-- People -->
+        <span class="lc-section-label">PEOPLE YOU NEED</span>
+        <div id="lcResPeople"></div>
+
+        <!-- Stress -->
+        <span class="lc-section-label">THE STRESS REALITY</span>
+        <div id="lcResStress"></div>
+
+        <!-- Phase roadmap -->
+        <span class="lc-section-label">YOUR PHASE ROADMAP</span>
+        <div class="lc-phase-grid" id="lcResPhases"></div>
+
+        <!-- Mind mines results -->
+        <div id="lcResMines"></div>
+        <div id="lcResWarning"></div>
+
+        <!-- Email me my map -->
+        <div class="lc-email-card" id="lcEmailCard">
+          <span class="lc-email-eyebrow">EMAIL ME MY MAP</span>
+          <h3 class="lc-email-title">Want this map in your inbox?</h3>
+          <p class="lc-email-sub">We will send you a copy of your full lifestyle map so you can revisit it any time. No spam, ever.</p>
+          <form class="lc-email-form" id="lcEmailForm" novalidate>
+            <input type="email" id="lc-email-input" placeholder="your@email.com" autocomplete="email" required />
+            <button type="submit" class="lc-email-btn" id="lcEmailBtn">Send my map →</button>
+          </form>
+          <p class="lc-email-msg" id="lcEmailMsg" role="status" aria-live="polite"></p>
+        </div>
+
+        <!-- CTA -->
+        <div class="lc-cta-section">
+          <div class="lc-cta-intro">
+            <span class="lc-cta-eyebrow">YOUR NEXT MOVE</span>
+            <h2 class="lc-cta-title">You have the map.<br>Now choose your path.</h2>
+            <p class="lc-cta-sub">Two options. One moves faster than the other. Neither is wrong. One is just more intentional.</p>
+          </div>
+          <div class="lc-cta-paths">
+            <div class="lc-cta-path lc-cta-path-a">
+              <span class="lc-path-label lc-path-a-label">PATH A</span>
+              <div class="lc-cta-path-title">Tour CWK.<br>Online HQ</div>
+              <p class="lc-cta-path-desc">See the full operating system. Community, frameworks, done-for-you infrastructure, and execution support built for founders who are ready to stop figuring it out alone. No pitch. Just a real look inside.</p>
+              <a class="lc-btn-path-a" href="https://cwkexperience.com" target="_blank" rel="noopener">Tour CWK HQ →</a>
+            </div>
+            <div class="lc-cta-path lc-cta-path-b">
+              <span class="lc-path-label lc-path-b-label">PATH B / FOR NEXT TIME</span>
+              <div class="lc-cta-path-title">Keep this<br>calculator.</div>
+              <p class="lc-cta-path-desc">Bookmark it. Come back the next time an idea needs a reality check before you commit. This map does not expire. Neither does your dream.</p>
+              <button type="button" class="lc-btn-path-b" id="lcResetBtn">Run a new idea ↺</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="lc-footer-note">
+          Built by <a href="https://cwkexperience.com" target="_blank" rel="noopener">CWK. Experience</a>
+          &nbsp;·&nbsp; Build. Learn. Earn. Play.
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Base>
+
+<script>
+  import {
+    CATEGORIES,
+    ARCHETYPES,
+    SPEEDS,
+    MINES,
+    TOOLS,
+    SKILLS,
+    PEOPLE,
+    PHASES,
+    SPEED_TOOL_COST,
+    SPEED_TIME_LABELS,
+    type CategoryKey,
+    type SpeedKey,
+    type ArchetypeKey,
+    type MineKey,
+    type CalculatorState,
+  } from '../data/lifestyleCalculator';
+
+  // ── State ───────────────────────────────────────────────
+  const STORAGE_KEY = 'cwk:lifestyle-calculator:v1';
+  const SQUARE_LABELS = ['01', '02', '03', '04', '05', '06', '★'];
+
+  const initialState: CalculatorState = {
+    ideaCategory: '',
+    ideaType: '',
+    archetype: '',
+    monthlyGoal: 0,
+    offerPrice: 0,
+    hoursWeek: 0,
+    timeMonths: 0,
+    speed: '',
+    s2l: 1,
+    l2s: 20,
+    mines: [],
+  };
+
+  let state: CalculatorState = { ...initialState };
+  let currentStep = 0;
+
+  function loadState(): void {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { state?: CalculatorState; step?: number };
+      if (parsed.state) state = { ...initialState, ...parsed.state };
+      if (typeof parsed.step === 'number' && parsed.step >= 0 && parsed.step <= 6) {
+        currentStep = parsed.step;
+      }
+    } catch {
+      // bad JSON, start fresh
+    }
+  }
+
+  function saveState(): void {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ state, step: currentStep })
+      );
+    } catch {
+      // localStorage disabled or full
+    }
+  }
+
+  function clearState(): void {
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  }
+
+  // ── Board ───────────────────────────────────────────────
+  function renderBoard(active: number): void {
+    const board = document.getElementById('lcBoard');
+    if (!board) return;
+    let html = '';
+    for (let i = 0; i < SQUARE_LABELS.length; i++) {
+      if (i > 0) html += '<div class="lc-board-conn"></div>';
+      const isGoal = i === SQUARE_LABELS.length - 1;
+      const cls = [
+        'lc-board-sq',
+        isGoal ? 'is-goal' : '',
+        i < active ? 'is-done' : '',
+        i === active ? 'is-active' : '',
+      ].filter(Boolean).join(' ');
+      html += `<div class="${cls}">${SQUARE_LABELS[i]}</div>`;
+    }
+    board.innerHTML = html;
+  }
+
+  // ── Navigation ──────────────────────────────────────────
+  function showStep(n: number): void {
+    document.querySelectorAll<HTMLElement>('.lc-step').forEach((el) => {
+      el.classList.remove('is-active');
+    });
+    const target = document.getElementById(`lc-step-${n}`);
+    if (target) target.classList.add('is-active');
+    currentStep = n;
+    renderBoard(n);
+    saveState();
+
+    if (n === 4) renderFunnel();
+    if (n === 6) buildResults();
+
+    const wrap = document.querySelector<HTMLElement>('.lc-page');
+    if (wrap) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      requestAnimationFrame(() => {
+        wrap.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  function flashEl(id: string): void {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('lc-flash');
+    setTimeout(() => el.classList.remove('lc-flash'), 1400);
+  }
+
+  // ── Step 0: category + sub-option ───────────────────────
+  function selectCat(key: CategoryKey, btn: HTMLElement): void {
+    document.querySelectorAll('.lc-cat-tile').forEach((el) => el.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+    state.ideaCategory = key;
+    state.ideaType = '';
+    renderSubOptions(key);
+    saveState();
+  }
+
+  function renderSubOptions(key: CategoryKey): void {
+    const cat = CATEGORIES.find((c) => c.key === key);
+    const wrap = document.getElementById('lcSubWrap');
+    const grid = document.getElementById('lcSubGrid');
+    if (!cat || !wrap || !grid) return;
+    grid.innerHTML = cat.subOptions
+      .map(
+        (o) => `<button type="button" class="lc-sub-opt" data-sub="${o.id}">
+          <span class="lc-sub-check">✓</span>
+          <div class="lc-sub-opt-label">${o.label}</div>
+          <div class="lc-sub-opt-desc">${o.desc}</div>
+        </button>`
+      )
+      .join('');
+    wrap.removeAttribute('hidden');
+
+    grid.querySelectorAll<HTMLButtonElement>('.lc-sub-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        grid.querySelectorAll('.lc-sub-opt').forEach((el) => el.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        state.ideaType = btn.dataset.sub ?? '';
+        if (state.ideaType === btn.dataset.sub) {
+          // re-mark from saved state
+        }
+        saveState();
+      });
+      if (btn.dataset.sub === state.ideaType) btn.classList.add('is-selected');
+    });
+  }
+
+  // ── Step 1: archetype ──────────────────────────────────
+  function wireArchetypes(): void {
+    document.querySelectorAll<HTMLButtonElement>('.lc-arch-card').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lc-arch-card').forEach((el) => el.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        state.archetype = (btn.dataset.arch as ArchetypeKey) ?? '';
+        saveState();
+      });
+    });
+  }
+
+  // ── Step 3: speed ──────────────────────────────────────
+  function wireSpeeds(): void {
+    document.querySelectorAll<HTMLButtonElement>('.lc-speed-card').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lc-speed-card').forEach((el) => el.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        state.speed = (btn.dataset.speed as SpeedKey) ?? '';
+        saveState();
+      });
+    });
+  }
+
+  // ── Step 5: mines ──────────────────────────────────────
+  function toggleMine(item: HTMLElement, key: string): void {
+    if (key === 'none') {
+      state.mines = [];
+      document.querySelectorAll('.lc-mine-item').forEach((el) => el.classList.remove('is-selected'));
+      item.classList.add('is-selected');
+      saveState();
+      return;
+    }
+    // Deselect "none"
+    const noneItem = document.querySelector('.lc-mine-item[data-mine="none"]');
+    if (noneItem) noneItem.classList.remove('is-selected');
+
+    const mineKey = key as MineKey;
+    const idx = state.mines.indexOf(mineKey);
+    if (idx >= 0) {
+      state.mines.splice(idx, 1);
+      item.classList.remove('is-selected');
+    } else {
+      state.mines.push(mineKey);
+      item.classList.add('is-selected');
+    }
+    saveState();
+  }
+
+  function wireMines(): void {
+    document.querySelectorAll<HTMLElement>('.lc-mine-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        toggleMine(item, item.dataset.mine ?? '');
+      });
+    });
+  }
+
+  // ── Math ───────────────────────────────────────────────
+  function calcNumbers(): {
+    totalSales: number; salesPw: number; leadsPw: number; strangersPw: number;
+  } {
+    const g = state.monthlyGoal, p = state.offerPrice, m = state.timeMonths;
+    const s2l = state.s2l, l2s = state.l2s;
+    const weeks = Math.max(1, m * 4.33);
+    const totalSales = Math.ceil((g * m) / Math.max(1, p));
+    const totalLeads = Math.ceil(totalSales / (l2s / 100));
+    const totalStrangers = Math.ceil(totalLeads / (s2l / 100));
+    return {
+      totalSales,
+      salesPw: Math.ceil(totalSales / weeks),
+      leadsPw: Math.ceil(totalLeads / weeks),
+      strangersPw: Math.ceil(totalStrangers / weeks),
+    };
+  }
+
+  function fmt(n: number): string {
+    return new Intl.NumberFormat('en-US').format(Math.round(n));
+  }
+
+  function fmtK(n: number): string {
+    if (n >= 1000) return (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'k';
+    return fmt(n);
+  }
+
+  function renderFunnel(): void {
+    const n = calcNumbers();
+    const top = document.getElementById('lcFunnelTop');
+    const arrows = document.getElementById('lcFunnelArrows');
+    const bottom = document.getElementById('lcFunnelBottom');
+    if (!top || !arrows || !bottom) return;
+
+    top.innerHTML =
+      fCard(fmt(n.strangersPw), 'New people / week') +
+      fCard(fmt(n.leadsPw), 'Leads / week') +
+      fCard(fmt(n.salesPw), 'Sales / week');
+    arrows.innerHTML = '<span>↓</span><span>↓</span><span>↓</span>';
+    bottom.innerHTML = `
+      <div class="lc-funnel-card lc-funnel-total">
+        <div class="lc-funnel-total-num">${fmt(n.totalSales)}</div>
+        <div class="lc-funnel-total-meta">
+          <div class="lc-funnel-lbl">Total sales over ${state.timeMonths} months</div>
+          <p>To reach $${fmtK(state.monthlyGoal)}/mo at $${fmtK(state.offerPrice)} per offer.</p>
+        </div>
+      </div>`;
+  }
+
+  function fCard(num: string, lbl: string): string {
+    return `<div class="lc-funnel-card"><div class="lc-funnel-num">${num}</div><div class="lc-funnel-lbl">${lbl}</div></div>`;
+  }
+
+  // ── Validation per-step ────────────────────────────────
+  function validateStep(step: number): boolean {
+    if (step === 0) {
+      if (!state.ideaCategory) {
+        flashEl('lc-step-0');
+        return false;
+      }
+      if (!state.ideaType) {
+        flashEl('lcSubGrid');
+        return false;
+      }
+      return true;
+    }
+    if (step === 1) {
+      if (!state.archetype) {
+        flashEl('lc-step-1');
+        return false;
+      }
+      return true;
+    }
+    if (step === 2) {
+      const g = parseFloat((document.getElementById('lc-monthly-goal') as HTMLInputElement).value);
+      const p = parseFloat((document.getElementById('lc-offer-price') as HTMLInputElement).value);
+      const h = parseFloat((document.getElementById('lc-hours-week') as HTMLInputElement).value);
+      const t = parseFloat((document.getElementById('lc-time-months') as HTMLInputElement).value);
+      if (!g || !p || !h || !t) {
+        flashEl('lc-step-2');
+        return false;
+      }
+      state.monthlyGoal = g;
+      state.offerPrice = p;
+      state.hoursWeek = h;
+      state.timeMonths = t;
+      return true;
+    }
+    if (step === 3) {
+      if (!state.speed) {
+        flashEl('lc-step-3');
+        return false;
+      }
+      return true;
+    }
+    if (step === 4) {
+      const s2lEl = document.getElementById('lc-s2l-rate') as HTMLInputElement;
+      const l2sEl = document.getElementById('lc-l2s-rate') as HTMLInputElement;
+      const s2l = parseFloat(s2lEl.value) || 1;
+      const l2s = parseFloat(l2sEl.value) || 20;
+      state.s2l = s2l;
+      state.l2s = l2s;
+      return true;
+    }
+    return true;
+  }
+
+  // ── Results ────────────────────────────────────────────
+  function getArch(key: ArchetypeKey | ''): typeof ARCHETYPES[number] | null {
+    return ARCHETYPES.find((a) => a.key === key) ?? null;
+  }
+
+  function getSubLabel(cat: CategoryKey | '', typeId: string): string {
+    if (!cat) return '';
+    const c = CATEGORIES.find((x) => x.key === cat);
+    if (!c) return '';
+    return c.subOptions.find((o) => o.id === typeId)?.label ?? '';
+  }
+
+  function statCell(val: string, lbl: string): string {
+    return `<div class="lc-stat-cell"><div class="lc-stat-val">${val}</div><div class="lc-stat-lbl">${lbl}</div></div>`;
+  }
+
+  function escapeHtml(s: string): string {
+    return s.replace(/[<>&"']/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' }[c] as string));
+  }
+
+  function buildResults(): void {
+    const n = calcNumbers();
+    const arch = getArch(state.archetype);
+    const cat = state.ideaCategory;
+    const spd = state.speed || 'car';
+
+    const catLabels: Record<string, string> = { mind: 'MIND', body: 'BODY', soul: 'SOUL', pocket: 'POCKET' };
+    const subLabel = cat ? getSubLabel(cat, state.ideaType) : '';
+
+    // Identity
+    const badges = document.getElementById('lcPlayerBadges');
+    if (badges && cat) {
+      badges.innerHTML =
+        `<span class="lc-player-badge lc-badge-${cat}">${catLabels[cat]} / ${escapeHtml(subLabel)}</span>` +
+        (arch ? `<span class="lc-player-badge lc-badge-stage">${arch.tag} / ${arch.name}</span>` : '');
+    }
+
+    const headline = document.getElementById('lcPlayerHeadline');
+    if (headline) {
+      headline.innerHTML = `A <span>${arch ? arch.name : ''}</span> monetizing ${escapeHtml(subLabel || 'your edge')}, targeting $${fmtK(state.monthlyGoal)}/month.`;
+    }
+
+    const stats = document.getElementById('lcPlayerStats');
+    if (stats) {
+      stats.innerHTML =
+        statCell('$' + fmtK(state.monthlyGoal) + '/mo', 'Target') +
+        statCell('$' + fmtK(state.offerPrice), 'Offer') +
+        statCell(state.timeMonths + ' mo', 'Runway');
+    }
+
+    // Archetype snapshot
+    const archEl = document.getElementById('lcResArchetype');
+    if (archEl && arch) {
+      archEl.innerHTML = `
+        <div class="lc-arch-snapshot">
+          <span class="lc-arch-snap-tag">${arch.tag} / ${arch.name.toUpperCase()}</span>
+          <div class="lc-arch-snap-name">${arch.name}</div>
+          <div class="lc-arch-snap-feel">${arch.feeling}</div>
+        </div>`;
+    }
+
+    // Destination
+    const dest = document.getElementById('lcResDestination');
+    if (dest) {
+      dest.innerHTML = `
+        <div class="lc-res-card">
+          <span class="lc-res-badge">YOUR TARGET</span>
+          <div class="lc-res-val">$${fmt(state.monthlyGoal)} / month</div>
+          <div class="lc-res-desc">That is $${fmt(state.monthlyGoal * 12)}/year. At $${fmt(state.offerPrice)} per offer you need ${fmt(n.totalSales)} sales over ${state.timeMonths} months, ${fmt(n.salesPw)} per week. To close those you need to reach ${fmt(n.strangersPw)} brand-new people every single week.</div>
+        </div>`;
+    }
+
+    // Timeline
+    const tl = getTimeline(arch ? arch.key : 'explorer', state.timeMonths);
+    const tlEl = document.getElementById('lcResTimeline');
+    if (tlEl) {
+      tlEl.innerHTML = `
+        <div class="lc-timeline-card">
+          ${tl.map((tm, i) => `
+            <div class="lc-timeline-row">
+              <div class="lc-timeline-marker" style="background:${tm.color}">${i + 1}</div>
+              <div>
+                <div class="lc-timeline-when">${tm.when}</div>
+                <div class="lc-timeline-what">${tm.what}</div>
+              </div>
+            </div>`).join('')}
+        </div>`;
+    }
+
+    // Tools
+    const toolList = (cat && TOOLS[spd] && TOOLS[spd][cat]) ? TOOLS[spd][cat] : [];
+    const toolPills = toolList.map((t) => `<span class="lc-tool-pill">${escapeHtml(t)}</span>`).join('');
+    const toolsEl = document.getElementById('lcResTools');
+    if (toolsEl) {
+      toolsEl.innerHTML = `
+        <div class="lc-breakdown-card">
+          <span class="lc-breakdown-title">RECOMMENDED STACK FOR YOUR SPEED</span>
+          <div class="lc-tool-pills">${toolPills}</div>
+          <div class="lc-tool-cost">Estimated tool cost: <span>${SPEED_TOOL_COST[spd]}</span></div>
+        </div>`;
+    }
+
+    // Skills
+    const skillList = cat ? SKILLS[cat] : [];
+    const skillsEl = document.getElementById('lcResSkills');
+    if (skillsEl) {
+      skillsEl.innerHTML = `
+        <div class="lc-res-card">
+          <span class="lc-res-badge">SKILLS TO BUILD, BASED ON YOUR EDGE</span>
+          <div class="lc-skill-list">
+            ${skillList.map((s, i) => `<div class="lc-skill-item"><div class="lc-skill-num">${i + 1}</div><div class="lc-skill-text">${escapeHtml(s)}</div></div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    // People
+    const ppl = PEOPLE[spd];
+    const peopleEl = document.getElementById('lcResPeople');
+    if (peopleEl) {
+      peopleEl.innerHTML = `
+        <div class="lc-res-card">
+          <span class="lc-res-badge">PEOPLE YOU NEED, AT YOUR SPEED</span>
+          <div class="lc-people-list">
+            ${ppl.list.map((p) => `
+              <div class="lc-people-item">
+                <div>
+                  <div class="lc-people-who">${escapeHtml(p.who)}</div>
+                  <div class="lc-people-note">${escapeHtml(p.note)}</div>
+                </div>
+                ${p.cost ? `<div class="lc-people-cost">${escapeHtml(p.cost)}</div>` : `<div class="lc-people-cost lc-people-cost-free">Free</div>`}
+              </div>`).join('')}
+          </div>
+          <div class="lc-people-total-row">
+            <div class="lc-people-total">Total people investment: <span>${escapeHtml(ppl.total)}</span></div>
+            <div class="lc-people-truth">${escapeHtml(ppl.truth)}</div>
+          </div>
+        </div>`;
+    }
+
+    // Stress
+    const stressEl = document.getElementById('lcResStress');
+    if (stressEl) {
+      stressEl.innerHTML = buildStressSection(spd);
+    }
+
+    // Phases
+    const phases = PHASES[arch ? arch.key : 'explorer'];
+    const phaseEl = document.getElementById('lcResPhases');
+    if (phaseEl) {
+      phaseEl.innerHTML = phases.map((ph) => `
+        <div class="lc-phase-card">
+          <div class="lc-phase-top">
+            <span class="lc-phase-badge">${ph.name} / ${ph.sub}</span>
+            <span class="lc-phase-time">${ph.time}</span>
+          </div>
+          <div class="lc-phase-focus">${escapeHtml(ph.focus)}</div>
+          <div class="lc-phase-tasks">
+            ${ph.tasks.map((t) => `<div class="lc-phase-task">${escapeHtml(t)}</div>`).join('')}
+          </div>
+        </div>`).join('');
+    }
+
+    // Mind mines
+    const minesEl = document.getElementById('lcResMines');
+    const warnEl = document.getElementById('lcResWarning');
+    if (minesEl && warnEl) {
+      if (state.mines.length === 0) {
+        minesEl.innerHTML = '';
+        warnEl.innerHTML = '';
+      } else {
+        const items = state.mines.map((mk) => {
+          const m = MINES.find((x) => x.key === mk);
+          if (!m) return '';
+          return `
+            <div class="lc-mine-result-item">
+              <div class="lc-mine-result-name">${m.label}</div>
+              <div class="lc-mine-result-stat">${m.stat}</div>
+              <div class="lc-mine-result-fix">${m.fix}</div>
+            </div>`;
+        }).join('');
+        minesEl.innerHTML = `
+          <div class="lc-mine-result-card">
+            <span class="lc-mine-result-badge">MIND MINES, ${state.mines.length} ACTIVE BLOCK${state.mines.length > 1 ? 'S' : ''} IDENTIFIED</span>
+            ${items}
+          </div>`;
+        if (state.mines.includes('money') || state.mines.includes('visibility')) {
+          warnEl.innerHTML = `<div class="lc-warning-card"><p>A money ceiling or fear of visibility will stall your acquisition before the strategy gets a chance to work. This is the first block to address, not the last.</p></div>`;
+        } else {
+          warnEl.innerHTML = '';
+        }
+      }
+    }
+  }
+
+  function getTimeline(archId: ArchetypeKey, targetMonths: number): { color: string; when: string; what: string }[] {
+    const stages: Record<ArchetypeKey, [string, string, string][]> = {
+      explorer: [
+        ['#00E396', 'Week 1 to 2', 'First real conversation happens'],
+        ['#00E5FF', 'Month 1 to 3', 'First paying client'],
+        ['#7B61FF', 'Month 3 to 6', 'First consistent month'],
+        ['#FB3079', `Month ${targetMonths}`, 'Target revenue hit'],
+      ],
+      committer: [
+        ['#00E396', 'Week 1 to 4', 'Offer goes live, imperfect is fine'],
+        ['#00E5FF', 'Month 1 to 2', 'First closed sale'],
+        ['#7B61FF', 'Month 3 to 5', 'Repeatability proven'],
+        ['#FB3079', `Month ${targetMonths}`, 'Target revenue hit'],
+      ],
+      builder: [
+        ['#00E396', 'Week 1 to 4', 'Revenue source audit complete'],
+        ['#00E5FF', 'Month 1 to 3', 'First system built'],
+        ['#7B61FF', 'Month 3 to 6', 'First real delegation'],
+        ['#FB3079', `Month ${targetMonths}`, 'Predictable revenue achieved'],
+      ],
+      operator: [
+        ['#00E396', 'Week 1 to 4', 'First process documented and handed off'],
+        ['#00E5FF', 'Month 1 to 3', 'First full delegation done'],
+        ['#7B61FF', 'Month 3 to 6', 'Business runs 2 weeks without you'],
+        ['#FB3079', `Month ${targetMonths}`, 'Full operating system installed'],
+      ],
+      sovereign: [
+        ['#00E396', 'Week 1 to 4', '3-year clarity sentence written'],
+        ['#00E5FF', 'Month 1 to 3', 'Core IP encoded into transferable systems'],
+        ['#7B61FF', 'Month 3 to 6', 'New play identified and started'],
+        ['#FB3079', `Month ${targetMonths}`, 'Next chapter fully activated'],
+      ],
+    };
+    return (stages[archId] || stages.explorer).map((s) => ({ color: s[0], when: s[1], what: s[2] }));
+  }
+
+  function buildStressSection(spd: SpeedKey): string {
+    const mineCount = state.mines.length;
+    const baseStress = { turtle: 5.5, car: 6.5, rocket: 8 }[spd];
+    const stressSolo = Math.min(10, baseStress + mineCount * 0.5);
+    const stressSupported = Math.max(2, stressSolo * 0.42);
+    const soloW = Math.round(stressSolo * 10);
+    const suppW = Math.round(stressSupported * 10);
+    const t = SPEED_TIME_LABELS[spd];
+
+    const burnSolo = spd === 'rocket' ? 'Very High' : spd === 'car' ? 'Moderate' : 'Low to Moderate';
+    const burnSupp = spd === 'rocket' ? 'Managed' : 'Low';
+
+    return `
+      <div class="lc-stress-section">
+        <div class="lc-stress-header">
+          <span class="lc-res-badge">STRESS REALITY</span>
+          <div class="lc-res-val lc-stress-val-head">Doing it alone vs. with the right people at the right time</div>
+        </div>
+        <div class="lc-stress-cols">
+          <div>
+            <span class="lc-stress-col-label lc-solo-label">GOING SOLO</span>
+            ${stressRow('Stress level', stressSolo.toFixed(1) + '/10', soloW, 'lc-solo-fill')}
+            ${stressRow('Time to goal', t.solo, Math.round(soloW * 0.75), 'lc-solo-fill')}
+            ${stressRow('Risk of burnout', burnSolo, soloW - 10, 'lc-solo-fill')}
+            ${stressRow('Mistake tax', 'Paid in time + money', Math.round(soloW * 0.8), 'lc-solo-fill')}
+          </div>
+          <div>
+            <span class="lc-stress-col-label lc-supp-label">WITH RIGHT PEOPLE</span>
+            ${stressRow('Stress level', stressSupported.toFixed(1) + '/10', suppW, 'lc-supp-fill')}
+            ${stressRow('Time to goal', t.supported, Math.round(suppW * 0.75), 'lc-supp-fill')}
+            ${stressRow('Risk of burnout', burnSupp, suppW - 5, 'lc-supp-fill')}
+            ${stressRow('Mistake tax', 'Paid in investment instead', Math.round(suppW * 0.8), 'lc-supp-fill')}
+          </div>
+        </div>
+        <div class="lc-stress-note">On average, founders working with structured mentorship and community reach their first client 2 to 3x faster and report significantly lower decision anxiety and burnout markers.</div>
+      </div>`;
+  }
+
+  function stressRow(name: string, val: string, widthPct: number, fillClass: string): string {
+    const w = Math.min(100, Math.max(5, widthPct));
+    return `
+      <div class="lc-stress-metric">
+        <div class="lc-stress-metric-name">${name}</div>
+        <div class="lc-stress-bar-track"><div class="lc-stress-bar-fill ${fillClass}" style="width:${w}%"></div></div>
+        <div class="lc-stress-val">${val}</div>
+      </div>`;
+  }
+
+  // ── Restore UI from state ──────────────────────────────
+  function restoreUi(): void {
+    if (state.ideaCategory) {
+      const tile = document.querySelector<HTMLElement>(`.lc-cat-tile[data-cat="${state.ideaCategory}"]`);
+      if (tile) {
+        tile.classList.add('is-selected');
+        renderSubOptions(state.ideaCategory);
+      }
+    }
+    if (state.archetype) {
+      const ac = document.querySelector(`.lc-arch-card[data-arch="${state.archetype}"]`);
+      if (ac) ac.classList.add('is-selected');
+    }
+    if (state.speed) {
+      const sc = document.querySelector(`.lc-speed-card[data-speed="${state.speed}"]`);
+      if (sc) sc.classList.add('is-selected');
+    }
+    if (state.monthlyGoal)  (document.getElementById('lc-monthly-goal') as HTMLInputElement).value = String(state.monthlyGoal);
+    if (state.offerPrice)   (document.getElementById('lc-offer-price') as HTMLInputElement).value = String(state.offerPrice);
+    if (state.hoursWeek)    (document.getElementById('lc-hours-week') as HTMLInputElement).value = String(state.hoursWeek);
+    if (state.timeMonths)   (document.getElementById('lc-time-months') as HTMLInputElement).value = String(state.timeMonths);
+    if (state.s2l !== 1)    (document.getElementById('lc-s2l-rate') as HTMLInputElement).value = String(state.s2l);
+    if (state.l2s !== 20)   (document.getElementById('lc-l2s-rate') as HTMLInputElement).value = String(state.l2s);
+
+    state.mines.forEach((mk) => {
+      const item = document.querySelector(`.lc-mine-item[data-mine="${mk}"]`);
+      if (item) item.classList.add('is-selected');
+    });
+  }
+
+  // ── Reset ──────────────────────────────────────────────
+  function resetAll(): void {
+    state = { ...initialState };
+    clearState();
+    document.querySelectorAll<HTMLInputElement>(
+      '#lc-monthly-goal, #lc-offer-price, #lc-hours-week, #lc-time-months, #lc-s2l-rate, #lc-l2s-rate, #lc-email-input'
+    ).forEach((el) => { el.value = ''; });
+    document.querySelectorAll('.is-selected').forEach((el) => el.classList.remove('is-selected'));
+    const sub = document.getElementById('lcSubWrap');
+    if (sub) sub.setAttribute('hidden', '');
+    const grid = document.getElementById('lcSubGrid');
+    if (grid) grid.innerHTML = '';
+    const msg = document.getElementById('lcEmailMsg');
+    if (msg) msg.textContent = '';
+    showStep(0);
+  }
+
+  // ── Email me my map ────────────────────────────────────
+  const API_BASE = (import.meta.env.PUBLIC_API_BASE_URL ?? 'https://api.houseofcwk.com') as string;
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  async function handleEmailSubmit(e: Event): Promise<void> {
+    e.preventDefault();
+    const input = document.getElementById('lc-email-input') as HTMLInputElement;
+    const btn = document.getElementById('lcEmailBtn') as HTMLButtonElement;
+    const msg = document.getElementById('lcEmailMsg') as HTMLElement;
+    const email = input.value.trim();
+
+    if (!EMAIL_REGEX.test(email)) {
+      msg.textContent = 'Please enter a valid email address.';
+      msg.dataset.tone = 'error';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    msg.textContent = '';
+
+    try {
+      const summary = buildEmailSummary();
+      const res = await fetch(`${API_BASE}/lifestyle-calculator`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, state, summary }),
+      });
+      if (res.ok) {
+        msg.textContent = 'Sent. Check your inbox in the next minute.';
+        msg.dataset.tone = 'success';
+        btn.textContent = 'Sent ✓';
+      } else {
+        msg.textContent = 'Something went wrong. Try again in a moment.';
+        msg.dataset.tone = 'error';
+        btn.disabled = false;
+        btn.textContent = 'Send my map →';
+      }
+    } catch {
+      msg.textContent = 'Network error. Please try again.';
+      msg.dataset.tone = 'error';
+      btn.disabled = false;
+      btn.textContent = 'Send my map →';
+    }
+  }
+
+  function buildEmailSummary(): {
+    headline: string;
+    targetLine: string;
+    weeklyLine: string;
+    archetype: string;
+    archetypeFeeling: string;
+    nextMove: string;
+    speed: string;
+    minesActive: number;
+  } {
+    const arch = getArch(state.archetype);
+    const n = calcNumbers();
+    const speed = SPEEDS.find((s) => s.key === state.speed);
+    const subLabel = state.ideaCategory ? getSubLabel(state.ideaCategory, state.ideaType) : '';
+    return {
+      headline: `A ${arch ? arch.name : ''} monetizing ${subLabel || 'your edge'}, targeting $${fmtK(state.monthlyGoal)}/month.`,
+      targetLine: `$${fmt(state.monthlyGoal)} per month at $${fmt(state.offerPrice)} per offer over ${state.timeMonths} months.`,
+      weeklyLine: `${fmt(n.salesPw)} sales/week, ${fmt(n.leadsPw)} leads/week, ${fmt(n.strangersPw)} strangers/week.`,
+      archetype: arch ? `${arch.tag} / ${arch.name}` : '',
+      archetypeFeeling: arch ? arch.feeling : '',
+      nextMove: arch ? arch.next : '',
+      speed: speed ? `${speed.label} (${speed.time})` : '',
+      minesActive: state.mines.length,
+    };
+  }
+
+  // ── Wire it all up ─────────────────────────────────────
+  loadState();
+
+  document.querySelectorAll<HTMLButtonElement>('.lc-cat-tile').forEach((btn) => {
+    btn.addEventListener('click', () => selectCat(btn.dataset.cat as CategoryKey, btn));
+  });
+
+  wireArchetypes();
+  wireSpeeds();
+  wireMines();
+
+  document.querySelectorAll<HTMLButtonElement>('[data-next]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const step = parseInt(btn.dataset.next ?? '0', 10);
+      if (validateStep(step)) showStep(step + 1);
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-back]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const step = parseInt(btn.dataset.back ?? '0', 10);
+      showStep(Math.max(0, step - 1));
+    });
+  });
+
+  // Live recalc on conversion-rate inputs
+  ['lc-s2l-rate', 'lc-l2s-rate'].forEach((id) => {
+    const el = document.getElementById(id) as HTMLInputElement | null;
+    el?.addEventListener('input', () => {
+      state.s2l = parseFloat((document.getElementById('lc-s2l-rate') as HTMLInputElement).value) || 1;
+      state.l2s = parseFloat((document.getElementById('lc-l2s-rate') as HTMLInputElement).value) || 20;
+      renderFunnel();
+      saveState();
+    });
+  });
+
+  document.getElementById('lcResetBtn')?.addEventListener('click', resetAll);
+  document.getElementById('lcEmailForm')?.addEventListener('submit', handleEmailSubmit);
+
+  // Restore UI from saved state, then jump to the saved step
+  restoreUi();
+  showStep(currentStep);
+</script>
+
+<style>
+  /* ───────────────────────────────────────────────────────
+     Lifestyle Calculator scoped styles. Brand tokens come
+     from src/styles/global.css.
+     ─────────────────────────────────────────────────────── */
+  .lc-page {
+    padding: 96px 16px 96px;
+    min-height: calc(100vh - 64px);
+    position: relative;
+  }
+  .lc-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Board indicator */
+  .lc-board-wrap { padding: 4px 0 36px; }
+  .lc-board { display: flex; align-items: center; }
+  .lc-board-sq {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--dim);
+    position: relative; transition: all 0.4s ease;
+  }
+  .lc-board-conn { height: 1px; flex: 1; background: var(--gb); min-width: 6px; }
+  .lc-board-sq.is-done {
+    background: rgba(0, 229, 255, 0.06);
+    border-color: rgba(0, 229, 255, 0.3);
+    color: var(--cyan);
+  }
+  .lc-board-sq.is-active {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.18);
+  }
+  .lc-board-sq.is-active::before {
+    content: '';
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 7px; height: 7px;
+    background: var(--cyan); border-radius: 50%;
+    box-shadow: 0 0 8px var(--cyan), 0 0 18px rgba(0, 229, 255, 0.5);
+    animation: lc-pulse 2s ease-in-out infinite;
+  }
+  .lc-board-sq.is-goal { background: rgba(123, 97, 255, 0.06); border-color: rgba(123, 97, 255, 0.3); color: var(--purple); font-size: 14px; }
+  @keyframes lc-pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    50%      { transform: translateX(-50%) scale(1.5); opacity: 0.6; }
+  }
+
+  /* Step container */
+  .lc-step { display: none; animation: lc-fade 0.4s both; }
+  .lc-step.is-active { display: block; }
+  @keyframes lc-fade {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Type */
+  .lc-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.42em;
+    text-transform: uppercase; color: var(--pink);
+    margin-bottom: 18px;
+  }
+  .lc-eyebrow-dot { width: 4px; height: 4px; background: var(--pink); border-radius: 50%; }
+  .lc-h1 {
+    font-family: 'Agrandir', 'DM Sans', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .lc-grad {
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .lc-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 28px;
+    max-width: 600px;
+  }
+  .lc-section-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--dim);
+    margin: 0 0 12px;
+  }
+
+  /* Cards / glass surface (shared) */
+  .lc-cat-tile, .lc-sub-opt, .lc-arch-card,
+  .lc-speed-card, .lc-funnel-card, .lc-adjust-block,
+  .lc-mine-item, .lc-field-group,
+  .lc-breakdown-card, .lc-res-card, .lc-timeline-card,
+  .lc-stress-section, .lc-phase-card {
+    background: var(--glass);
+    border: 1px solid var(--gb);
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* ── Step 0: Categories ──────────────────────────────── */
+  .lc-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lc-cat-tile {
+    text-align: left; cursor: pointer;
+    padding: 22px 20px;
+    border-radius: 14px;
+    transition: all 0.18s ease;
+    position: relative; overflow: hidden;
+    color: inherit; font: inherit;
+  }
+  .lc-cat-tile::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .lc-mind::after   { background: var(--cyan); }
+  .lc-body::after   { background: #00E396; }
+  .lc-soul::after   { background: var(--purple); }
+  .lc-pocket::after { background: var(--pink); }
+  .lc-cat-tile:hover { background: rgba(255,255,255,0.05); border-color: var(--gb2); }
+  .lc-cat-tile:hover::after { opacity: 0.5; }
+  .lc-cat-tile.is-selected::after { opacity: 1; }
+  .lc-mind.is-selected   { border-color: var(--cyan);   background: rgba(0, 229, 255, 0.05); }
+  .lc-body.is-selected   { border-color: #00E396;       background: rgba(0, 227, 150, 0.05); }
+  .lc-soul.is-selected   { border-color: var(--purple); background: rgba(123, 97, 255, 0.05); }
+  .lc-pocket.is-selected { border-color: var(--pink);   background: rgba(251, 48, 121, 0.05); }
+  .lc-cat-icon { display: block; margin-bottom: 12px; line-height: 1; }
+  .lc-mind .lc-cat-icon   { color: var(--cyan); }
+  .lc-body .lc-cat-icon   { color: #00E396; }
+  .lc-soul .lc-cat-icon   { color: var(--purple); }
+  .lc-pocket .lc-cat-icon { color: var(--pink); }
+  .lc-cat-label {
+    display: block; font-size: 16px; font-weight: 800;
+    color: var(--text); letter-spacing: 0.02em; margin-bottom: 4px;
+  }
+  .lc-cat-desc {
+    display: block; font-size: 12.5px; color: var(--muted); line-height: 1.6;
+  }
+  .lc-cat-check {
+    position: absolute; top: 12px; right: 12px;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 900; color: var(--bg);
+    opacity: 0; transform: scale(0.4); transition: all 0.2s ease;
+  }
+  .lc-mind.is-selected .lc-cat-check   { opacity: 1; transform: scale(1); background: var(--cyan); }
+  .lc-body.is-selected .lc-cat-check   { opacity: 1; transform: scale(1); background: #00E396; }
+  .lc-soul.is-selected .lc-cat-check   { opacity: 1; transform: scale(1); background: var(--purple); color: #fff; }
+  .lc-pocket.is-selected .lc-cat-check { opacity: 1; transform: scale(1); background: var(--pink);   color: #fff; }
+
+  /* Sub-options */
+  .lc-sub-wrap { margin-top: 16px; }
+  .lc-sub-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 8px;
+  }
+  .lc-sub-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .lc-sub-opt {
+    padding: 16px 14px; cursor: pointer; text-align: left;
+    border-radius: 10px; position: relative;
+    color: inherit; font: inherit;
+    transition: all 0.2s ease;
+  }
+  .lc-sub-opt:hover { background: rgba(255,255,255,0.05); border-color: var(--gb2); }
+  .lc-sub-opt.is-selected { border-color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
+  .lc-sub-opt-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .lc-sub-opt-desc { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+  .lc-sub-check {
+    position: absolute; top: 8px; right: 8px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--cyan); color: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 900;
+    opacity: 0; transform: scale(0.4); transition: all 0.2s ease;
+  }
+  .lc-sub-opt.is-selected .lc-sub-check { opacity: 1; transform: scale(1); }
+
+  /* ── Step 1: Archetypes ─────────────────────────────── */
+  .lc-arch-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+  .lc-arch-card {
+    text-align: left; cursor: pointer;
+    padding: 18px 20px;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    color: inherit; font: inherit; position: relative;
+  }
+  .lc-arch-card:hover { background: rgba(255,255,255,0.05); border-color: var(--gb2); }
+  .lc-arch-card.is-selected { border-color: var(--cyan); background: rgba(0, 229, 255, 0.04); }
+  .lc-arch-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; margin-bottom: 10px;
+  }
+  .lc-arch-name-wrap { flex: 1; }
+  .lc-arch-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.36em;
+    text-transform: uppercase; color: var(--pink);
+    display: block; margin-bottom: 4px;
+  }
+  .lc-arch-name { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; }
+  .lc-arch-dots { display: flex; gap: 5px; align-items: center; padding-top: 3px; }
+  .lc-arch-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gb2);
+  }
+  .lc-arch-dot.is-active { background: var(--cyan); box-shadow: 0 0 6px rgba(0, 229, 255, 0.5); }
+  .lc-arch-feeling { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 12px; }
+  .lc-arch-cost-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    background: rgba(251, 48, 121, 0.05);
+    border: 1px solid rgba(251, 48, 121, 0.18);
+    border-left: 2px solid var(--pink);
+    border-radius: 8px;
+  }
+  .lc-arch-cost-tag {
+    flex-shrink: 0;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--pink);
+    background: rgba(251, 48, 121, 0.12);
+    border-radius: 4px;
+    padding: 3px 7px;
+    line-height: 1.2;
+    margin-top: 1px;
+  }
+  .lc-arch-cost-val {
+    font-size: 12.5px; font-weight: 500;
+    color: rgba(238, 240, 255, 0.78);
+    line-height: 1.55;
+  }
+  .lc-arch-check {
+    position: absolute; top: 12px; right: 12px;
+    width: 18px; height: 18px; background: var(--cyan); color: var(--bg);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 900;
+    opacity: 0; transform: scale(0.4); transition: all 0.2s ease;
+  }
+  .lc-arch-card.is-selected .lc-arch-check { opacity: 1; transform: scale(1); }
+
+  /* ── Step 2: Fields ─────────────────────────────────── */
+  .lc-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lc-field-group {
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .lc-field-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .lc-field-prefix {
+    display: flex; align-items: baseline; gap: 4px;
+  }
+  .lc-field-prefix-mark {
+    font-size: 22px; font-weight: 700; color: var(--dim);
+  }
+  .lc-field-group input {
+    background: transparent; border: none; padding: 0;
+    font-family: inherit; font-size: 22px; font-weight: 700; color: var(--text);
+    outline: none; -moz-appearance: textfield;
+    width: 100%; min-width: 0;
+  }
+  .lc-field-group input::-webkit-outer-spin-button,
+  .lc-field-group input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .lc-field-group input::placeholder { font-size: 22px; font-weight: 300; color: rgba(238, 240, 255, 0.18); }
+
+  /* ── Step 3: Speed ─────────────────────────────────── */
+  .lc-speed-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 32px; }
+  .lc-speed-card {
+    padding: 22px 16px 18px;
+    cursor: pointer; text-align: left;
+    border-radius: 14px;
+    color: inherit; font: inherit; position: relative;
+    display: flex; flex-direction: column;
+    transition: all 0.2s ease; overflow: hidden;
+  }
+  .lc-speed-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .lc-speed-turtle::after { background: #00E396; }
+  .lc-speed-car::after    { background: var(--cyan); }
+  .lc-speed-rocket::after { background: var(--pink); }
+  .lc-speed-card:hover { background: rgba(255,255,255,0.05); border-color: var(--gb2); }
+  .lc-speed-card:hover::after { opacity: 1; }
+  .lc-speed-card.is-selected::after { opacity: 1; }
+  .lc-speed-turtle.is-selected { border-color: #00E396;     background: rgba(0, 227, 150, 0.05); }
+  .lc-speed-car.is-selected    { border-color: var(--cyan); background: rgba(0, 229, 255, 0.05); }
+  .lc-speed-rocket.is-selected { border-color: var(--pink); background: rgba(251, 48, 121, 0.05); }
+  .lc-speed-symbol { display: block; margin-bottom: 12px; line-height: 1; }
+  .lc-speed-turtle .lc-speed-symbol { color: #00E396; }
+  .lc-speed-car .lc-speed-symbol    { color: var(--cyan); }
+  .lc-speed-rocket .lc-speed-symbol { color: var(--pink); }
+  .lc-speed-label { display: block; font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .lc-speed-time {
+    display: block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .lc-speed-turtle .lc-speed-time { color: #00E396; }
+  .lc-speed-car .lc-speed-time    { color: var(--cyan); }
+  .lc-speed-rocket .lc-speed-time { color: var(--pink); }
+  .lc-speed-desc { display: block; font-size: 12px; color: var(--muted); line-height: 1.65; flex: 1; }
+  .lc-speed-check {
+    position: absolute; top: 12px; right: 12px;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 900;
+    opacity: 0; transform: scale(0.4); transition: all 0.2s ease;
+  }
+  .lc-speed-turtle.is-selected .lc-speed-check { opacity: 1; transform: scale(1); background: #00E396;     color: var(--bg); }
+  .lc-speed-car.is-selected .lc-speed-check    { opacity: 1; transform: scale(1); background: var(--cyan); color: var(--bg); }
+  .lc-speed-rocket.is-selected .lc-speed-check { opacity: 1; transform: scale(1); background: var(--pink); color: #fff; }
+
+  /* ── Step 4: Funnel ────────────────────────────────── */
+  .lc-funnel-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+  .lc-funnel-card { padding: 18px 20px; }
+  .lc-funnel-num {
+    font-size: 32px; font-weight: 800; color: var(--cyan);
+    letter-spacing: -0.025em; line-height: 1; margin-bottom: 6px;
+  }
+  .lc-funnel-lbl {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .lc-funnel-arrows { display: flex; margin: 4px 0; }
+  .lc-funnel-arrows span { flex: 1; text-align: center; font-size: 12px; color: var(--dim); }
+  .lc-funnel-bottom { margin-bottom: 4px; }
+  .lc-funnel-total {
+    border-color: rgba(0, 229, 255, 0.22);
+    background: rgba(0, 229, 255, 0.04);
+    display: flex; align-items: center; gap: 22px; padding: 22px 22px;
+  }
+  .lc-funnel-total-num {
+    font-size: 40px; font-weight: 800; color: var(--cyan);
+    letter-spacing: -0.03em; line-height: 1; white-space: nowrap;
+  }
+  .lc-funnel-total-meta { flex: 1; }
+  .lc-funnel-total-meta p {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.6; margin: 4px 0 0;
+  }
+
+  .lc-divider { border: none; border-top: 1px solid var(--gb); margin: 28px 0; }
+
+  .lc-adjust-block { padding: 20px 22px; }
+  .lc-adjust-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 16px;
+  }
+  .lc-adjust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .lc-adjust-field { display: flex; flex-direction: column; gap: 7px; }
+  .lc-adjust-field label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .lc-adjust-field input {
+    background: var(--bg2);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+    color: var(--text); font-family: inherit;
+    font-size: 15px; font-weight: 600;
+    padding: 11px 14px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .lc-adjust-field input:focus { border-color: rgba(0, 229, 255, 0.45); }
+
+  /* ── Step 5: Mind mines ────────────────────────────── */
+  .lc-mine-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+  .lc-mine-item {
+    cursor: pointer; transition: all 0.2s; overflow: hidden; padding: 0;
+  }
+  .lc-mine-item:hover { background: rgba(255,255,255,0.05); border-color: var(--gb2); }
+  .lc-mine-item.is-selected { border-color: rgba(251, 48, 121, 0.4); background: rgba(251, 48, 121, 0.04); }
+  .lc-mine-stat-bar {
+    background: rgba(251, 48, 121, 0.08);
+    border-bottom: 1px solid rgba(251, 48, 121, 0.15);
+    padding: 7px 18px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--pink);
+    display: none;
+  }
+  .lc-mine-item.is-selected .lc-mine-stat-bar { display: block; }
+  .lc-mine-body { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; }
+  .lc-mine-check {
+    width: 20px; height: 20px;
+    border: 1px solid var(--gb2); border-radius: 5px;
+    flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: transparent; transition: all 0.15s;
+  }
+  .lc-mine-item.is-selected .lc-mine-check {
+    background: var(--pink); border-color: var(--pink); color: #fff;
+  }
+  .lc-mine-content { flex: 1; }
+  .lc-mine-label { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .lc-mine-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+  .lc-mine-fix {
+    font-size: 11px; font-style: italic; color: var(--dim);
+    margin-top: 8px; line-height: 1.6; display: none;
+  }
+  .lc-mine-item.is-selected .lc-mine-fix { display: block; color: rgba(238, 240, 255, 0.5); }
+
+  /* ── Nav row ───────────────────────────────────────── */
+  .lc-nav-row { display: flex; gap: 10px; margin-top: 32px; align-items: center; }
+  .lc-btn-next {
+    flex: 1;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    border: none; border-radius: 8px;
+    color: var(--bg); font: inherit;
+    font-size: 14px; font-weight: 700;
+    padding: 14px 28px; cursor: pointer;
+    transition: filter 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .lc-btn-next:hover  { filter: brightness(1.1); transform: translateY(-1px); }
+  .lc-btn-next:active { transform: scale(0.98); }
+  .lc-btn-back {
+    background: transparent;
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+    color: var(--muted); font: inherit;
+    font-size: 14px; font-weight: 500;
+    padding: 14px 22px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .lc-btn-back:hover { border-color: var(--gb2); color: var(--text); }
+
+  /* ── Flash (validation prompt) ─────────────────────── */
+  .lc-flash {
+    outline: 1px solid rgba(251, 48, 121, 0.6) !important;
+    border-radius: 12px;
+  }
+
+  /* ── Section labels in results ─────────────────────── */
+  .lc-section-label {
+    display: block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--cyan);
+    margin: 36px 0 12px;
+  }
+
+  /* ── Player header ─────────────────────────────────── */
+  .lc-player-header {
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.07), rgba(123, 97, 255, 0.07));
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 16px; padding: 30px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+  }
+  .lc-player-header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 380px 180px at 50% 0%, rgba(0, 229, 255, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .lc-player-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; position: relative; }
+  .lc-player-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; border-radius: 100px;
+    padding: 5px 12px; border: 1px solid;
+  }
+  .lc-badge-mind   { color: var(--cyan);   background: rgba(0, 229, 255, 0.1);   border-color: rgba(0, 229, 255, 0.25); }
+  .lc-badge-body   { color: #00E396;       background: rgba(0, 227, 150, 0.1);   border-color: rgba(0, 227, 150, 0.25); }
+  .lc-badge-soul   { color: var(--purple); background: rgba(123, 97, 255, 0.1);  border-color: rgba(123, 97, 255, 0.25); }
+  .lc-badge-pocket { color: var(--pink);   background: rgba(251, 48, 121, 0.1);  border-color: rgba(251, 48, 121, 0.25); }
+  .lc-badge-stage  { color: var(--pink);   background: rgba(251, 48, 121, 0.08); border-color: rgba(251, 48, 121, 0.2); }
+  .lc-player-headline {
+    font-size: 17px; font-weight: 700; color: var(--text);
+    margin-bottom: 20px; line-height: 1.5; position: relative;
+  }
+  .lc-player-headline span { color: var(--cyan); }
+  .lc-player-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; position: relative; }
+  .lc-stat-cell { background: rgba(0, 0, 0, 0.25); border-radius: 8px; padding: 12px 14px; }
+  .lc-stat-val { font-size: 20px; font-weight: 800; color: var(--cyan); letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
+  .lc-stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
+
+  /* ── Result cards ──────────────────────────────────── */
+  .lc-res-card { padding: 20px 22px; }
+  .lc-res-badge {
+    display: block;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.36em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 10px;
+  }
+  .lc-res-val { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+  .lc-res-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+  /* Archetype snapshot */
+  .lc-arch-snapshot {
+    background: rgba(251, 48, 121, 0.04);
+    border: 1px solid rgba(251, 48, 121, 0.18);
+    border-left: 3px solid var(--pink);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .lc-arch-snap-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.36em;
+    text-transform: uppercase; color: var(--pink);
+    display: block; margin-bottom: 8px;
+  }
+  .lc-arch-snap-name { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .lc-arch-snap-feel { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* Timeline */
+  .lc-timeline-card { padding: 20px 22px; }
+  .lc-timeline-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 10px 0; border-bottom: 1px solid var(--gb);
+  }
+  .lc-timeline-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .lc-timeline-marker {
+    width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: var(--bg);
+  }
+  .lc-timeline-when { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin-bottom: 3px; }
+  .lc-timeline-what { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+
+  /* Tools */
+  .lc-breakdown-card { padding: 20px 22px; }
+  .lc-breakdown-title {
+    display: block;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.36em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 14px;
+  }
+  .lc-tool-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lc-tool-pill {
+    font-size: 11px; font-weight: 600;
+    background: rgba(0, 229, 255, 0.07);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 100px;
+    padding: 5px 12px; color: var(--muted);
+  }
+  .lc-tool-cost { margin-top: 12px; font-size: 11px; color: var(--dim); }
+  .lc-tool-cost span { color: var(--muted); font-weight: 600; }
+
+  /* Skills */
+  .lc-skill-list { display: flex; flex-direction: column; gap: 8px; }
+  .lc-skill-item { display: flex; align-items: flex-start; gap: 10px; }
+  .lc-skill-num {
+    font-size: 9px; font-weight: 800; min-width: 18px; height: 18px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); flex-shrink: 0; margin-top: 1px;
+  }
+  .lc-skill-text { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+
+  /* People */
+  .lc-people-list { display: flex; flex-direction: column; gap: 10px; }
+  .lc-people-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .lc-people-who { font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .lc-people-note { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .lc-people-cost { font-size: 10px; font-weight: 700; color: #00E396; white-space: nowrap; margin-top: 2px; }
+  .lc-people-cost-free { color: var(--dim); }
+  .lc-people-total-row { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gb); }
+  .lc-people-total { font-size: 11.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .lc-people-total span { color: var(--cyan); }
+  .lc-people-truth { font-size: 11px; color: var(--dim); line-height: 1.65; font-style: italic; }
+
+  /* Stress */
+  .lc-stress-section { padding: 22px; }
+  .lc-stress-header { margin-bottom: 18px; }
+  .lc-stress-val-head { font-size: 15px; }
+  .lc-stress-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lc-stress-col-label {
+    display: block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .lc-solo-label { color: var(--dim); }
+  .lc-supp-label { color: var(--cyan); }
+  .lc-stress-metric { margin-bottom: 12px; }
+  .lc-stress-metric-name {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 6px;
+  }
+  .lc-stress-bar-track {
+    height: 6px; background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px; overflow: hidden; margin-bottom: 4px;
+  }
+  .lc-stress-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+  .lc-solo-fill { background: rgba(255, 120, 50, 0.6); }
+  .lc-supp-fill { background: #00E396; }
+  .lc-stress-val { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .lc-stress-note {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--gb);
+    font-size: 12px; color: var(--dim); line-height: 1.7;
+    font-style: italic; text-align: center;
+  }
+
+  /* Phase grid */
+  .lc-phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lc-phase-card { padding: 20px 18px; position: relative; overflow: hidden; }
+  .lc-phase-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.3), transparent);
+  }
+  .lc-phase-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
+  .lc-phase-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--pink);
+  }
+  .lc-phase-time {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--gb);
+    border-radius: 100px; padding: 3px 9px; color: var(--dim);
+    white-space: nowrap;
+  }
+  .lc-phase-focus { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 12px; }
+  .lc-phase-tasks { display: flex; flex-direction: column; gap: 6px; }
+  .lc-phase-task {
+    font-size: 11px; color: var(--muted); line-height: 1.55;
+    padding-left: 14px; position: relative;
+  }
+  .lc-phase-task::before {
+    content: '•'; position: absolute; left: 0; top: -2px;
+    color: var(--cyan); font-size: 14px;
+  }
+
+  /* Mine result card */
+  .lc-mine-result-card {
+    background: rgba(251, 48, 121, 0.04);
+    border: 1px solid rgba(251, 48, 121, 0.18);
+    border-radius: 12px; padding: 20px 22px;
+    margin-top: 20px;
+  }
+  .lc-mine-result-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.36em;
+    text-transform: uppercase; color: var(--pink);
+    margin-bottom: 12px; display: block;
+  }
+  .lc-mine-result-item { padding: 12px 0; border-bottom: 1px solid rgba(251, 48, 121, 0.12); }
+  .lc-mine-result-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .lc-mine-result-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .lc-mine-result-stat { font-size: 11px; color: var(--pink); font-weight: 600; margin-bottom: 5px; }
+  .lc-mine-result-fix { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+  .lc-warning-card {
+    background: rgba(255, 68, 68, 0.04);
+    border: 1px solid rgba(255, 68, 68, 0.2);
+    border-left: 3px solid #FF4444;
+    border-radius: 12px; padding: 16px 20px; margin-top: 8px;
+  }
+  .lc-warning-card p { font-size: 13px; color: #FF8888; line-height: 1.75; font-weight: 500; margin: 0; }
+
+  /* Email card */
+  .lc-email-card {
+    margin-top: 36px;
+    padding: 26px 28px;
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(123, 97, 255, 0.05));
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 16px;
+  }
+  .lc-email-eyebrow {
+    display: block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 8px;
+  }
+  .lc-email-title { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin: 0 0 8px; }
+  .lc-email-sub { font-size: 13px; color: var(--muted); line-height: 1.65; margin: 0 0 18px; }
+  .lc-email-form { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lc-email-form input {
+    flex: 1; min-width: 200px;
+    height: 44px; padding: 0 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--gb);
+    border-radius: 8px;
+    color: var(--text); font: inherit; font-size: 14px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .lc-email-form input:focus { border-color: rgba(0, 229, 255, 0.55); }
+  .lc-email-form input::placeholder { color: rgba(238, 240, 255, 0.32); }
+  .lc-email-btn {
+    height: 44px; padding: 0 20px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    border: none; border-radius: 8px;
+    color: var(--bg); font: inherit;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: filter 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .lc-email-btn:hover:not(:disabled)  { filter: brightness(1.1); transform: translateY(-1px); }
+  .lc-email-btn:disabled { opacity: 0.7; cursor: default; }
+  .lc-email-msg {
+    margin: 12px 0 0; font-size: 13px; min-height: 18px;
+  }
+  .lc-email-msg[data-tone="success"] { color: #00E396; }
+  .lc-email-msg[data-tone="error"]   { color: #FF7A30; }
+
+  /* CTA */
+  .lc-cta-section { margin-top: 56px; }
+  .lc-cta-intro { text-align: center; margin-bottom: 24px; }
+  .lc-cta-eyebrow {
+    display: block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 14px;
+  }
+  .lc-cta-title { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin: 0 0 10px; line-height: 1.25; }
+  .lc-cta-sub { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 420px; margin: 0 auto; }
+
+  .lc-cta-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lc-cta-path { border-radius: 16px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .lc-cta-path-a {
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.06), rgba(123, 97, 255, 0.07));
+    border: 1px solid rgba(0, 229, 255, 0.28);
+    box-shadow: 0 0 48px rgba(0, 229, 255, 0.06), inset 0 0 40px rgba(123, 97, 255, 0.03);
+  }
+  .lc-cta-path-a::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 300px 140px at 50% 0%, rgba(0, 229, 255, 0.07), transparent 70%);
+    pointer-events: none;
+  }
+  .lc-cta-path-b { background: var(--glass); border: 1px solid var(--gb); }
+  .lc-path-label {
+    display: block;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; margin-bottom: 18px; position: relative;
+  }
+  .lc-path-a-label { color: var(--cyan); }
+  .lc-path-b-label { color: var(--dim); }
+  .lc-cta-path-title { font-size: 21px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.25; position: relative; }
+  .lc-cta-path-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; flex: 1; position: relative; }
+  .lc-btn-path-a {
+    align-self: flex-start; position: relative;
+    display: inline-block;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    border: none; border-radius: 8px;
+    color: var(--bg); font: inherit;
+    font-size: 13px; font-weight: 700;
+    padding: 12px 22px; cursor: pointer; text-decoration: none;
+    transition: filter 0.2s, transform 0.15s;
+  }
+  .lc-btn-path-a:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .lc-btn-path-b {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--gb2);
+    border-radius: 8px;
+    color: var(--muted); font: inherit;
+    font-size: 13px; font-weight: 600;
+    padding: 12px 22px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .lc-btn-path-b:hover { border-color: var(--gb2); color: var(--text); }
+
+  .lc-footer-note {
+    text-align: center; margin-top: 48px;
+    font-size: 11px; color: var(--dim); line-height: 1.8;
+  }
+  .lc-footer-note a { color: var(--dim); text-decoration: none; }
+  .lc-footer-note a:hover { color: var(--muted); }
+
+  /* ── Responsive ────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .lc-page { padding-top: 80px; }
+    .lc-cat-grid,
+    .lc-speed-grid,
+    .lc-cta-paths,
+    .lc-adjust-grid,
+    .lc-phase-grid,
+    .lc-stress-cols,
+    .lc-funnel-top,
+    .lc-player-stats,
+    .lc-sub-grid,
+    .lc-field-grid { grid-template-columns: 1fr; }
+    .lc-board-sq { width: 32px; height: 32px; font-size: 9px; }
+    .lc-funnel-total { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .lc-funnel-total-num { font-size: 36px; }
+    .lc-email-form { flex-direction: column; }
+    .lc-email-form input { width: 100%; }
+    .lc-email-btn { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lc-step,
+    .lc-board-sq.is-active::before,
+    .lc-stress-bar-fill { animation: none; transition: none; }
+  }
+</style>
