@@ -1098,10 +1098,12 @@ const pageDescription =
   showStep(currentStep);
 </script>
 
-<style>
+<style is:global>
   /* ───────────────────────────────────────────────────────
-     Lifestyle Calculator scoped styles. Brand tokens come
-     from src/styles/global.css.
+     Lifestyle Calculator styles. Marked is:global so they
+     also apply to elements injected via innerHTML at runtime
+     (board tiles, sub-options, funnel cards, results). All
+     selectors are lc- prefixed and only match this page.
      ─────────────────────────────────────────────────────── */
   .lc-page {
     padding: 96px 16px 96px;
